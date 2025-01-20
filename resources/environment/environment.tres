@@ -1,0 +1,18 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://bnmt5yys6egho"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n5ql1"]
+
+[sub_resource type="Sky" id="Sky_sugp2"]
+sky_material = SubResource("ProceduralSkyMaterial_n5ql1")
+radiance_size = 0
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_sugp2")
+tonemap_mode = 2
+tonemap_exposure = 0.8
+fog_mode = 1
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 1.0
+fog_depth_begin = 1.0
+fog_depth_end = 50.0

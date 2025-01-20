@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://b7l0ssrmhfv0a"]
+
+[ext_resource type="FontFile" uid="uid://dl1j3jncqc4u0" path="res://assets/Baby Gemoy.ttf" id="1_jbojv"]
+[ext_resource type="Script" uid="uid://cy3cvqjr7v3d3" path="res://scenes/goal.gd" id="1_w3gav"]
+[ext_resource type="Material" uid="uid://dkubysa4c573m" path="res://resources/materials/goal.tres" id="2_jvyg3"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_q5bgg"]
+lightmap_size_hint = Vector2i(17, 11)
+material = ExtResource("2_jvyg3")
+top_radius = 1.0
+bottom_radius = 1.0
+height = 0.5
+cap_bottom = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c16ly"]
+depth_draw_mode = 2
+specular_mode = 2
+disable_receive_shadows = true
+
+[sub_resource type="TextMesh" id="TextMesh_rlg85"]
+material = SubResource("StandardMaterial3D_c16ly")
+text = "GOAL"
+font = ExtResource("1_jbojv")
+font_size = 32
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_aqdrf"]
+height = 0.5
+radius = 1.0
+
+[node name="Goal" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_w3gav")
+
+[node name="CylinderMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("CylinderMesh_q5bgg")
+
+[node name="Text" type="MeshInstance3D" parent="CylinderMesh"]
+transform = Transform3D(0.957561, 0, -0.288231, 0, 1, 0, 0.288231, 0, 0.957561, 0, 0.870961, 0)
+mesh = SubResource("TextMesh_rlg85")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("CylinderShape3D_aqdrf")

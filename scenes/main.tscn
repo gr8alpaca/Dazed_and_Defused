@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://m687fwwg288h"]
+
+[ext_resource type="Script" uid="uid://db0fl44jb2ep7" path="res://scenes/main.gd" id="1_0wfyh"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_0wfyh")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 0, 0)
+light_energy = 0.5
+light_angular_distance = 10.0
+shadow_enabled = true
+shadow_opacity = 0.7
+directional_shadow_mode = 0
+directional_shadow_blend_splits = true
