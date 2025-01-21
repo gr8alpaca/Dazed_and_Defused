@@ -1,7 +1,7 @@
 @icon("res://assets/textures/ClassIcons16x16/camera.png")
 @tool
 class_name PlayerCamera extends Node3D
-const GROUP: StringName = &"cam"
+const GROUP: StringName = &"player_camera"
 
 @export_tool_button("Select Camera", "Camera3D") 
 var select_camera: Callable = select_camera_in_editor
@@ -14,9 +14,9 @@ var select_camera: Callable = select_camera_in_editor
 			att.changed.connect(_on_att_changed)
 
 
-#var position_pivot: Node3D
+
 var rotation_pivot: Node3D
-#var remote_transform: RemoteTransform3D
+
 var cam: Camera3D
 
 var tilt_cam: bool = false
@@ -30,6 +30,7 @@ func _init() -> void:
 		rotation_pivot = Node3D.new()
 		cam = Camera3D.new()
 		add_child(rotation_pivot, false, Node.INTERNAL_MODE_BACK)
+		#cam.current = true
 		rotation_pivot.add_child(cam,)
 		rotation_pivot.owner = self
 		cam.owner = self
@@ -102,10 +103,11 @@ func set_att(att: ControllerAttributes) -> PlayerCamera:
 	return self
 
 func select_camera_in_editor() -> void:
-	var select:= EditorInterface.get_selection()
+	if not Engine.has_singleton(&"EditorInterface"): return
+	var select = Engine.get_singleton(&"EditorInterface").get_selection()
 	select.clear()
 	select.add_node(cam)
-
+	
 #func _notification(what: int) -> void:
 	#pass
 

@@ -1,5 +1,7 @@
 class_name CollisionSensor extends Node
 
+const META_TAG: StringName = &"cushion"
+
 signal unsafe_collision(collider: Node)
 
 @onready var body: RigidBody3D = get_parent()
@@ -27,17 +29,13 @@ func _physics_process(delta: float) -> void:
 
 func handle_collision(collider: Node) -> void:
 	var linear_velocity_delta: Vector3 =  body.linear_velocity - linear_velocity
-	var linear_strength: float = linear_velocity_delta.length()
 	if not is_collision_safe(linear_velocity_delta, collider):
 		unsafe_collision.emit(collider)
-		#if debug:
-			#print("Unsafe collision with node '%s' | Strength: %2.1f | Delta: %1.3v" % [collider.name, linear_velocity_delta.length(), linear_velocity_delta])
 	linear_velocity = body.linear_velocity
 
 func is_collision_safe(linear_velocity_delta: Vector3, collider: Node) -> bool:
-	var linear_strength: float = linear_velocity_delta.length()
-	if debug: 
-		print("Collision with %s | Strength: %2.2f" %[collider.name, linear_strength])
+	var linear_strength: float = linear_velocity_delta.length() * collider.get_meta(META_TAG, 1.0)
+	if debug:  print("Collision with %s | Strength: %2.2f" %[collider.name, linear_strength])
 	return max_safe_linear_delta_magnitude >= linear_strength
 
 

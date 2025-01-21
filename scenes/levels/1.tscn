@@ -1,10 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://drh50l3xjd3m3"]
+[gd_scene load_steps=11 format=3 uid="uid://drh50l3xjd3m3"]
 
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/level.gd" id="1_0absb"]
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_4o7q8"]
+[ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/death_box.gd" id="3_4o7q8"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_kpjit"]
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="4_ijh0y"]
 [ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/trap.gd" id="5_ql3nd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kpjit"]
+size = Vector3(1000, 20, 1000)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_22n3q"]
 size = Vector3(1, 1, 3)
@@ -20,6 +24,19 @@ size = Vector3(1, 3, 1)
 script = ExtResource("1_0absb")
 
 [node name="Environment" type="Node3D" parent="."]
+
+[node name="DeathBox" type="Area3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -2.25, 0)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("3_4o7q8")
+metadata/_custom_type_script = ExtResource("3_4o7q8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/DeathBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+shape = SubResource("BoxShape3D_kpjit")
+debug_fill = false
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="Environment"]
 use_collision = true
