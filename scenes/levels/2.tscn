@@ -101,13 +101,27 @@ skeleton = NodePath("../..")
 [node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Environment/SpinningBridge"]
 shape = SubResource("ConcavePolygonShape3D_mp0kl")
 
-[node name="Area3D" type="Area3D" parent="Environment/SpinningBridge"]
-transform = Transform3D(1, -2.98023e-08, 0, 0, 1, 0, 0, 0, 1, -6.5, 0, 0)
+[node name="BridgeFlipper" type="Node3D" parent="Environment/SpinningBridge" node_paths=PackedStringArray("area_trigger", "body")]
+transform = Transform3D(1, 0, 0.000185315, 0, 1, 0, -0.000185315, 0, 1, -6.5, 0, 0.00120455)
+script = ExtResource("5_8jtne")
+disabled = null
+area_trigger = NodePath("Area3D")
+body = NodePath("..")
+body_property = "rotation_degrees:z"
+end_value = -60.0
+delay_sec = 0.501
+trigger_speed_sec = 0.301
+idle_duration_sec = 0.501
+reset_speed_sec = 1.41
+metadata/_custom_type_script = ExtResource("5_8jtne")
+
+[node name="Area3D" type="Area3D" parent="Environment/SpinningBridge/BridgeFlipper"]
+transform = Transform3D(1, -2.98023e-08, -0.000185315, 0, 1, 0, 0.000185315, -5.52281e-12, 1, 0, 0, -0.00120455)
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/SpinningBridge/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/SpinningBridge/BridgeFlipper/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 shape = SubResource("BoxShape3D_souht")
 
@@ -122,19 +136,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 starting_camera_angle = -1.5708
 
 [node name="Traps" type="Node3D" parent="."]
-
-[node name="BridgeFlipper" type="Node3D" parent="Traps" node_paths=PackedStringArray("area_trigger", "body")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 0)
-script = ExtResource("5_8jtne")
-area_trigger = NodePath("../../Environment/SpinningBridge/Area3D")
-body = NodePath("../../Environment/SpinningBridge")
-body_property = "rotation_degrees:z"
-end_value = -60.0
-delay_sec = 0.501
-trigger_speed_sec = 0.301
-idle_duration_sec = 0.501
-reset_speed_sec = 1.41
-metadata/_custom_type_script = ExtResource("5_8jtne")
 
 [node name="DeathBox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -8.75, 0)
