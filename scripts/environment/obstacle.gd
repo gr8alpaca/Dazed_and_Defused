@@ -12,6 +12,7 @@ var execute: Callable = start
 @export var tween_ease: Tween.EaseType = Tween.EASE_IN_OUT
 @export var tween_trans: Tween.TransitionType = Tween.TRANS_LINEAR
 
+var dict: Dictionary[String, Dictionary]
 var tween: Tween
 
 var cushion: float = 1.0:

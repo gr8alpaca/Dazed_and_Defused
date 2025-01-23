@@ -14,13 +14,8 @@ func _ready() -> void:
 	get_tree().root.child_entered_tree.connect(_on_root_child_entered_tree)
 
 func connect_scene(level: Level) -> void:
-	if not level.is_node_ready():
-		await level.ready
-	#level.goal_reached.connect()
 	level.goal_reached.connect(_on_goal_reached)
-	var player: Player = get_tree().get_first_node_in_group(Player.GROUP)
-	
-	player.dead.connect(_on_dead)
+	level.player_dead.connect(_on_player_dead)
 
 
 func show_message(msg: String) -> void:
@@ -33,7 +28,8 @@ func show_message(msg: String) -> void:
 	tw.chain().tween_property(%MainLabel, ^"modulate:a", 1.0, FADE_IN_TIME).from(0.0)
 	tw.tween_property(%CornerLabel, ^"modulate:a", 1.0, FADE_IN_TIME).from(0.0)
 
-func _on_dead(collider: Node) -> void:
+
+func _on_player_dead(collider: Node) -> void:
 	show_message("You died")
 
 
@@ -47,6 +43,8 @@ func hide_all() -> void:
 	ENVIRONMENT.set_adjustment_saturation(1.0)
 	%Rect.modulate.a = 0.0
 
+func show_level_clear_message() -> void:
+	show_message("Level Clear")
 func _on_goal_reached() -> void:
 	show_message.bind("Level Clear")
 	

@@ -1,14 +1,14 @@
-[gd_scene load_steps=30 format=4 uid="uid://blg8v1lrpbae3"]
+[gd_scene load_steps=29 format=4 uid="uid://blg8v1lrpbae3"]
 
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="1_mpdjq"]
-[ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/level.gd" id="1_souht"]
-[ext_resource type="Script" uid="uid://cr3r4feojithi" path="res://scripts/obstacle.gd" id="2_afygv"]
+[ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_souht"]
+[ext_resource type="Script" uid="uid://cr3r4feojithi" path="res://scripts/environment/obstacle.gd" id="2_afygv"]
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="2_mx7cr"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_afygv"]
-[ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/trap.gd" id="5_8jtne"]
+[ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/environment/trap.gd" id="5_8jtne"]
 [ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="5_kt1qv"]
 [ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="6_fnalb"]
-[ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/death_box.gd" id="6_mp0kl"]
+[ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="6_mp0kl"]
 [ext_resource type="Texture2D" uid="uid://bdiqhgu1kf5ps" path="res://assets/textures/prototype/Red/texture_03.png" id="7_fnalb"]
 
 [sub_resource type="Resource" id="Resource_sipdq"]
@@ -99,7 +99,7 @@ tween_trans = 5
 target_node_path = NodePath("..")
 path = "rotation_degrees:z"
 reset_speed_sec = 1.501
-arguments = null
+arguments = []
 metadata/_custom_type_script = ExtResource("6_fnalb")
 
 [sub_resource type="Resource" id="Resource_fnalb"]
@@ -160,8 +160,6 @@ metadata/_custom_type_script = ExtResource("6_fnalb")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sipdq"]
 size = Vector3(2.25, 1, 3.5)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_kt1qv"]
 
 [node name="2" type="Node3D"]
 script = ExtResource("1_souht")
@@ -238,6 +236,7 @@ material = ExtResource("1_mpdjq")
 
 [node name="Goal2" parent="Environment/Bridge3" instance=ExtResource("2_mx7cr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.75, -0.25, 0)
+input_ray_pickable = false
 
 [node name="SpinningBridge" type="AnimatableBody3D" parent="Environment"]
 transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 19.5, 0, 0)
@@ -296,7 +295,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 shape = SubResource("BoxShape3D_souht")
 
 [node name="TrapActivators" type="Node3D" parent="Environment/SpinningBridge" node_paths=PackedStringArray("area_trigger")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("5_8jtne")
 area_trigger = NodePath("Area3D2")
 delay_sec = 6.001
@@ -352,6 +350,7 @@ shape = SubResource("BoxShape3D_sipdq")
 
 [node name="Goal" parent="." instance=ExtResource("2_mx7cr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.25, 0, 0)
+input_ray_pickable = false
 
 [node name="Player" parent="." instance=ExtResource("3_afygv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -368,7 +367,3 @@ gravity = 19.6
 linear_damp_space_override = 3
 script = ExtResource("6_mp0kl")
 metadata/_custom_type_script = ExtResource("6_mp0kl")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="DeathBox"]
-shape = SubResource("WorldBoundaryShape3D_kt1qv")
-debug_fill = false

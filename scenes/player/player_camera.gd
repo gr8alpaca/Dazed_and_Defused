@@ -14,7 +14,6 @@ var select_camera: Callable = select_camera_in_editor
 			att.changed.connect(_on_att_changed)
 
 
-
 var rotation_pivot: Node3D
 
 var cam: Camera3D
@@ -90,11 +89,10 @@ func _on_att_changed() -> void:
 	update_rotation()
 	update_position()
 
-
 func get_camera_dir() -> Vector2:
 	var position_deltas := global_position - cam.global_position
 	return Vector2(position_deltas.x, position_deltas.z).normalized()
-	
+
 func get_yaw() -> float:
 	return rotation_pivot.global_rotation.y
 
@@ -107,7 +105,8 @@ func select_camera_in_editor() -> void:
 	var select = Engine.get_singleton(&"EditorInterface").get_selection()
 	select.clear()
 	select.add_node(cam)
-	
+
+
 #func _notification(what: int) -> void:
 	#pass
 

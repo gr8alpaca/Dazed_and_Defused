@@ -3,12 +3,13 @@ extends Node
 const LEVEL_DIR: String = "res://scenes/levels/"
 
 var current_level: int = 1
+var messager: Messager
 var transitioner: Transitioner
 
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
-	var messager: Messager = load("res://scenes/messager/messager.tscn").instantiate()
+	messager = load("res://scenes/messager/messager.tscn").instantiate()
 	
 	transitioner = load("res://scenes/transitioner/transitioner.tscn").instantiate()
 	transitioner.reset()
@@ -30,9 +31,11 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	
 	if Input.is_key_pressed(KEY_R):
 		reset_level()
-	elif Input.is_key_pressed(KEY_1) and Input.is_key_pressed(KEY_SHIFT):
+	elif Input.is_key_pressed(KEY_1):
 		change_level(1)
-	elif Input.is_key_pressed(KEY_2) and Input.is_key_pressed(KEY_SHIFT):
+	elif Input.is_key_pressed(KEY_2):
 		change_level(2)
+	elif Input.is_key_pressed(KEY_3):
+		change_level(3)
 		#change_level("res://scenes/levels/2.tscn")
 		#"res://scenes/levels/2.tscn"

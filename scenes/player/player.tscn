@@ -1,11 +1,24 @@
-[gd_scene load_steps=17 format=3 uid="uid://ca38c7oafrli"]
+[gd_scene load_steps=19 format=3 uid="uid://ca38c7oafrli"]
 
 [ext_resource type="Script" uid="uid://265ioi7d3q7c" path="res://scenes/player/player.gd" id="1_8afob"]
-[ext_resource type="Resource" uid="uid://5np8ylpjol61" path="res://resources/controller_attributes.tres" id="2_gmlin"]
+[ext_resource type="Script" uid="uid://d3ffl3xfdj0mv" path="res://scripts/data/ControllerAttributes.gd" id="2_75vfm"]
 [ext_resource type="Material" uid="uid://ndqemuv2cft8" path="res://resources/materials/player.tres" id="3_gmlin"]
 [ext_resource type="Texture2D" uid="uid://d3sufsikrdg5q" path="res://resources/fire_gradient.tres" id="4_lvxji"]
 [ext_resource type="Script" uid="uid://25tgv36t2oc5" path="res://scenes/player/CollisionSensor.gd" id="5_p47bc"]
 [ext_resource type="Material" uid="uid://cxhaa6i7bto07" path="res://scenes/player/Explosion/ExplosionMaterial.tres" id="6_75vfm"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_75vfm"]
+friction = 0.4
+
+[sub_resource type="Resource" id="Resource_0owmy"]
+script = ExtResource("2_75vfm")
+distance_from_pivot = 3.0
+camera_y_offset = 0.5
+initial_dive_angle_deg = -30.0
+pitch_limit_deg = 35.0
+roll_limit_deg = 30.0
+tilt_speed = 202.0
+horizontal_rotation_sensitiveness = 10.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gmlin"]
 
@@ -78,9 +91,11 @@ scale_max = 2.0
 
 [node name="Player" type="RigidBody3D"]
 collision_layer = 3
+physics_material_override = SubResource("PhysicsMaterial_75vfm")
 max_contacts_reported = 10
+linear_damp = 0.2
 script = ExtResource("1_8afob")
-att = ExtResource("2_gmlin")
+att = SubResource("Resource_0owmy")
 metadata/_custom_type_script = ExtResource("1_8afob")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -109,7 +124,9 @@ draw_pass_1 = SubResource("QuadMesh_5gtgg")
 
 [node name="CollisionSensor" type="Node" parent="."]
 script = ExtResource("5_p47bc")
-debug = true
+detection_mode = 1
+debug_level = 2
+max_safe_impulse = 10.0
 metadata/_custom_type_script = ExtResource("5_p47bc")
 
 [node name="Explosion" type="GPUParticles3D" parent="."]

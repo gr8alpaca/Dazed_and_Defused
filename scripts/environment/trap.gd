@@ -7,19 +7,9 @@ var trigger_trap_function: Callable = trigger
 
 @export var disabled: bool = false
 @export var area_trigger: Area3D: set = set_area_trigger
-#
-#@export var body: AnimatableBody3D
-#@export var body_property: String = "position:x"
-#@export var start_value: float = 0.0
-#@export var end_value: float = 1.0
-
-#@export var tween_trans: Tween.TransitionType = Tween.TRANS_LINEAR
 
 @export_range(0.001, 10.0, 0.05, "or_greater", "suffix:s",) var delay_sec: float = 0.0
-#@export_range(0.001, 10.0, 0.05, "or_greater", "suffix:s", ) var trigger_speed_sec: float = 0.5
-#@export_range(0.001, 10.0, 0.05, "or_greater", "suffix:s",) var idle_duration_sec: float = 0.0
-#@export_range(0.001, 20.0, 0.2, "or_greater", "suffix:s",) var reset_speed_sec: float = 2.0
-@export var cancel_on_player_exit: bool = false
+@export var cancel_on_player_exit: bool
 
 @export var actions: Array[TrapAction]
 
@@ -28,6 +18,7 @@ var triggered: bool = false
 
 func disable() -> void:
 	disabled = true
+
 func enable() -> void:
 	if not disabled: return
 	disabled = false
@@ -70,7 +61,6 @@ func set_area_trigger(val: Area3D) -> void:
 		area_trigger.body_entered.connect(_on_trigger)
 	
 	update_configuration_warnings()
-
 
 func _get_configuration_warnings() -> PackedStringArray:
 	return ["No area trigger set"] if not area_trigger else []

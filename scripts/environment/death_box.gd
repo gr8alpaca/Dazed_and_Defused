@@ -15,6 +15,12 @@ func _ready() -> void:
 	monitorable = false
 	collision_layer = 0
 	collision_mask = 2
+	var collision_shape:= CollisionShape3D.new()
+	collision_shape.shape = WorldBoundaryShape3D.new()
+	collision_shape.debug_fill = false
+	add_child(collision_shape)
+	collision_shape.owner = self
+
 	body_entered.connect(_on_body_entered)
 
 

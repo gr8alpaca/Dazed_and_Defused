@@ -42,7 +42,6 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9
 var data: Dictionary = {"Input": Vector2(), "LinVel": 0.0, "pitch": 0.0, "roll": 0.0, "yaw": 0.0, "scale": Vector3.ONE}
 
 
-
 func _init() -> void:
 	add_to_group(GROUP)
 	camera = PlayerCamera.new()
@@ -82,10 +81,7 @@ func set_collision_sensor_enabled(enabled: bool) -> void:
 
 func _on_unsafe_collision(collider: Node) -> void:
 	set_process_mode.call_deferred(Node.PROCESS_MODE_DISABLED)
-	print("Unsafe collision with \"%s\"" % collider.name)
 	$Explosion.emitting = true
 	$SphereMesh.hide()
 	dead.emit(collider)
-	#create_tween().tween_callback($SphereMesh.hide)
-	#$SphereMesh.visible = false
 	

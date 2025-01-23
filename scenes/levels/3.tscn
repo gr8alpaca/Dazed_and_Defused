@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cxljo1y5hpidu"]
 
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="1_mpdjq"]
-[ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/level.gd" id="1_t3mkv"]
+[ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_t3mkv"]
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="2_mx7cr"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_afygv"]
 
