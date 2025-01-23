@@ -21,7 +21,7 @@ func _ready() -> void:
 	root.add_child.call_deferred(transitioner)
 	
 func change_level(level_number: int) -> void:
-	transitioner.transition(LEVEL_DIR.path_join(str(level_number if level_number < 3 else 1) + ".tscn"))
+	transitioner.transition(LEVEL_DIR.path_join(str(level_number) + ".tscn"))
 
 func reset_level() -> void:
 	get_tree().reload_current_scene()

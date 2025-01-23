@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxljo1y5hpidu"]
+[gd_scene load_steps=6 format=3 uid="uid://cxljo1y5hpidu"]
 
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="1_mpdjq"]
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_t3mkv"]
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="2_mx7cr"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_afygv"]
+[ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="5_cddsv"]
 
 [node name="3" type="Node3D"]
 script = ExtResource("1_t3mkv")
@@ -95,4 +96,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.25, -2, 0)
 
 [node name="Player" parent="." instance=ExtResource("3_afygv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, -1.45, 0)
+gravity_scale = 3.0
 starting_camera_angle = 1.5708
+
+[node name="DeathBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.31313, 0)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("5_cddsv")
+metadata/_custom_type_script = ExtResource("5_cddsv")

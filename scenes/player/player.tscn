@@ -124,9 +124,6 @@ draw_pass_1 = SubResource("QuadMesh_5gtgg")
 
 [node name="CollisionSensor" type="Node" parent="."]
 script = ExtResource("5_p47bc")
-detection_mode = 1
-debug_level = 2
-max_safe_impulse = 10.0
 metadata/_custom_type_script = ExtResource("5_p47bc")
 
 [node name="Explosion" type="GPUParticles3D" parent="."]
