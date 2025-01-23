@@ -42,9 +42,8 @@ gdscript/warnings/empty_file=0
 
 window/size/viewport_width=480
 window/size/viewport_height=360
-window/size/always_on_top=true
-window/size/window_width_override=1920
-window/size/window_height_override=1440
+window/size/window_width_override=960
+window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 

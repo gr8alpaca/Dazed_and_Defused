@@ -1,3 +1,4 @@
+@icon("res://assets/textures/ClassIcons16x16/object.png")
 @tool
 class_name Obstacle extends AnimatableBody3D
 
@@ -8,11 +9,16 @@ var execute: Callable = start
 @export var start_val: float = 0.0
 @export var end_val: float = 1.0
 @export_range(0.001, 5.0, 0.05, "or_greater", "suffix:s") var duration_sec: float = 1.0
-#("None:-1,Ease In:0,Ease Out:1,Ease in out:2,Ease out in:3") 
 @export var tween_ease: Tween.EaseType = Tween.EASE_IN_OUT
 @export var tween_trans: Tween.TransitionType = Tween.TRANS_LINEAR
 
 var tween: Tween
+
+var cushion: float = 1.0:
+	set(val):
+		cushion = val
+		set_meta(&"cushion", val)
+
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():

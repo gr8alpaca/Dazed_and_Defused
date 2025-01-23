@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://blg8v1lrpbae3"]
+[gd_scene load_steps=30 format=4 uid="uid://blg8v1lrpbae3"]
 
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="1_mpdjq"]
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/level.gd" id="1_souht"]
@@ -6,7 +6,27 @@
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="2_mx7cr"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_afygv"]
 [ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/trap.gd" id="5_8jtne"]
+[ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="5_kt1qv"]
+[ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="6_fnalb"]
 [ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/death_box.gd" id="6_mp0kl"]
+[ext_resource type="Texture2D" uid="uid://bdiqhgu1kf5ps" path="res://assets/textures/prototype/Red/texture_03.png" id="7_fnalb"]
+
+[sub_resource type="Resource" id="Resource_sipdq"]
+script = ExtResource("6_fnalb")
+start_value = 50.0
+end_value = 0.0
+action_speed_sec = 0.251
+idle_duration_sec = 1.501
+tween_ease = 1
+tween_trans = 3
+target_node_path = NodePath("../../Piston")
+path = "position:y"
+reset_speed_sec = 2.001
+arguments = []
+metadata/_custom_type_script = ExtResource("6_fnalb")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fnalb"]
+size = Vector3(3.25, 1, 2.5)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_8jtne"]
 _surfaces = [{
@@ -23,11 +43,125 @@ _surfaces = [{
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mp0kl"]
 data = PackedVector3Array(10, 0, -1.25, 10, -0.25, -1.5, 10, 0, 1.25, 10, 0, 1.25, 10, 0.25, 1.5, 10, 0.25, 1.25, 10, 0, 1.25, 10, -0.25, 1.5, 10, 0.25, 1.5, 10, 0.25, 1.25, 10, 0.25, 1.5, -10, 0.25, 1.25, 10, 0.25, -1.5, 10, 0, -1.25, 10, 0.25, -1.25, 10, -0.25, -1.5, 10, 0, -1.25, 10, 0.25, -1.5, 10, 0.25, -1.25, -10, 0.25, -1.5, 10, 0.25, -1.5, 10, -0.25, -1.5, 10, 0.25, -1.5, -10, 0.25, -1.5, 10, -0.25, 1.5, 10, 0, 1.25, 10, -0.25, -1.5, 10, 0.25, 1.5, 10, -0.25, 1.5, -10, -0.25, 1.5, -10, -0.25, 1.5, 10, -0.25, 1.5, 10, -0.25, -1.5, -10, -0.25, -1.5, -10, 0, -1.25, -10, -0.25, 1.5, -10, 0.25, 1.25, 10, 0.25, 1.5, -10, 0.25, 1.5, -10, 0.25, 1.5, 10, 0.25, 1.5, -10, -0.25, 1.5, -10, 0.25, 1.5, -10, 0, 1.25, -10, 0.25, 1.25, -10, -0.25, 1.5, -10, 0, 1.25, -10, 0.25, 1.5, -10, 0.25, -1.25, -10, 0.25, -1.5, 10, 0.25, -1.25, -10, 0, -1.25, -10, 0.25, -1.5, -10, 0.25, -1.25, -10, 0, -1.25, -10, -0.25, -1.5, -10, 0.25, -1.5, -10, 0, 1.25, -10, -0.25, 1.5, -10, 0, -1.25, 10, -0.25, -1.5, -10, 0.25, -1.5, -10, -0.25, -1.5, -10, -0.25, 1.5, 10, -0.25, -1.5, -10, -0.25, -1.5, 10, 0, 1.25, -10, 0.25, 1.25, -10, 0, 1.25, 10, 0.25, -1.25, -10, 0, -1.25, -10, 0.25, -1.25, -10, 0, -1.25, 10, 0.25, -1.25, 10, 0, -1.25, -10, 0, -1.25, 10, 0, -1.25, -10, 0, 1.25, 10, 0, -1.25, 10, 0, 1.25, -10, 0, 1.25, -10, 0.25, 1.25, 10, 0, 1.25, 10, 0.25, 1.25)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_souht"]
-size = Vector3(3, 2, 3)
+[sub_resource type="Resource" id="Resource_hakhg"]
+script = ExtResource("6_fnalb")
+start_value = 1.0
+end_value = 0.0
+action_speed_sec = 0.001
+idle_duration_sec = 0.0
+tween_ease = 2
+tween_trans = 0
+target_node_path = NodePath("..")
+path = "cushion"
+reset_speed_sec = 2.001
+arguments = []
+metadata/_custom_type_script = ExtResource("6_fnalb")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_wk5vn"]
-size = Vector3(1000, 20, 1000)
+[sub_resource type="Resource" id="Resource_i33xw"]
+script = ExtResource("6_fnalb")
+start_value = 0.0
+end_value = -90.0
+action_speed_sec = 0.201
+idle_duration_sec = 0.501
+tween_ease = 0
+tween_trans = 5
+target_node_path = NodePath("..")
+path = "rotation_degrees:z"
+reset_speed_sec = 1.501
+arguments = []
+metadata/_custom_type_script = ExtResource("6_fnalb")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_souht"]
+size = Vector3(3.5, 2, 3)
+
+[sub_resource type="Resource" id="Resource_0v1d0"]
+script = ExtResource("6_fnalb")
+start_value = 1.0
+end_value = 0.0
+action_speed_sec = 0.001
+idle_duration_sec = 0.0
+tween_ease = 2
+tween_trans = 0
+target_node_path = NodePath("..")
+path = "cushion"
+reset_speed_sec = 2.001
+arguments = []
+metadata/_custom_type_script = ExtResource("6_fnalb")
+
+[sub_resource type="Resource" id="Resource_kt1qv"]
+script = ExtResource("6_fnalb")
+start_value = 0.0
+end_value = 90.0
+action_speed_sec = 0.201
+idle_duration_sec = 0.501
+tween_ease = 0
+tween_trans = 5
+target_node_path = NodePath("..")
+path = "rotation_degrees:z"
+reset_speed_sec = 1.501
+arguments = null
+metadata/_custom_type_script = ExtResource("6_fnalb")
+
+[sub_resource type="Resource" id="Resource_fnalb"]
+script = ExtResource("5_kt1qv")
+target_node_path = NodePath("../BridgeFlipper")
+path = "enable"
+reset_speed_sec = 0.001
+arguments = []
+metadata/_custom_type_script = ExtResource("5_kt1qv")
+
+[sub_resource type="Resource" id="Resource_ci58i"]
+script = ExtResource("5_kt1qv")
+target_node_path = NodePath("../BridgeFlipper2")
+path = "enable"
+reset_speed_sec = 0.001
+arguments = []
+metadata/_custom_type_script = ExtResource("5_kt1qv")
+
+[sub_resource type="Resource" id="Resource_js46e"]
+script = ExtResource("5_kt1qv")
+target_node_path = NodePath(".")
+path = "queue_free"
+reset_speed_sec = 0.001
+arguments = []
+metadata/_custom_type_script = ExtResource("5_kt1qv")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kt1qv"]
+size = Vector3(19, 2, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ci58i"]
+albedo_texture = ExtResource("7_fnalb")
+distance_fade_mode = 1
+distance_fade_min_distance = 50.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kt1qv"]
+material = SubResource("StandardMaterial3D_ci58i")
+top_radius = 1.5
+bottom_radius = 1.5
+height = 100.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fnalb"]
+radius = 1.5
+
+[sub_resource type="Resource" id="Resource_64ba3"]
+script = ExtResource("6_fnalb")
+start_value = -2.0
+end_value = 3.0
+action_speed_sec = 0.151
+idle_duration_sec = 2.001
+tween_ease = 2
+tween_trans = 0
+target_node_path = NodePath("../Bridge3")
+path = "position:x"
+reset_speed_sec = 4.001
+arguments = []
+metadata/_custom_type_script = ExtResource("6_fnalb")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sipdq"]
+size = Vector3(2.25, 1, 3.5)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_kt1qv"]
 
 [node name="2" type="Node3D"]
 script = ExtResource("1_souht")
@@ -57,24 +191,10 @@ operation = 2
 size = Vector3(14.25, 0.5, 2.5)
 material = ExtResource("1_mpdjq")
 
-[node name="Bridge3" type="CSGCombiner3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -5, 0)
-use_collision = true
-
-[node name="Base" type="CSGBox3D" parent="Environment/Bridge3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.375, 0, 0)
-size = Vector3(14.75, 0.5, 2)
-material = ExtResource("1_mpdjq")
-
-[node name="Subtraction" type="CSGBox3D" parent="Environment/Bridge3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25, 0.25, 0)
-operation = 2
-size = Vector3(14, 0.5, 1.5)
-material = ExtResource("1_mpdjq")
-
 [node name="Bridge2" type="CSGCombiner3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0)
 use_collision = true
+metadata/cushion = 0.0
 
 [node name="Base" type="CSGBox3D" parent="Environment/Bridge2"]
 size = Vector3(20, 0.5, 3)
@@ -86,13 +206,47 @@ operation = 2
 size = Vector3(19.75, 0.5, 2.5)
 material = ExtResource("1_mpdjq")
 
+[node name="PistonTrap" type="Node3D" parent="Environment/Bridge2" node_paths=PackedStringArray("area_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 0, 0)
+script = ExtResource("5_8jtne")
+area_trigger = NodePath("Area3D")
+actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_sipdq")])
+metadata/_custom_type_script = ExtResource("5_8jtne")
+
+[node name="Area3D" type="Area3D" parent="Environment/Bridge2/PistonTrap"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Bridge2/PistonTrap/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.375, 0, 0)
+shape = SubResource("BoxShape3D_fnalb")
+
+[node name="Bridge3" type="CSGCombiner3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -5, 0)
+use_collision = true
+
+[node name="Base" type="CSGBox3D" parent="Environment/Bridge3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.875, 0, 0)
+size = Vector3(11.75, 0.5, 2)
+material = ExtResource("1_mpdjq")
+
+[node name="Subtraction" type="CSGBox3D" parent="Environment/Bridge3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.25, 0)
+operation = 2
+size = Vector3(11, 0.5, 1.5)
+material = ExtResource("1_mpdjq")
+
+[node name="Goal2" parent="Environment/Bridge3" instance=ExtResource("2_mx7cr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.75, -0.25, 0)
+
 [node name="SpinningBridge" type="AnimatableBody3D" parent="Environment"]
-transform = Transform3D(1, 0, -0.000185315, 0, 1, 0, 0.000185315, 0, 1, 19.5, 0, 0)
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 19.5, 0, 0)
 script = ExtResource("2_afygv")
 property_path = "rotation:y"
-end_val = 6.283
-duration_sec = 12.001
-metadata/cushion = 0.0
+start_val = -1.571
+end_val = 4.713
+duration_sec = 8.001
+metadata/cushion = 1.0
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Environment/SpinningBridge"]
 mesh = SubResource("ArrayMesh_8jtne")
@@ -101,18 +255,12 @@ skeleton = NodePath("../..")
 [node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Environment/SpinningBridge"]
 shape = SubResource("ConcavePolygonShape3D_mp0kl")
 
-[node name="BridgeFlipper" type="Node3D" parent="Environment/SpinningBridge" node_paths=PackedStringArray("area_trigger", "body")]
+[node name="BridgeFlipper" type="Node3D" parent="Environment/SpinningBridge" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0.000185315, 0, 1, 0, -0.000185315, 0, 1, -6.5, 0, 0.00120455)
 script = ExtResource("5_8jtne")
-disabled = null
+disabled = true
 area_trigger = NodePath("Area3D")
-body = NodePath("..")
-body_property = "rotation_degrees:z"
-end_value = -60.0
-delay_sec = 0.501
-trigger_speed_sec = 0.301
-idle_duration_sec = 0.501
-reset_speed_sec = 1.41
+actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_hakhg"), SubResource("Resource_i33xw")])
 metadata/_custom_type_script = ExtResource("5_8jtne")
 
 [node name="Area3D" type="Area3D" parent="Environment/SpinningBridge/BridgeFlipper"]
@@ -120,25 +268,97 @@ transform = Transform3D(1, -2.98023e-08, -0.000185315, 0, 1, 0, 0.000185315, -5.
 collision_layer = 0
 collision_mask = 2
 monitorable = false
+gravity_space_override = 1
+gravity_point = true
+gravity_point_center = Vector3(1, 0, 0)
+gravity_direction = Vector3(1, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/SpinningBridge/BridgeFlipper/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0, 0)
+shape = SubResource("BoxShape3D_souht")
+
+[node name="BridgeFlipper2" type="Node3D" parent="Environment/SpinningBridge" node_paths=PackedStringArray("area_trigger")]
+transform = Transform3D(1, 0, 0.000185315, 0, 1, 0, -0.000185315, 0, 1, 9, 0, -0.00166783)
+script = ExtResource("5_8jtne")
+disabled = true
+area_trigger = NodePath("Area3D")
+actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_0v1d0"), SubResource("Resource_kt1qv")])
+metadata/_custom_type_script = ExtResource("5_8jtne")
+
+[node name="Area3D" type="Area3D" parent="Environment/SpinningBridge/BridgeFlipper2"]
+transform = Transform3D(1, -2.98023e-08, -0.000185315, 0, 1, 0, 0.000185315, -5.52281e-12, 1, 0, 0, -0.00120455)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/SpinningBridge/BridgeFlipper2/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 shape = SubResource("BoxShape3D_souht")
 
+[node name="TrapActivators" type="Node3D" parent="Environment/SpinningBridge" node_paths=PackedStringArray("area_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("5_8jtne")
+area_trigger = NodePath("Area3D2")
+delay_sec = 6.001
+cancel_on_player_exit = true
+actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_fnalb"), SubResource("Resource_ci58i"), SubResource("Resource_js46e")])
+metadata/_custom_type_script = ExtResource("5_8jtne")
+
+[node name="Area3D2" type="Area3D" parent="Environment/SpinningBridge/TrapActivators"]
+transform = Transform3D(1, -2.98023e-08, 0, 0, 1, 0, 0, 3.03577e-18, 1, 0, 0, 0)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/SpinningBridge/TrapActivators/Area3D2"]
+transform = Transform3D(1, 7.52897e-16, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_kt1qv")
+
+[node name="Piston" type="AnimatableBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.75, 50, 0)
+collision_priority = 2.0
+input_ray_pickable = false
+axis_lock_linear_x = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+sync_to_physics = false
+metadata/cushion = 100.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Piston"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 49, 0)
+mesh = SubResource("CylinderMesh_kt1qv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Piston"]
+shape = SubResource("CylinderShape3D_fnalb")
+
+[node name="UnderneathTrap" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, -1, 0)
+script = ExtResource("5_8jtne")
+area_trigger = NodePath("UnderneathTrapArea")
+delay_sec = 0.501
+actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_64ba3")])
+metadata/_custom_type_script = ExtResource("5_8jtne")
+
+[node name="UnderneathTrapArea" type="Area3D" parent="Environment/UnderneathTrap"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/UnderneathTrap/UnderneathTrapArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.125)
+shape = SubResource("BoxShape3D_sipdq")
+
 [node name="Goal" parent="." instance=ExtResource("2_mx7cr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.25, 0, 0)
-
-[node name="Goal2" parent="." instance=ExtResource("2_mx7cr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, -5.25, 0)
 
 [node name="Player" parent="." instance=ExtResource("3_afygv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 starting_camera_angle = -1.5708
 
-[node name="Traps" type="Node3D" parent="."]
-
 [node name="DeathBox" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -8.75, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -10, 0)
 collision_layer = 0
 collision_mask = 2
 input_ray_pickable = false
@@ -149,9 +369,6 @@ linear_damp_space_override = 3
 script = ExtResource("6_mp0kl")
 metadata/_custom_type_script = ExtResource("6_mp0kl")
 
-[node name="_Camera3D_242198" type="Camera3D" parent="DeathBox"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="DeathBox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
-shape = SubResource("BoxShape3D_wk5vn")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="DeathBox"]
+shape = SubResource("WorldBoundaryShape3D_kt1qv")
 debug_fill = false

@@ -16,7 +16,8 @@ func _ready() -> void:
 func connect_scene(level: Level) -> void:
 	if not level.is_node_ready():
 		await level.ready
-	level.goal_reached.connect(show_message.bind("Level Clear"))
+	#level.goal_reached.connect()
+	level.goal_reached.connect(_on_goal_reached)
 	var player: Player = get_tree().get_first_node_in_group(Player.GROUP)
 	
 	player.dead.connect(_on_dead)
@@ -46,7 +47,9 @@ func hide_all() -> void:
 	ENVIRONMENT.set_adjustment_saturation(1.0)
 	%Rect.modulate.a = 0.0
 
-
+func _on_goal_reached() -> void:
+	show_message.bind("Level Clear")
+	
 
 func _on_root_child_entered_tree(node: Node) -> void:
 	if node is Level: 

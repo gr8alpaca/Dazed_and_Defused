@@ -77,6 +77,9 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		data[prop] = att.get(prop)
 
 
+func set_collision_sensor_enabled(enabled: bool) -> void:
+	$CollisionSensor.enabled = enabled
+
 func _on_unsafe_collision(collider: Node) -> void:
 	set_process_mode.call_deferred(Node.PROCESS_MODE_DISABLED)
 	print("Unsafe collision with \"%s\"" % collider.name)

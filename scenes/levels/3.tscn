@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxljo1y5hpidu"]
+[gd_scene load_steps=5 format=3 uid="uid://cxljo1y5hpidu"]
 
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="1_mpdjq"]
+[ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/level.gd" id="1_t3mkv"]
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="2_mx7cr"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_afygv"]
 
 [node name="3" type="Node3D"]
+script = ExtResource("1_t3mkv")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 0, 0)
@@ -19,7 +21,7 @@ metadata/_edit_lock_ = true
 [node name="Environment" type="Node3D" parent="."]
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
@@ -29,6 +31,7 @@ material = ExtResource("1_mpdjq")
 
 [node name="CSGCylinder3D4" type="CSGCylinder3D" parent="Environment/CSGCombiner3D"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.25, -0.5)
+visible = false
 operation = 2
 radius = 1.0
 height = 26.5
@@ -37,8 +40,17 @@ material = ExtResource("1_mpdjq")
 
 [node name="CSGCylinder3D5" type="CSGCylinder3D" parent="Environment/CSGCombiner3D"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.25, 0.5)
+visible = false
 operation = 2
 radius = 1.0
+height = 26.5
+sides = 64
+material = ExtResource("1_mpdjq")
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.75, 0)
+operation = 2
+radius = 2.7
 height = 26.5
 sides = 64
 material = ExtResource("1_mpdjq")
@@ -49,9 +61,38 @@ operation = 2
 size = Vector3(26.75, 1.25, 1)
 material = ExtResource("1_mpdjq")
 
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="Environment"]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Environment/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.25, -1, 0)
+size = Vector3(0.5, 3, 6)
+material = ExtResource("1_mpdjq")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Environment/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+size = Vector3(26.5, 3, 6)
+material = ExtResource("1_mpdjq")
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="Environment/CSGCombiner3D2"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.75, 0)
+operation = 2
+radius = 2.7
+height = 26.5
+sides = 64
+material = ExtResource("1_mpdjq")
+
+[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="Environment/CSGCombiner3D2"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 13.25, 0.5, 0)
+operation = 2
+radius = 2.0
+height = 0.5
+sides = 64
+material = ExtResource("1_mpdjq")
+
 [node name="Goal" parent="." instance=ExtResource("2_mx7cr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.25, -2, 0)
 
 [node name="Player" parent="." instance=ExtResource("3_afygv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.25, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, -1.45, 0)
+starting_camera_angle = 1.5708

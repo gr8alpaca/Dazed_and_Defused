@@ -78,6 +78,7 @@ scale_max = 2.0
 
 [node name="Player" type="RigidBody3D"]
 collision_layer = 3
+max_contacts_reported = 10
 script = ExtResource("1_8afob")
 att = ExtResource("2_gmlin")
 metadata/_custom_type_script = ExtResource("1_8afob")

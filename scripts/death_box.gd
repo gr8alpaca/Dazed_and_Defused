@@ -1,3 +1,4 @@
+@icon("res://assets/textures/ClassIcons16x16/skull.png")
 @tool
 class_name DeathBox extends Area3D
 const GROUP: StringName = &"deathbox"
