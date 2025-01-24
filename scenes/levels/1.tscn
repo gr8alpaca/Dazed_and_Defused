@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://drh50l3xjd3m3"]
+[gd_scene load_steps=16 format=3 uid="uid://drh50l3xjd3m3"]
 
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_0absb"]
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_4o7q8"]
@@ -9,6 +9,9 @@
 [ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/environment/trap.gd" id="5_ql3nd"]
 [ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="7_ijh0y"]
 [ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="8_ql3nd"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ql3nd"]
+friction = 0.4
 
 [sub_resource type="Resource" id="Resource_djhl7"]
 script = ExtResource("4_ql3nd")
@@ -100,8 +103,10 @@ depth = 0.5
 
 [node name="Player" parent="." instance=ExtResource("3_kpjit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+physics_material_override = SubResource("PhysicsMaterial_ql3nd")
 att = SubResource("Resource_djhl7")
 starting_camera_angle = -1.5708
+debug_raycast = null
 
 [node name="Goal" parent="." instance=ExtResource("4_ijh0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.9161, 0, 0)

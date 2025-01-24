@@ -1,23 +1,19 @@
-[gd_scene load_steps=18 format=3 uid="uid://ca38c7oafrli"]
+[gd_scene load_steps=16 format=3 uid="uid://b7khn0n5wmlhi"]
 
-[ext_resource type="Script" uid="uid://265ioi7d3q7c" path="res://scenes/player/player.gd" id="1_8afob"]
-[ext_resource type="Resource" uid="uid://5np8ylpjol61" path="res://resources/controller_attributes.tres" id="2_75vfm"]
-[ext_resource type="Material" uid="uid://ndqemuv2cft8" path="res://resources/materials/player.tres" id="3_gmlin"]
-[ext_resource type="Texture2D" uid="uid://d3sufsikrdg5q" path="res://resources/fire_gradient.tres" id="4_lvxji"]
-[ext_resource type="Script" uid="uid://25tgv36t2oc5" path="res://scenes/player/CollisionSensor.gd" id="5_p47bc"]
-[ext_resource type="Material" uid="uid://cxhaa6i7bto07" path="res://scenes/player/Explosion/ExplosionMaterial.tres" id="6_75vfm"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_75vfm"]
-friction = 0.4
+[ext_resource type="Script" uid="uid://dxet836vncjwj" path="res://scenes/player/player_character.gd" id="1_0tl7n"]
+[ext_resource type="Resource" uid="uid://5np8ylpjol61" path="res://resources/controller_attributes.tres" id="2_qbflp"]
+[ext_resource type="Material" uid="uid://ndqemuv2cft8" path="res://resources/materials/player.tres" id="3_o34dh"]
+[ext_resource type="Texture2D" uid="uid://d3sufsikrdg5q" path="res://resources/fire_gradient.tres" id="4_g3cxm"]
+[ext_resource type="Material" uid="uid://cxhaa6i7bto07" path="res://scenes/player/Explosion/ExplosionMaterial.tres" id="6_xtec5"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gmlin"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_dovo2"]
 lightmap_size_hint = Vector2i(17, 9)
-material = ExtResource("3_gmlin")
+material = ExtResource("3_o34dh")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_gmlin"]
-material = ExtResource("3_gmlin")
+material = ExtResource("3_o34dh")
 top_radius = 0.16
 bottom_radius = 0.2
 height = 0.1
@@ -44,7 +40,7 @@ attractor_interaction_enabled = false
 scale_min = 0.2
 scale_max = 1.8
 scale_curve = SubResource("CurveTexture_75vfm")
-color_ramp = ExtResource("4_lvxji")
+color_ramp = ExtResource("4_g3cxm")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qek5x"]
 transparency = 1
@@ -79,15 +75,19 @@ scale_max = 2.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_h17s1"]
 
-[node name="Player" type="RigidBody3D"]
+[node name="PlayerCharacter" type="CharacterBody3D"]
 collision_layer = 3
-physics_material_override = SubResource("PhysicsMaterial_75vfm")
-max_contacts_reported = 10
-linear_damp = 0.2
-script = ExtResource("1_8afob")
-att = ExtResource("2_75vfm")
-debug_raycast = true
-metadata/_custom_type_script = ExtResource("1_8afob")
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+wall_min_slide_angle = 0.0
+floor_block_on_wall = false
+floor_max_angle = 2.26893
+floor_snap_length = 0.0
+platform_wall_layers = 16777197
+script = ExtResource("1_0tl7n")
+att = ExtResource("2_qbflp")
+metadata/_custom_type_script = ExtResource("1_0tl7n")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_gmlin")
@@ -113,15 +113,9 @@ draw_order = 3
 process_material = SubResource("ParticleProcessMaterial_0owmy")
 draw_pass_1 = SubResource("QuadMesh_5gtgg")
 
-[node name="CollisionSensor" type="Node" parent="."]
-script = ExtResource("5_p47bc")
-debug = true
-max_safe_linear_delta_magnitude = 4.0
-metadata/_custom_type_script = ExtResource("5_p47bc")
-
 [node name="Explosion" type="GPUParticles3D" parent="."]
 process_mode = 1
-material_override = ExtResource("6_75vfm")
+material_override = ExtResource("6_xtec5")
 emitting = false
 amount = 30
 lifetime = 3.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://blg8v1lrpbae3"]
+[gd_scene load_steps=30 format=4 uid="uid://blg8v1lrpbae3"]
 
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="1_mpdjq"]
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_souht"]
@@ -13,12 +13,12 @@
 
 [sub_resource type="Resource" id="Resource_sipdq"]
 script = ExtResource("6_fnalb")
-start_value = 50.0
+start_value = 10.0
 end_value = 0.0
-action_speed_sec = 0.251
-idle_duration_sec = 1.501
-tween_ease = 1
-tween_trans = 3
+action_speed_sec = 0.201
+idle_duration_sec = 1.001
+tween_ease = 2
+tween_trans = 0
 target_node_path = NodePath("../../Piston")
 path = "position:y"
 reset_speed_sec = 2.001
@@ -132,7 +132,7 @@ size = Vector3(19, 2, 3)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ci58i"]
 albedo_texture = ExtResource("7_fnalb")
 distance_fade_mode = 1
-distance_fade_min_distance = 50.0
+distance_fade_min_distance = 20.0
 distance_fade_max_distance = 0.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_kt1qv"]
@@ -160,6 +160,9 @@ metadata/_custom_type_script = ExtResource("6_fnalb")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sipdq"]
 size = Vector3(2.25, 1, 3.5)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fnalb"]
+friction = 0.4
 
 [node name="2" type="Node3D"]
 script = ExtResource("1_souht")
@@ -205,7 +208,7 @@ size = Vector3(19.75, 0.5, 2.5)
 material = ExtResource("1_mpdjq")
 
 [node name="PistonTrap" type="Node3D" parent="Environment/Bridge2" node_paths=PackedStringArray("area_trigger")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.125, 0, 0)
 script = ExtResource("5_8jtne")
 area_trigger = NodePath("Area3D")
 actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_sipdq")])
@@ -216,7 +219,6 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Bridge2/PistonTrap/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.375, 0, 0)
 shape = SubResource("BoxShape3D_fnalb")
 
 [node name="Bridge3" type="CSGCombiner3D" parent="Environment"]
@@ -267,10 +269,6 @@ transform = Transform3D(1, -2.98023e-08, -0.000185315, 0, 1, 0, 0.000185315, -5.
 collision_layer = 0
 collision_mask = 2
 monitorable = false
-gravity_space_override = 1
-gravity_point = true
-gravity_point_center = Vector3(1, 0, 0)
-gravity_direction = Vector3(1, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/SpinningBridge/BridgeFlipper/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0, 0)
@@ -313,16 +311,8 @@ transform = Transform3D(1, 7.52897e-16, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_kt1qv")
 
 [node name="Piston" type="AnimatableBody3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.75, 50, 0)
-collision_priority = 2.0
-input_ray_pickable = false
-axis_lock_linear_x = true
-axis_lock_linear_z = true
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
-sync_to_physics = false
-metadata/cushion = 100.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.75, 20, 0)
+collision_mask = 3
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Piston"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 49, 0)
@@ -354,7 +344,9 @@ input_ray_pickable = false
 
 [node name="Player" parent="." instance=ExtResource("3_afygv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+physics_material_override = SubResource("PhysicsMaterial_fnalb")
 starting_camera_angle = -1.5708
+debug_raycast = null
 
 [node name="DeathBox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -10, 0)

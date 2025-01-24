@@ -20,12 +20,13 @@ func _ready() -> void:
 	collision_shape.debug_fill = false
 	add_child(collision_shape)
 	collision_shape.owner = self
-
+	if Engine.is_editor_hint(): return
 	body_entered.connect(_on_body_entered)
 
 
 func _on_body_entered(body: Node) -> void:
 	if not body is Player: return
+	assert(is_inside_tree(), "Deathbox method '_on_body_entered' called outside of tree.")
 	const TWEEN_TIME_SEC: float = 0.3
 	
 	var player: Player = body

@@ -38,9 +38,10 @@ func _ready() -> void:
 	_on_att_changed.call_deferred()
 
 func _process(delta: float) -> void:
-	position = get_parent().position #position.move_toward(target_pos, delta * target_pos.distance_to(position))
+	position = get_parent().position
 
 func update_cam(input: Vector2, state: PhysicsDirectBodyState3D) -> void:
+	assert(is_inside_tree(), "Method 'update_cam' called outside of tree!")
 	var rotation_delta: float = att.tilt_speed * state.step
 
 	var target_pitch: float = lerpf(0.0, att.pitch_limit_deg, -input.y)
@@ -55,8 +56,8 @@ func update_cam(input: Vector2, state: PhysicsDirectBodyState3D) -> void:
 	update_position()
 
 func update_position() -> void:
-	var marble_scale: float #= maxf(0.0, Global.marble.scale.x - 1.0) if Global.marble else 0.0
-	var pre_offset_position: Vector3 = Vector3.FORWARD.rotated(Vector3.RIGHT, PI + cam.global_rotation.x) * (att.distance_from_pivot + marble_scale * 0.5)
+	
+	var pre_offset_position: Vector3 = Vector3.FORWARD.rotated(Vector3.RIGHT, PI + cam.global_rotation.x) * (att.distance_from_pivot + 0.5)
 	cam.position = pre_offset_position + Vector3(0, att.camera_y_offset, 0)
 
 
@@ -70,12 +71,13 @@ func update_yaw(state: PhysicsDirectBodyState3D) -> void:
 	const VELOCITY_CAM_MAX_SPEED: float = 30.0
 	const MAX_RADIANS_PER_SECOND: float = PI
 	const DEFAULT_VELOCITY_DIR := Vector2.UP
+	
 	var vel_dir: Vector2 = Vector2(state.linear_velocity.x, state.linear_velocity.z, )
-	var cam_dir: Vector2 = get_camera_dir()
+	#var cam_dir: Vector2 = get_camera_dir()
 	var vel_norm: Vector2 = vel_dir.normalized()
 	var ang_delta: float = vel_norm.angle() - DEFAULT_VELOCITY_DIR.angle()
 	var t: float = (vel_dir.length() * state.step)
-
+	
 	var rotated_angle: float = lerp_angle(rotation_pivot.global_rotation.y, -ang_delta, t)
 	var max_move: float = state.step * MAX_RADIANS_PER_SECOND
 	var new_ang: float = move_toward(rotation_pivot.global_rotation.y, rotated_angle, max_move)
@@ -85,19 +87,21 @@ func update_yaw(state: PhysicsDirectBodyState3D) -> void:
 
 # NOTE: For editor only!
 func _on_att_changed() -> void:
-	if not is_inside_tree(): return
+	if not is_inside_tree(): 
+		await tree_entered
 	update_rotation()
 	update_position()
 
-func get_camera_dir() -> Vector2:
-	var position_deltas := global_position - cam.global_position
-	return Vector2(position_deltas.x, position_deltas.z).normalized()
+#func get_camera_dir() -> Vector2:
+	#var position_deltas := global_position - cam.global_position
+	#return Vector2(position_deltas.x, position_deltas.z).normalized()
 
 func get_yaw() -> float:
-	return rotation_pivot.global_rotation.y
+	return rotation_pivot.rotation.y
 
 func set_att(att: ControllerAttributes) -> PlayerCamera:
 	self.att = att
+	#if Engine.is_editor_hint(): _on_att_changed()
 	return self
 
 func select_camera_in_editor() -> void:

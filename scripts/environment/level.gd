@@ -6,9 +6,16 @@ signal player_dead(collider: Node)
 signal goal_reached
 
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
 	for goal: Goal in find_children("*", "Goal"):
 		goal.body_entered.connect(_on_goal_entered.bind(goal), CONNECT_ONE_SHOT)
-	find_child("Player").dead.connect(_on_dead)
+	
+	var player: Player = find_child("Player")
+	assert(player, "No player instance set for level %s" % name)
+	if not player:
+		player = load(Player.SCENE_PATH).instantiate()
+		add_child(player)
+	player.dead.connect(_on_dead)
 
 func _on_dead(collider: Node) -> void:
 	player_dead.emit(collider)
