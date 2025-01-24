@@ -84,6 +84,7 @@ collision_layer = 3
 physics_material_override = SubResource("PhysicsMaterial_75vfm")
 max_contacts_reported = 10
 linear_damp = 0.2
+angular_damp = 0.1
 script = ExtResource("1_8afob")
 att = ExtResource("2_75vfm")
 debug_raycast = true

@@ -49,5 +49,6 @@ script = ExtResource("5_cddsv")
 metadata/_custom_type_script = ExtResource("5_cddsv")
 
 [node name="Player" parent="." instance=ExtResource("5_sc0rx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.8261, -3.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.576, -3.25, 0)
 physics_material_override = SubResource("PhysicsMaterial_2n3hm")
+starting_camera_angle = 1.5708

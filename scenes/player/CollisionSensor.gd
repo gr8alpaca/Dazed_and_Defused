@@ -30,7 +30,6 @@ func _ready() -> void:
 	body.contact_monitor = true
 	body.continuous_cd = true
 	body.max_contacts_reported = 32
-	#PhysicsServer3D.body_set_force_integration_callback(rid, _integrate_forces)
 	linear_velocity = body.linear_velocity
 	body.add_child.call_deferred(raycast)
 	position = body.position
@@ -51,7 +50,7 @@ func _physics_process(delta: float) -> void:
 	if 2.0 < linear_strength:
 		print("Collision: Force: %1.2f | Delta: %1.2v" % [linear_strength, velocity_delta])
 	if max_safe_linear_delta_magnitude < linear_strength:
-		unsafe_collision.emit(self)
+		unsafe_collision.emit(body.get_colliding_bodies().front())
 	
 		#print("Collision: Force: %1.2f | Delta: %1.2v" % [linear_strength, linear_velocity_delta])
 	#linear_velocity = body.linear_velocity

@@ -37,10 +37,9 @@ var starting_camera_angle: float = 0.0:
 @export var debug_raycast: bool = false:
 	set(val):
 		debug_raycast = val
-		get_node(^"DebugRayCast").visible = val
-		
+		$DebugRayCast.visible = val
+
 var camera: PlayerCamera
-#var raycast: RayCast3D
 
 #var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 var data: Dictionary = {"Input": Vector2(), "LinVel": 0.0, "pitch": 0.0, "roll": 0.0, "yaw": 0.0, "scale": Vector3.ONE}
@@ -54,15 +53,15 @@ func _init() -> void:
 	select_camera = camera.select_camera_in_editor
 	add_child(camera)
 	
-	if OS.is_debug_build() and not Engine.is_editor_hint():
-		var raycast:= RayCast3D.new()
-		raycast.name = &"DebugRayCast"
-		raycast.collide_with_bodies = false
-		raycast.collision_mask = 0
-		raycast.debug_shape_custom_color = Color(0.957, 0.224, 0.98, 0.361)
-		add_child(raycast, true)
-		raycast.top_level= true
-		raycast.visible = false
+	#if OS.is_debug_build() and not Engine.is_editor_hint():
+	var raycast:= RayCast3D.new()
+	raycast.name = &"DebugRayCast"
+	raycast.collide_with_bodies = false
+	raycast.collision_mask = 0
+	raycast.debug_shape_custom_color = Color(0.957, 0.224, 0.98, 0.361)
+	add_child(raycast, true)
+	raycast.top_level= true
+	raycast.visible = false
 	
 
 
@@ -73,7 +72,6 @@ func _ready() -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if Engine.is_editor_hint(): return
-	#$CollisionSensor._integrate_force(state)
 	
 	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.05) if input_active else Vector2.ZERO
 	
@@ -93,12 +91,6 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	var prev_lin:= state.linear_velocity
 	state.apply_central_force(Vector3(x_force, 0, z_force))
 	
-	#var collision:= KinematicCollision3D.new()
-	#if test_move(global_transform, linear_velocity, collision, 0.001, false, 32):
-		#pass
-	
-	#print("%1.2v -> %1.2v" % [prev_lin, state.linear_velocity])
-	
 	
 	camera.update_cam(input, state)
 	
@@ -112,13 +104,14 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		raycast.position = position
 		raycast.target_position = state.linear_velocity
 	#linear_velocity * state.step
-	#$SphereMesh.global_rotation += linear_velocity * Vector3(1,1,-1) * state.step
+	
 
 func set_collision_sensor_enabled(enabled: bool) -> void:
 	$CollisionSensor.enabled = enabled
 
 
 func _on_unsafe_collision(collider: Node) -> void:
+	$CollisionSensor.enabled = false
 	set_process_mode.call_deferred(Node.PROCESS_MODE_DISABLED)
 	$Explosion.emitting = true
 	$SphereMesh.hide()

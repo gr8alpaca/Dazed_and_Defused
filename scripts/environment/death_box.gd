@@ -32,7 +32,7 @@ func _on_body_entered(body: Node) -> void:
 	var player: Player = body
 	var player_camera: Camera3D = get_viewport().get_camera_3d()
 	var death_camera : Camera3D = get_death_camera()
-	
+	if not is_inside_tree() or not player.is_inside_tree(): return
 	death_camera.global_transform = player_camera.global_transform
 	death_camera.current = true
 	

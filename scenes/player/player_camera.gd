@@ -29,7 +29,6 @@ func _init() -> void:
 		rotation_pivot = Node3D.new()
 		cam = Camera3D.new()
 		add_child(rotation_pivot, false, Node.INTERNAL_MODE_BACK)
-		#cam.current = true
 		rotation_pivot.add_child(cam,)
 		rotation_pivot.owner = self
 		cam.owner = self
