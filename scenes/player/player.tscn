@@ -8,7 +8,7 @@
 [ext_resource type="Material" uid="uid://cxhaa6i7bto07" path="res://scenes/player/Explosion/ExplosionMaterial.tres" id="6_75vfm"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_75vfm"]
-friction = 0.4
+friction = 0.1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gmlin"]
 
@@ -116,7 +116,7 @@ draw_pass_1 = SubResource("QuadMesh_5gtgg")
 [node name="CollisionSensor" type="Node" parent="."]
 script = ExtResource("5_p47bc")
 debug = true
-max_safe_linear_delta_magnitude = 4.0
+max_safe_linear_delta_magnitude = 5.0
 metadata/_custom_type_script = ExtResource("5_p47bc")
 
 [node name="Explosion" type="GPUParticles3D" parent="."]

@@ -17,8 +17,8 @@ var linear_velocity: Vector3 = Vector3.ZERO
 
 var raycast: RayCast3D = RayCast3D.new()
 
-var real_velocity: Vector3
-var previous_postion: Vector3 
+var velocity: Vector3
+var position: Vector3 
 
 func set_debug(val: bool) -> void:
 	debug = val
@@ -30,22 +30,30 @@ func _ready() -> void:
 	body.contact_monitor = true
 	body.continuous_cd = true
 	body.max_contacts_reported = 32
-	PhysicsServer3D.body_set_force_integration_callback(rid, _integrate_forces)
+	#PhysicsServer3D.body_set_force_integration_callback(rid, _integrate_forces)
 	linear_velocity = body.linear_velocity
 	body.add_child.call_deferred(raycast)
-	previous_postion = body.position
+	position = body.position
 
 
-#func _physics_process(delta: float) -> void:
-#
+func _physics_process(delta: float) -> void:
+	var real_velocity: Vector3 = (body.position - position) / delta
+	var velocity_delta: Vector3 = real_velocity - velocity
+	
+	velocity = real_velocity
+	position = body.position
+	
+	if not enabled: return
+	var linear_strength:= velocity_delta.length()
 	#var linear_velocity_delta: Vector3 =  body.linear_velocity - linear_velocity
 	#var linear_strength: float = linear_velocity_delta.length() #* collider.get_meta(META_TAG, 1.0)
-	#
-	#if 1.0 < linear_strength:
+	
+	if 2.0 < linear_strength:
+		print("Collision: Force: %1.2f | Delta: %1.2v" % [linear_strength, velocity_delta])
+	if max_safe_linear_delta_magnitude < linear_strength:
+		unsafe_collision.emit(self)
+	
 		#print("Collision: Force: %1.2f | Delta: %1.2v" % [linear_strength, linear_velocity_delta])
-	#if max_safe_linear_delta_magnitude < linear_strength:
-		##print("Collision: Force: %1.2f | Delta: %1.2v" % [linear_strength, linear_velocity_delta])
-		#unsafe_collision.emit(self)
 	#linear_velocity = body.linear_velocity
 
 
@@ -60,7 +68,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D) -> void:
 		unsafe_collision.emit(self)
 		
 	linear_velocity = state.linear_velocity
-
+	
 
 
 

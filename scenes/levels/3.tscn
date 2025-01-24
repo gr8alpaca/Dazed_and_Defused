@@ -24,78 +24,21 @@ metadata/_edit_lock_ = true
 
 [node name="Environment" type="Node3D" parent="."]
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Environment"]
-visible = false
+[node name="CSGCombiner3D3" type="CSGCombiner3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.75, 0, 0)
 use_collision = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.375, 0)
-size = Vector3(26.5, 2.25, 4)
-material = ExtResource("1_mpdjq")
-
-[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="Environment/CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.25, -0.5)
-visible = false
-operation = 2
-radius = 1.0
-height = 26.5
-sides = 32
-material = ExtResource("1_mpdjq")
-
-[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="Environment/CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.25, 0.5)
-visible = false
-operation = 2
-radius = 1.0
-height = 26.5
-sides = 64
-material = ExtResource("1_mpdjq")
-
-[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="Environment/CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.75, 0)
-operation = 2
-radius = 2.7
-height = 26.5
-sides = 64
-material = ExtResource("1_mpdjq")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.625, 0)
-operation = 2
-size = Vector3(26.75, 1.25, 1)
-material = ExtResource("1_mpdjq")
-
-[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="Environment"]
-use_collision = true
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Environment/CSGCombiner3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.25, -1, 0)
-size = Vector3(0.5, 3, 6)
-material = ExtResource("1_mpdjq")
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="Environment/CSGCombiner3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-size = Vector3(26.5, 3, 6)
-material = ExtResource("1_mpdjq")
-
-[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="Environment/CSGCombiner3D2"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.75, 0)
-operation = 2
-radius = 2.7
-height = 26.5
-sides = 64
-material = ExtResource("1_mpdjq")
-
-[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="Environment/CSGCombiner3D2"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 13.25, 0.5, 0)
-operation = 2
-radius = 2.0
-height = 0.5
-sides = 64
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Environment/CSGCombiner3D3"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 0, 0)
+polygon = PackedVector2Array(3.75, 0, 3.75, 80, 4, 80, 4, 0)
+mode = 1
+spin_degrees = 180.0
+spin_sides = 64
+smooth_faces = true
 material = ExtResource("1_mpdjq")
 
 [node name="Goal" parent="." instance=ExtResource("2_mx7cr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.25, -2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.75, -3.75, 0)
 
 [node name="DeathBox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.31313, 0)
@@ -106,5 +49,5 @@ script = ExtResource("5_cddsv")
 metadata/_custom_type_script = ExtResource("5_cddsv")
 
 [node name="Player" parent="." instance=ExtResource("5_sc0rx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8261, -1.45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.8261, -3.25, 0)
 physics_material_override = SubResource("PhysicsMaterial_2n3hm")

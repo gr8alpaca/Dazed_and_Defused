@@ -53,7 +53,8 @@ func _init() -> void:
 	camera = PlayerCamera.new()
 	select_camera = camera.select_camera_in_editor
 	add_child(camera)
-	if OS.is_debug_build():
+	
+	if OS.is_debug_build() and not Engine.is_editor_hint():
 		var raycast:= RayCast3D.new()
 		raycast.name = &"DebugRayCast"
 		raycast.collide_with_bodies = false

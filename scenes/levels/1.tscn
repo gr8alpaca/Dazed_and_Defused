@@ -106,7 +106,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 physics_material_override = SubResource("PhysicsMaterial_ql3nd")
 att = SubResource("Resource_djhl7")
 starting_camera_angle = -1.5708
-debug_raycast = null
 
 [node name="Goal" parent="." instance=ExtResource("4_ijh0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.9161, 0, 0)

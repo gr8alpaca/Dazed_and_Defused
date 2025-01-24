@@ -14,19 +14,34 @@
 [sub_resource type="Resource" id="Resource_sipdq"]
 script = ExtResource("6_fnalb")
 start_value = 10.0
-end_value = 0.0
+end_value = 1.0
 action_speed_sec = 0.201
 idle_duration_sec = 1.001
 tween_ease = 2
 tween_trans = 0
-target_node_path = NodePath("../../Piston")
+target_node_path = NodePath("Piston")
 path = "position:y"
-reset_speed_sec = 2.001
+reset_speed_sec = 12.001
 arguments = []
 metadata/_custom_type_script = ExtResource("6_fnalb")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fnalb"]
 size = Vector3(3.25, 1, 2.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ci58i"]
+albedo_texture = ExtResource("7_fnalb")
+distance_fade_mode = 1
+distance_fade_min_distance = 20.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kt1qv"]
+material = SubResource("StandardMaterial3D_ci58i")
+top_radius = 1.5
+bottom_radius = 1.5
+height = 100.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fnalb"]
+radius = 1.5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_8jtne"]
 _surfaces = [{
@@ -129,21 +144,6 @@ metadata/_custom_type_script = ExtResource("5_kt1qv")
 [sub_resource type="BoxShape3D" id="BoxShape3D_kt1qv"]
 size = Vector3(19, 2, 3)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ci58i"]
-albedo_texture = ExtResource("7_fnalb")
-distance_fade_mode = 1
-distance_fade_min_distance = 20.0
-distance_fade_max_distance = 0.0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_kt1qv"]
-material = SubResource("StandardMaterial3D_ci58i")
-top_radius = 1.5
-bottom_radius = 1.5
-height = 100.0
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_fnalb"]
-radius = 1.5
-
 [sub_resource type="Resource" id="Resource_64ba3"]
 script = ExtResource("6_fnalb")
 start_value = -2.0
@@ -220,6 +220,17 @@ collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Bridge2/PistonTrap/Area3D"]
 shape = SubResource("BoxShape3D_fnalb")
+
+[node name="Piston" type="AnimatableBody3D" parent="Environment/Bridge2/PistonTrap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.125, 20, 0)
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Bridge2/PistonTrap/Piston"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 49, 0)
+mesh = SubResource("CylinderMesh_kt1qv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Bridge2/PistonTrap/Piston"]
+shape = SubResource("CylinderShape3D_fnalb")
 
 [node name="Bridge3" type="CSGCombiner3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -5, 0)
@@ -310,17 +321,6 @@ monitorable = false
 transform = Transform3D(1, 7.52897e-16, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_kt1qv")
 
-[node name="Piston" type="AnimatableBody3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.75, 20, 0)
-collision_mask = 3
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Piston"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 49, 0)
-mesh = SubResource("CylinderMesh_kt1qv")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Piston"]
-shape = SubResource("CylinderShape3D_fnalb")
-
 [node name="UnderneathTrap" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, -1, 0)
 script = ExtResource("5_8jtne")
@@ -346,7 +346,6 @@ input_ray_pickable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 physics_material_override = SubResource("PhysicsMaterial_fnalb")
 starting_camera_angle = -1.5708
-debug_raycast = null
 
 [node name="DeathBox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -10, 0)
