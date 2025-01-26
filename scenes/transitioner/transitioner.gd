@@ -19,7 +19,6 @@ func _process(delta: float) -> void:
 	
 	update_loading(ResourceLoader.load_threaded_get_status(scene_path, progress))
 	load_bar.value = progress[0] * 100.0
-	
 
 
 func transition(path: String) -> void:

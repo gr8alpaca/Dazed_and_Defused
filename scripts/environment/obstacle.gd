@@ -9,6 +9,8 @@ var execute: Callable = start
 @export var start_val: float = 0.0
 @export var end_val: float = 1.0
 @export_range(0.001, 5.0, 0.05, "or_greater", "suffix:s") var duration_sec: float = 1.0
+@export var tween_both_ways: bool = false
+
 @export var tween_ease: Tween.EaseType = Tween.EASE_IN_OUT
 @export var tween_trans: Tween.TransitionType = Tween.TRANS_LINEAR
 
@@ -30,6 +32,8 @@ func start() -> void:
 	if not tween or not tween.is_valid():
 		tween = create_tween().set_ease(tween_ease).set_trans(tween_trans).set_loops(int(Engine.is_editor_hint()))
 		tween.tween_property(self, property_path, end_val, duration_sec).from(start_val)
+		if tween_both_ways:
+			tween.tween_property(self, property_path, start_val, duration_sec).from(end_val)
 		return
 	
 	tween.play()

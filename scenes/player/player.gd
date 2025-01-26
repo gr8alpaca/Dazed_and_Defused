@@ -73,11 +73,9 @@ func _ready() -> void:
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if Engine.is_editor_hint(): return
 	
-	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.05) if input_active else Vector2.ZERO
+	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1) if input_active else Vector2.ZERO
 	
-	if godmode:
-		handle_godmode(state, input)
-		return
+	
 	
 	var yaw: float = camera.get_yaw()
 	var local_input: Vector2 = input.rotated(-yaw)
@@ -88,9 +86,9 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	
 	var x_force: float = x_inp * ACCELERATION * state.step
 	var z_force: float = z_inp * ACCELERATION * state.step
-	var prev_lin:= state.linear_velocity
-	state.apply_central_force(Vector3(x_force, 0, z_force))
 	
+	
+	state.apply_central_force(get_force_vector(state.step))
 	
 	camera.update_cam(input, state)
 	
@@ -103,8 +101,23 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		var raycast: RayCast3D = $DebugRayCast
 		raycast.position = position
 		raycast.target_position = state.linear_velocity
-	#linear_velocity * state.step
+
+
+
+func get_force_vector(delta: float,) -> Vector3:
+	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1) if input_active else Vector2.ZERO
 	
+	var yaw: float = camera.get_yaw()
+	var local_input: Vector2 = input.rotated(-yaw)
+	
+	var x_inp: float = local_input.x * 5.0 * tilt_sensitivity
+	var z_inp: float = local_input.y * 5.0 * tilt_sensitivity
+	
+	var x_force: float = x_inp * ACCELERATION * delta
+	var z_force: float = z_inp * ACCELERATION * delta
+	return Vector3(x_force, 0, z_force)
+	#
+
 
 func set_collision_sensor_enabled(enabled: bool) -> void:
 	$CollisionSensor.enabled = enabled
@@ -117,20 +130,32 @@ func _on_unsafe_collision(collider: Node) -> void:
 	$SphereMesh.hide()
 	dead.emit(collider)
 
-func handle_godmode(state: PhysicsDirectBodyState3D, input: Vector2) -> void:
-	pass
+func _process(delta: float) -> void:
+	if not godmode:
+		set_process(false)
+		return
+	const GODMODE_SPEED: float = 10.0
+	var xz_dir:= Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1).rotated(-camera.get_yaw()) * delta
+	position += Vector3(xz_dir.x, Input.get_axis(&"crouch", &"jump") * delta, xz_dir.y) * GODMODE_SPEED
 
 func set_godmode(active: bool) -> void:
 	godmode = active
 	$CollisionSensor.enabled = !godmode
-	freeze = godmode
+	gravity_scale = 0.0 if godmode else 1.0
+	#freeze = godmode
+	set_process(godmode)
 
 
-func _unhandled_key_input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_echo() or not event.is_pressed(): return
 	
 	if Input.is_key_pressed(KEY_PAGEUP):
 		$CollisionSensor.enabled = !$CollisionSensor.enabled
-		
-	if Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_INSERT):
+	
+	elif event.is_action_pressed(&"godmode"):
 		set_godmode(!godmode)
+	
+	else:
+		return
+	
+	get_viewport().set_input_as_handled()

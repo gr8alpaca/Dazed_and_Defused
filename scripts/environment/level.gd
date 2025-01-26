@@ -25,4 +25,4 @@ func _on_goal_entered(player: Node3D, goal: Goal) -> void:
 	player.input_active = false
 	player.linear_damp = 10.0
 	goal_reached.emit()
-	Master.change_level(Master.current_level + 1)
+	Master.change_level.call_deferred(Master.current_level + 1)

@@ -38,7 +38,6 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Elements"]
-visible = false
 custom_minimum_size = Vector2(384, 0)
 layout_mode = 1
 anchors_preset = -1
@@ -61,7 +60,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_86vjs")
 text = "Loading resources..."
 
 [node name="LoadBar" type="ProgressBar" parent="Elements/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(384, 0)
 layout_mode = 2
 mouse_filter = 2

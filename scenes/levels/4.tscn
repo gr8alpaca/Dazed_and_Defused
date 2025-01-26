@@ -1,0 +1,129 @@
+[gd_scene load_steps=16 format=3 uid="uid://vr3yqvb1juop"]
+
+[ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_gpjcc"]
+[ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_0u0gx"]
+[ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_mowbc"]
+[ext_resource type="Script" uid="uid://d3ffl3xfdj0mv" path="res://scripts/data/ControllerAttributes.gd" id="4_033ma"]
+[ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="5_xbara"]
+[ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/environment/trap.gd" id="6_d6cry"]
+[ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="7_ij7pi"]
+[ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="8_mew47"]
+[ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="9_mnd8g"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ql3nd"]
+friction = 0.4
+
+[sub_resource type="Resource" id="Resource_gpjcc"]
+resource_local_to_scene = true
+script = ExtResource("4_033ma")
+distance_from_pivot = 3.0
+camera_y_offset = 0.5
+initial_dive_angle_deg = -30.0
+pitch_limit_deg = 35.0
+roll_limit_deg = 30.0
+tilt_speed = 202.0
+
+[sub_resource type="Resource" id="Resource_x6e36"]
+script = ExtResource("8_mew47")
+start_value = 0.0
+end_value = -90.0
+action_speed_sec = 0.151
+idle_duration_sec = 1.0
+tween_ease = 2
+tween_trans = 0
+target_node_path = NodePath("Trap")
+path = "rotation_degrees:x"
+reset_speed_sec = 1.501
+arguments = []
+metadata/_custom_type_script = ExtResource("8_mew47")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_22n3q"]
+size = Vector3(1, 1, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g7cpj"]
+size = Vector3(1, 3, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_22n3q"]
+material = ExtResource("2_0u0gx")
+size = Vector3(1, 3, 1)
+
+[node name="1" type="Node3D"]
+script = ExtResource("1_gpjcc")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Environment"]
+transform = Transform3D(0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 0, 0, 1, 2.75, 0, 0)
+use_collision = true
+
+[node name="CSGFloor2" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.625, -1.625, 0)
+material_override = ExtResource("2_0u0gx")
+use_collision = true
+size = Vector3(33.25, 3.25, 10)
+material = ExtResource("2_0u0gx")
+
+[node name="Ramp" type="CSGPolygon3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.25581, -0.25, -6.75)
+material_override = ExtResource("2_0u0gx")
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 0.75, 2.5, 0)
+depth = 0.5
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, -0.5, 0)
+use_collision = true
+size = Vector3(4, 1, 10)
+material = ExtResource("2_0u0gx")
+
+[node name="Player" parent="." instance=ExtResource("3_mowbc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+physics_material_override = SubResource("PhysicsMaterial_ql3nd")
+att = SubResource("Resource_gpjcc")
+starting_camera_angle = -1.5708
+
+[node name="Goal" parent="." instance=ExtResource("5_xbara")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.4161, -13.5, 0)
+input_ray_pickable = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.25, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 9, 0)
+light_energy = 0.5
+shadow_enabled = true
+shadow_opacity = 0.7
+directional_shadow_mode = 0
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 35.0
+
+[node name="Trap" type="Node3D" parent="." node_paths=PackedStringArray("area_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.75, 0, 8.25)
+script = ExtResource("6_d6cry")
+area_trigger = NodePath("Trigger")
+actions = Array[ExtResource("7_ij7pi")]([SubResource("Resource_x6e36")])
+
+[node name="Trigger" type="Area3D" parent="Trap"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trap/Trigger"]
+shape = SubResource("BoxShape3D_22n3q")
+
+[node name="Trap" type="AnimatableBody3D" parent="Trap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, -0.25, 1.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trap/Trap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0.5)
+shape = SubResource("BoxShape3D_g7cpj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Trap/Trap"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.5, 0.5)
+mesh = SubResource("BoxMesh_22n3q")
+
+[node name="DeathBox" type="Area3D" parent="."]
+transform = Transform3D(0.999941, 0, 0.0108732, 0, 1, 0, -0.0108732, 0, 0.999941, 4, -3, 0)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("9_mnd8g")
+metadata/_custom_type_script = ExtResource("9_mnd8g")

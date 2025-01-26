@@ -89,7 +89,7 @@ material = ExtResource("1_mpdjq")
 size = Vector3(1, 5, 8)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5bsmb"]
-size = Vector3(9, 4.75, 8)
+size = Vector3(6.25, 4.75, 8)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2n3hm"]
 friction = 0.4
@@ -173,7 +173,7 @@ transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, -26.5, 0
 script = ExtResource("3_sc0rx")
 property_path = "rotation_degrees:x"
 start_val = 150.0
-end_val = 75.0
+end_val = 0.0
 duration_sec = 0.701
 tween_both_ways = true
 metadata/_custom_type_script = ExtResource("3_sc0rx")
@@ -187,24 +187,6 @@ skeleton = NodePath("../..")
 transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_s5tjy")
 
-[node name="Obstacle4" type="AnimatableBody3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.5, 0, 0)
-script = ExtResource("3_sc0rx")
-property_path = "rotation_degrees:x"
-end_val = 75.0
-duration_sec = 0.701
-tween_both_ways = true
-metadata/_custom_type_script = ExtResource("3_sc0rx")
-
-[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Environment/Obstacle4"]
-transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 0, 0)
-mesh = SubResource("ArrayMesh_2n3hm")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Obstacle4"]
-transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_s5tjy")
-
 [node name="Trap1" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.25, 0, 0)
 script = ExtResource("4_2n3hm")
@@ -213,6 +195,7 @@ actions = Array[ExtResource("5_si25r")]([SubResource("Resource_y87mq")])
 metadata/_custom_type_script = ExtResource("4_2n3hm")
 
 [node name="TrapBody1" type="AnimatableBody3D" parent="Environment/Trap1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 metadata/_edit_group_ = true
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Environment/Trap1/TrapBody1"]
@@ -291,7 +274,7 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -1.375, 0)
 shape = SubResource("BoxShape3D_s5tjy")
 
-[node name="TrapWall" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
+[node name="Trap4" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.75, -2.5, 0)
 script = ExtResource("4_2n3hm")
 area_trigger = NodePath("TrapArea")
@@ -300,23 +283,24 @@ cancel_on_player_exit = true
 actions = Array[ExtResource("5_si25r")]([SubResource("Resource_ki155")])
 metadata/_custom_type_script = ExtResource("4_2n3hm")
 
-[node name="TrapBody" type="AnimatableBody3D" parent="Environment/TrapWall"]
+[node name="TrapBody" type="AnimatableBody3D" parent="Environment/Trap4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 metadata/_edit_group_ = true
 
-[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Environment/TrapWall/TrapBody"]
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Environment/Trap4/TrapBody"]
 mesh = SubResource("BoxMesh_si25r")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Environment/TrapWall/TrapBody"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Environment/Trap4/TrapBody"]
 shape = SubResource("BoxShape3D_s5tjy")
 
-[node name="TrapArea" type="Area3D" parent="Environment/TrapWall"]
+[node name="TrapArea" type="Area3D" parent="Environment/Trap4"]
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/TrapWall/TrapArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.25, 0.375, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Trap4/TrapArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.875, 0.375, 0)
 shape = SubResource("BoxShape3D_5bsmb")
 
 [node name="Goal" parent="." instance=ExtResource("2_mx7cr")]
@@ -331,6 +315,6 @@ script = ExtResource("5_cddsv")
 metadata/_custom_type_script = ExtResource("5_cddsv")
 
 [node name="Player" parent="." instance=ExtResource("5_sc0rx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -3.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.076, -3.25, 0)
 physics_material_override = SubResource("PhysicsMaterial_2n3hm")
 starting_camera_angle = 1.5708

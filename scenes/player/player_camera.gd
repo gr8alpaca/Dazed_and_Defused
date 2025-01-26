@@ -8,11 +8,9 @@ var select_camera: Callable = select_camera_in_editor
 
 @export var att: ControllerAttributes:
 	set(val):
-		att = val
+		att = val if val else ControllerAttributes.new()
 		att.pivot_distance_changed.connect(update_position)
-		if not att.changed.is_connected(_on_att_changed):
-			att.changed.connect(_on_att_changed)
-
+		att.changed.connect(_on_att_changed)
 
 var rotation_pivot: Node3D
 
@@ -55,7 +53,6 @@ func update_cam(input: Vector2, state: PhysicsDirectBodyState3D) -> void:
 	update_position()
 
 func update_position() -> void:
-	
 	var pre_offset_position: Vector3 = Vector3.FORWARD.rotated(Vector3.RIGHT, PI + cam.global_rotation.x) * (att.distance_from_pivot + 0.5)
 	cam.position = pre_offset_position + Vector3(0, att.camera_y_offset, 0)
 

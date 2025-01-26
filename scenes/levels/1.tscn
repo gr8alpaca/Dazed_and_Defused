@@ -21,7 +21,6 @@ initial_dive_angle_deg = -30.0
 pitch_limit_deg = 35.0
 roll_limit_deg = 30.0
 tilt_speed = 202.0
-horizontal_rotation_sensitiveness = 10.0
 
 [sub_resource type="Resource" id="Resource_x6e36"]
 script = ExtResource("8_ql3nd")
