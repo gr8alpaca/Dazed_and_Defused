@@ -1,9 +1,21 @@
 extends Node
 
+#signal input_device_changed(new_type: int)
+
+enum {DEVICE_KEYBOARD, DEVICE_XBOX, DEVICE_PLAYSTATION}
+
 var messager: Messager
 var transitioner: Transitioner
 
 var current_level: int = 1
+
+var device_type: int = DEVICE_KEYBOARD:
+	set(val):
+		if device_type == val: return
+		device_type = val
+		update_device_type()
+
+
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
@@ -35,6 +47,20 @@ func reset_level() -> void:
 	get_tree().reload_current_scene()
 
 
+func _input(event: InputEvent) -> void:
+	if (event is InputEventJoypadButton or event is InputEventJoypadMotion) and (device_type != DEVICE_PLAYSTATION or device_type != DEVICE_XBOX):
+		device_type = get_device_type(event.device)
+	if event is InputEventKey and device_type != DEVICE_KEYBOARD:
+		device_type = DEVICE_KEYBOARD
+
+
+func get_device_type(device: int) -> int:
+	var input_name:= Input.get_joy_name(device)
+	if input_name.containsn("PS4") or input_name.containsn("PS5") or input_name.containsn("Playstation"):
+		return DEVICE_PLAYSTATION
+	return DEVICE_XBOX
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_echo() or not event.is_pressed(): return
 	
@@ -50,3 +76,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	
 	get_viewport().set_input_as_handled()
+
+func update_device_type() -> void:
+	messager.update_input_device(device_type)

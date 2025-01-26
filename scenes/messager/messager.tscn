@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpef8jng0prf7"]
+[gd_scene load_steps=3 format=3 uid="uid://cpef8jng0prf7"]
 
 [ext_resource type="Script" uid="uid://bb8c2x1qnbo23" path="res://scenes/messager/messager.gd" id="1_7i6lk"]
+[ext_resource type="Texture2D" uid="uid://bhwqis24yqddu" path="res://assets/textures/buttons/keyboard/R_Key_Dark.png" id="2_08stw"]
 
 [node name="Messager" type="CanvasLayer"]
+layer = 2
 script = ExtResource("1_7i6lk")
 
 [node name="Control" type="Control" parent="."]
@@ -24,7 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.392157)
 
-[node name="CornerLabel" type="Label" parent="Control"]
+[node name="Corner" type="HBoxContainer" parent="Control"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
@@ -32,13 +34,30 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -135.0
-offset_top = -30.0
-offset_right = -11.0
-offset_bottom = -14.0
+offset_left = -162.0
+offset_top = -37.0
+offset_right = -14.0
+offset_bottom = -13.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "press 'R' To reset "
+alignment = 2
+
+[node name="CornerLabel" type="Label" parent="Control/Corner"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "press"
+
+[node name="ButtonTexture" type="TextureRect" parent="Control/Corner"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("2_08stw")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="CornerLabel2" type="Label" parent="Control/Corner"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "to reset "
 
 [node name="MainVbox" type="VBoxContainer" parent="Control"]
 layout_mode = 1
@@ -54,7 +73,7 @@ alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "you died"
+text = "You Died"
 horizontal_alignment = 1
 
 [node name="SubLabel" type="Label" parent="Control/MainVbox"]

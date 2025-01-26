@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dl1j3jncqc4u0"
-path="res://.godot/imported/Baby Gemoy.ttf-19a7d6a309e1158d71d7b6396c9dbae5.fontdata"
+uid="uid://bx8qweglvu8be"
+path="res://.godot/imported/ChubbyCrayon-Regular.ttf-02c72273b9ee28c79bf00a560e97046f.fontdata"
 
 [deps]
 
-source_file="res://assets/Baby Gemoy.ttf"
-dest_files=["res://.godot/imported/Baby Gemoy.ttf-19a7d6a309e1158d71d7b6396c9dbae5.fontdata"]
+source_file="res://assets/ChubbyCrayon-Regular.ttf"
+dest_files=["res://.godot/imported/ChubbyCrayon-Regular.ttf-02c72273b9ee28c79bf00a560e97046f.fontdata"]
 
 [params]
 

@@ -1,0 +1,106 @@
+[gd_scene load_steps=9 format=3 uid="uid://dhv3fkt5cbd0f"]
+
+[ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_klc73"]
+[ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_ljm8n"]
+[ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_p5xfs"]
+[ext_resource type="Script" uid="uid://d3ffl3xfdj0mv" path="res://scripts/data/ControllerAttributes.gd" id="4_csx81"]
+[ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="5_3nc6l"]
+[ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="6_rvt76"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ql3nd"]
+friction = 0.4
+rough = true
+
+[sub_resource type="Resource" id="Resource_klc73"]
+resource_local_to_scene = true
+script = ExtResource("4_csx81")
+distance_from_pivot = 3.0
+camera_y_offset = 0.5
+initial_dive_angle_deg = -30.0
+pitch_limit_deg = 35.0
+roll_limit_deg = 30.0
+tilt_speed = 202.0
+
+[node name="5" type="Node3D"]
+script = ExtResource("1_klc73")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Environment"]
+use_collision = true
+collision_priority = 2.0
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, -4.25, 0)
+radius = 16.0
+height = 10.0
+sides = 64
+cone = true
+smooth_faces = false
+material = ExtResource("2_ljm8n")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, -3.225, 0)
+operation = 2
+radius = 16.0
+height = 8.0
+sides = 64
+cone = true
+material = ExtResource("2_ljm8n")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.15625, 0)
+operation = 2
+radius = 11.75
+height = 10.0
+sides = 64
+material = ExtResource("2_ljm8n")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8724, 0.525, 0)
+size = Vector3(4.5, 0.5, 2)
+material = ExtResource("2_ljm8n")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6224, 0.65, 0)
+operation = 2
+size = Vector3(4.5, 0.25, 1.5)
+material = ExtResource("2_ljm8n")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.1276, 0.525, 0)
+size = Vector3(4.5, 0.5, 2)
+material = ExtResource("2_ljm8n")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0276, 0.65, 0)
+operation = 2
+size = Vector3(4.2, 0.25, 1.5)
+material = ExtResource("2_ljm8n")
+
+[node name="Player" parent="." instance=ExtResource("3_p5xfs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.25, 1.025, 0)
+physics_material_override = SubResource("PhysicsMaterial_ql3nd")
+att = SubResource("Resource_klc73")
+starting_camera_angle = -1.5708
+
+[node name="Goal" parent="." instance=ExtResource("5_3nc6l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.1661, -15.75, 0)
+input_ray_pickable = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.25, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 20, 0)
+light_energy = 0.5
+shadow_enabled = true
+shadow_opacity = 0.7
+directional_shadow_mode = 0
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 35.0
+
+[node name="DeathBox" type="Area3D" parent="."]
+transform = Transform3D(0.999941, 0, 0.0108732, 0, 1, 0, -0.0108732, 0, 0.999941, 4, -39.25, 0)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("6_rvt76")
+metadata/_custom_type_script = ExtResource("6_rvt76")

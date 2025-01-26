@@ -4,7 +4,7 @@ class_name Player extends RigidBody3D
 const GROUP: StringName = &"player"
 
 const SCENE_PATH: String = "res://scenes/player/player.tscn"
-const ACCELERATION: float = 175.0
+const ACCELERATION: float = 125.0
 const MAX_TILT_DEGREES: float = 20.0
 
 signal dead(collider: Node)
@@ -67,6 +67,11 @@ func _init() -> void:
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
+	var explosion: GPUParticles3D = $Explosion
+	explosion.finished.connect(explosion.set_lifetime.bind(explosion.lifetime), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	explosion.lifetime = 0.01
+	explosion.emitting = true
+	
 	$CollisionSensor.unsafe_collision.connect(_on_unsafe_collision)
 
 
@@ -107,7 +112,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 func get_force_vector(delta: float,) -> Vector3:
 	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1) if input_active else Vector2.ZERO
 	
-	var yaw: float = camera.get_yaw()
+	var yaw: float = get_viewport().get_camera_3d().global_rotation.y 
 	var local_input: Vector2 = input.rotated(-yaw)
 	
 	var x_inp: float = local_input.x * 5.0 * tilt_sensitivity
@@ -115,6 +120,7 @@ func get_force_vector(delta: float,) -> Vector3:
 	
 	var x_force: float = x_inp * ACCELERATION * delta
 	var z_force: float = z_inp * ACCELERATION * delta
+	
 	return Vector3(x_force, 0, z_force)
 	#
 
@@ -126,14 +132,17 @@ func set_collision_sensor_enabled(enabled: bool) -> void:
 func _on_unsafe_collision(collider: Node) -> void:
 	$CollisionSensor.enabled = false
 	set_process_mode.call_deferred(Node.PROCESS_MODE_DISABLED)
+	$Explosion.visible = true
 	$Explosion.emitting = true
 	$SphereMesh.hide()
 	dead.emit(collider)
 
+
+
 func _process(delta: float) -> void:
-	if not godmode:
-		set_process(false)
-		return
+	if camera and input_active:
+		pass
+	if not godmode: return
 	const GODMODE_SPEED: float = 10.0
 	var xz_dir:= Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1).rotated(-camera.get_yaw()) * delta
 	position += Vector3(xz_dir.x, Input.get_axis(&"crouch", &"jump") * delta, xz_dir.y) * GODMODE_SPEED

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://blg8v1lrpbae3"]
+[gd_scene load_steps=28 format=4 uid="uid://blg8v1lrpbae3"]
 
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="1_mpdjq"]
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_souht"]
@@ -16,12 +16,12 @@ script = ExtResource("6_fnalb")
 start_value = 10.0
 end_value = 1.0
 action_speed_sec = 0.201
-idle_duration_sec = 1.001
+idle_duration_sec = 0.301
 tween_ease = 2
 tween_trans = 0
 target_node_path = NodePath("Piston")
 path = "position:y"
-reset_speed_sec = 12.001
+reset_speed_sec = 8.001
 arguments = []
 metadata/_custom_type_script = ExtResource("6_fnalb")
 
@@ -29,7 +29,9 @@ metadata/_custom_type_script = ExtResource("6_fnalb")
 size = Vector3(3.25, 1, 2.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ci58i"]
+depth_draw_mode = 1
 albedo_texture = ExtResource("7_fnalb")
+distance_fade_mode = 1
 distance_fade_min_distance = 20.0
 distance_fade_max_distance = 0.0
 
@@ -75,7 +77,7 @@ metadata/_custom_type_script = ExtResource("6_fnalb")
 script = ExtResource("6_fnalb")
 start_value = 0.0
 end_value = -90.0
-action_speed_sec = 0.201
+action_speed_sec = 0.301
 idle_duration_sec = 0.501
 tween_ease = 0
 tween_trans = 5
@@ -92,7 +94,7 @@ size = Vector3(3.5, 2, 3)
 script = ExtResource("6_fnalb")
 start_value = 0.0
 end_value = 90.0
-action_speed_sec = 0.201
+action_speed_sec = 0.301
 idle_duration_sec = 0.501
 tween_ease = 0
 tween_trans = 5
@@ -101,33 +103,6 @@ path = "rotation_degrees:z"
 reset_speed_sec = 1.501
 arguments = []
 metadata/_custom_type_script = ExtResource("6_fnalb")
-
-[sub_resource type="Resource" id="Resource_fnalb"]
-script = ExtResource("5_kt1qv")
-target_node_path = NodePath("../BridgeFlipper")
-path = "enable"
-reset_speed_sec = 0.001
-arguments = []
-metadata/_custom_type_script = ExtResource("5_kt1qv")
-
-[sub_resource type="Resource" id="Resource_ci58i"]
-script = ExtResource("5_kt1qv")
-target_node_path = NodePath("../BridgeFlipper2")
-path = "enable"
-reset_speed_sec = 0.001
-arguments = []
-metadata/_custom_type_script = ExtResource("5_kt1qv")
-
-[sub_resource type="Resource" id="Resource_js46e"]
-script = ExtResource("5_kt1qv")
-target_node_path = NodePath(".")
-path = "queue_free"
-reset_speed_sec = 0.001
-arguments = []
-metadata/_custom_type_script = ExtResource("5_kt1qv")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_kt1qv"]
-size = Vector3(19, 2, 3)
 
 [sub_resource type="Resource" id="Resource_64ba3"]
 script = ExtResource("6_fnalb")
@@ -273,7 +248,7 @@ script = ExtResource("2_afygv")
 property_path = "rotation:y"
 start_val = -1.571
 end_val = 4.713
-duration_sec = 8.001
+duration_sec = 12.001
 metadata/cushion = 1.0
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Environment/SpinningBridge"]
@@ -287,7 +262,7 @@ shape = SubResource("ConcavePolygonShape3D_mp0kl")
 transform = Transform3D(1, 0, 0.000185315, 0, 1, 0, -0.000185315, 0, 1, -6.5, 0, 0.00120455)
 script = ExtResource("5_8jtne")
 area_trigger = NodePath("Area3D")
-delay_sec = 3.001
+delay_sec = 2.501
 cancel_on_player_exit = true
 actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_0v1d0"), SubResource("Resource_i33xw")])
 metadata/_custom_type_script = ExtResource("5_8jtne")
@@ -306,7 +281,7 @@ shape = SubResource("BoxShape3D_souht")
 transform = Transform3D(1, 0, 0.000185315, 0, 1, 0, -0.000185315, 0, 1, 9, 0, -0.00166783)
 script = ExtResource("5_8jtne")
 area_trigger = NodePath("Area3D")
-delay_sec = 3.001
+delay_sec = 2.501
 cancel_on_player_exit = true
 actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_0v1d0"), SubResource("Resource_kt1qv")])
 metadata/_custom_type_script = ExtResource("5_8jtne")
@@ -320,25 +295,6 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/SpinningBridge/BridgeFlipper2/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 shape = SubResource("BoxShape3D_souht")
-
-[node name="TrapActivators" type="Node3D" parent="Environment/SpinningBridge" node_paths=PackedStringArray("area_trigger")]
-visible = false
-script = ExtResource("5_8jtne")
-area_trigger = NodePath("Area3D2")
-delay_sec = 6.001
-cancel_on_player_exit = true
-actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_fnalb"), SubResource("Resource_ci58i"), SubResource("Resource_js46e")])
-metadata/_custom_type_script = ExtResource("5_8jtne")
-
-[node name="Area3D2" type="Area3D" parent="Environment/SpinningBridge/TrapActivators"]
-transform = Transform3D(1, -2.98023e-08, 0, 0, 1, 0, 0, 3.03577e-18, 1, 0, 0, 0)
-collision_layer = 0
-collision_mask = 2
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/SpinningBridge/TrapActivators/Area3D2"]
-transform = Transform3D(1, 7.52897e-16, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-shape = SubResource("BoxShape3D_kt1qv")
 
 [node name="UnderneathTrap" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -1, 0)

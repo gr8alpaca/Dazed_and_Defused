@@ -6,6 +6,31 @@ const GROUP: StringName = &"player_camera"
 @export_tool_button("Select Camera", "Camera3D") 
 var select_camera: Callable = select_camera_in_editor
 
+#@export_range(-180, 180, 2.5, "radians_as_degrees") 
+#var starting_pitch: float = deg_to_rad(-30.0)
+#
+#@export_range(-180, 180, 2.5, "radians_as_degrees") 
+#var pitch_min: float = deg_to_rad(-50.0)
+#
+#@export_range(-180, 180, 2.5, "radians_as_degrees") 
+#var pitch_max: float = deg_to_rad(-5.0)
+
+const DISTANCE_FROM_PIVOT: float = 3.0
+
+const CAMERA_OFFSET: Vector3 = Vector3(0, 0.5, 0)
+
+
+const STARTING_PITCH: float = deg_to_rad(-30.0)
+const MIN_PITCH: float =  deg_to_rad(-45.0)
+const MAX_PITCH: float =  deg_to_rad(-5.0)
+
+
+
+const HORIZONTAL_CAMERA_SENSITIVITY: float = 3.0
+const VERTICAL_CAMERA_SENSITIVITY: float = 1.0
+
+@onready var player: Player = get_parent()
+
 @export var att: ControllerAttributes:
 	set(val):
 		att = val if val else ControllerAttributes.new()
@@ -13,11 +38,7 @@ var select_camera: Callable = select_camera_in_editor
 		att.changed.connect(_on_att_changed)
 
 var rotation_pivot: Node3D
-
 var cam: Camera3D
-
-var tilt_cam: bool = false
-
 
 func _init() -> void:
 	add_to_group(GROUP)
@@ -30,14 +51,33 @@ func _init() -> void:
 		rotation_pivot.add_child(cam,)
 		rotation_pivot.owner = self
 		cam.owner = self
+		cam.rotation.x = STARTING_PITCH
+
 
 func _ready() -> void:
 	_on_att_changed.call_deferred()
 
 func _process(delta: float) -> void:
-	position = get_parent().position
+	position = player.position
+	if Engine.is_editor_hint(): return
+	if player.input_active:
+		process_input(delta)
+
+
+func process_input(delta: float) -> void:
+	const HORIZONTAL_CAMERA_SENSITIVITY: float = 3.0
+	const VERTICAL_CAMERA_SENSITIVITY: float = 1.0
+	
+	var input:= Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", 0.2)
+	cam.rotation.x = clampf(cam.rotation.x - input.y * VERTICAL_CAMERA_SENSITIVITY * delta, MIN_PITCH, MAX_PITCH)
+	
+	rotation_pivot.rotation.y = fmod(rotation_pivot.rotation.y - input.x * HORIZONTAL_CAMERA_SENSITIVITY * delta, TAU)
+	att.yaw = rotation_pivot.global_rotation_degrees.y
+	update_position()
+
 
 func update_cam(input: Vector2, state: PhysicsDirectBodyState3D) -> void:
+	return
 	assert(is_inside_tree(), "Method 'update_cam' called outside of tree!")
 	var rotation_delta: float = att.tilt_speed * state.step
 
@@ -48,23 +88,17 @@ func update_cam(input: Vector2, state: PhysicsDirectBodyState3D) -> void:
 	
 	
 	att.roll = move_toward(att.roll, target_roll, rotation_delta)
-	update_rotation()
+	#update_rotation()
 	update_yaw(state)
 	update_position()
 
 func update_position() -> void:
-	var pre_offset_position: Vector3 = Vector3.FORWARD.rotated(Vector3.RIGHT, PI + cam.global_rotation.x) * (att.distance_from_pivot + 0.5)
-	cam.position = pre_offset_position + Vector3(0, att.camera_y_offset, 0)
-
-
-func update_rotation() -> void:
-	cam.global_rotation_degrees.x = att.initial_dive_angle_deg + att.pitch if tilt_cam else att.initial_dive_angle_deg
-	cam.global_rotation_degrees.z = att.roll if tilt_cam else 0.0
+	var pre_offset_position: Vector3 = Vector3.FORWARD.rotated(Vector3.RIGHT, PI + cam.rotation.x) * (DISTANCE_FROM_PIVOT + 0.5)
+	cam.position = pre_offset_position + CAMERA_OFFSET
 
 
 func update_yaw(state: PhysicsDirectBodyState3D) -> void:
 	const YAW_SPEED: float = 0.2
-	const VELOCITY_CAM_MAX_SPEED: float = 30.0
 	const MAX_RADIANS_PER_SECOND: float = PI
 	const DEFAULT_VELOCITY_DIR := Vector2.UP
 	
@@ -78,14 +112,14 @@ func update_yaw(state: PhysicsDirectBodyState3D) -> void:
 	var max_move: float = state.step * MAX_RADIANS_PER_SECOND
 	var new_ang: float = move_toward(rotation_pivot.global_rotation.y, rotated_angle, max_move)
 	rotation_pivot.global_rotation.y = new_ang
-
 	att.yaw = rotation_pivot.global_rotation_degrees.y
+
 
 # NOTE: For editor only!
 func _on_att_changed() -> void:
 	if not is_inside_tree(): 
 		await tree_entered
-	update_rotation()
+	#update_rotation()
 	update_position()
 
 #func get_camera_dir() -> Vector2:

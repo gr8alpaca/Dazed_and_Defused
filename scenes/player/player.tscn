@@ -59,6 +59,7 @@ particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 distance_fade_mode = 1
+distance_fade_max_distance = 8.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_5gtgg"]
 material = SubResource("StandardMaterial3D_qek5x")

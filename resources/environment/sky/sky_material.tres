@@ -1,8 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://d2j3lttn43gtr"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d2j3lttn43gtr"]
 
 [ext_resource type="Shader" uid="uid://cbmylaenrypep" path="res://resources/environment/sky/sky.gdshader" id="1_red3y"]
-[ext_resource type="Texture2D" uid="uid://2y34juxlet2x" path="res://assets/textures/SMB1_Starry_Night.webp" id="2_ai7ca"]
 
 [resource]
 shader = ExtResource("1_red3y")
-shader_parameter/sky_tex = ExtResource("2_ai7ca")

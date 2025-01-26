@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://b7l0ssrmhfv0a"]
 
-[ext_resource type="FontFile" uid="uid://dl1j3jncqc4u0" path="res://assets/Baby Gemoy.ttf" id="1_jbojv"]
 [ext_resource type="Script" uid="uid://cy3cvqjr7v3d3" path="res://scenes/goal.gd" id="1_w3gav"]
 [ext_resource type="Material" uid="uid://dkubysa4c573m" path="res://resources/materials/goal.tres" id="2_jvyg3"]
+[ext_resource type="FontFile" uid="uid://bx8qweglvu8be" path="res://assets/ChubbyCrayon-Regular.ttf" id="3_w3gav"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_q5bgg"]
 lightmap_size_hint = Vector2i(17, 11)
@@ -20,8 +20,8 @@ disable_receive_shadows = true
 [sub_resource type="TextMesh" id="TextMesh_rlg85"]
 material = SubResource("StandardMaterial3D_c16ly")
 text = "GOAL"
-font = ExtResource("1_jbojv")
-font_size = 32
+font = ExtResource("3_w3gav")
+font_size = 64
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_aqdrf"]
 height = 0.5
@@ -38,7 +38,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 mesh = SubResource("CylinderMesh_q5bgg")
 
 [node name="Text" type="MeshInstance3D" parent="CylinderMesh"]
-transform = Transform3D(0.928871, 0, -0.370403, 0, 1, 0, 0.370403, 0, 0.928871, 0, 0.65089, 0)
+transform = Transform3D(0.734654, 0, 0.678442, 0, 1, 0, -0.678442, 0, 0.734654, 0, 0.52527, 0)
 mesh = SubResource("TextMesh_rlg85")
 skeleton = NodePath("../..")
 

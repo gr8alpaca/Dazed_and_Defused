@@ -2,6 +2,20 @@
 class_name Messager extends CanvasLayer
 const GRAYSCALE_MATERIAL: ShaderMaterial = preload("res://scenes/messager/grayscale_material.tres")
 const ENVIRONMENT : Environment = preload("res://resources/environment/environment.tres")
+const INPUT_TEXTURES:= [
+	#KEYBOARD
+	{
+		reset = preload("res://assets/textures/buttons/keyboard/R_Key_Dark.png"),
+	},
+	#XBOX
+	{
+		reset = preload("res://assets/textures/buttons/xbox/XboxSeriesX_Y.png"),
+	},
+	#PLAYSTATION
+	{
+		reset = preload("res://assets/textures/buttons/ps/PS5_Triangle.png")
+	},
+]
 
 var tw: Tween 
 
@@ -28,7 +42,7 @@ func show_message(msg: String, label_fade_time_sec: float = FADE_IN_TIME) -> voi
 	tw.tween_method(ENVIRONMENT.set_adjustment_saturation , 1.0, 0.0, FADE_IN_TIME)
 	tw.set_parallel().tween_property(%Rect, ^"modulate:a", 1.0, FADE_IN_TIME)
 	tw.chain().tween_property(%MainLabel, ^"modulate:a", 1.0, label_fade_time_sec).from(0.0)
-	tw.tween_property(%CornerLabel, ^"modulate:a", 1.0, FADE_IN_TIME).from(0.0)
+	tw.tween_property(%Corner, ^"modulate:a", 1.0, FADE_IN_TIME).from(0.0)
 
 
 
@@ -40,11 +54,14 @@ func hide_all() -> void:
 	
 	%MainLabel.modulate.a = 0.0
 	%SubLabel.modulate.a = 0.0
-	%CornerLabel.modulate.a = 0.0
+	%Corner.modulate.a = 0.0
 	tw = create_tween()
 	tw.tween_method(ENVIRONMENT.set_adjustment_saturation , 1.0, 1.0, FADE_IN_TIME)
 	%Rect.modulate.a = 0.0
 
+func update_input_device(type: int) -> void:
+	%ButtonTexture.texture = INPUT_TEXTURES[type].reset
+	
 
 func _on_goal_reached() -> void:
 	show_message("Level Clear", 0.1)

@@ -7,6 +7,8 @@
 content_margin_left = 11.0
 
 [node name="Transitioner" type="Control" node_paths=PackedStringArray("load_bar", "load_label")]
+process_mode = 1
+auto_translate_mode = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
