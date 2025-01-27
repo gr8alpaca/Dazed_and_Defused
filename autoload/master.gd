@@ -10,7 +10,12 @@ const LEVEL_PATHS:PackedStringArray = [
 	"res://scenes/levels/platforms.tscn",
 	"res://scenes/levels/turbine.tscn",
 	"res://scenes/levels/traffic_light.tscn",
+	
+	# End Scene Here...
+	"res://scenes/menus/end.tscn",
 ]
+
+signal device_type_changed(new_device_type: int)
 
 var messager: Messager
 var transitioner: Transitioner
@@ -62,6 +67,9 @@ func reset_level() -> void:
 func get_current_level() -> int:
 	return LEVEL_PATHS.find(get_tree().current_scene.scene_file_path) + 1
 
+func reset_to_main() -> void:
+	transitioner.transition(ProjectSettings.get_setting("application/run/main_scene"))
+	current_level = 1
 
 func _input(event: InputEvent) -> void:
 	if (event is InputEventJoypadButton or event is InputEventJoypadMotion) and (device_type != DEVICE_PLAYSTATION or device_type != DEVICE_XBOX):
@@ -82,12 +90,23 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed(&"reset"):
 		reset_level()
-	elif Input.is_key_pressed(KEY_1):
+	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_1):
 		change_level(1)
-	elif Input.is_key_pressed(KEY_2):
+	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_2):
 		change_level(2)
-	elif Input.is_key_pressed(KEY_3):
+	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_3):
 		change_level(3)
+	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_4):
+		change_level(4)
+	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_5):
+		change_level(5)
+	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_6):
+		change_level(6)
+	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_RIGHT):
+		change_level(7)
+	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_END):
+		change_level(LEVEL_PATHS.size())
+
 	else:
 		return
 	
@@ -95,3 +114,4 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func update_device_type() -> void:
 	messager.update_input_device(device_type)
+	device_type_changed.emit(device_type)

@@ -19,7 +19,7 @@ func _ready() -> void:
 		add_child(player)
 	player.dead.connect(_on_dead)
 	
-	
+	const DELAY_SEC: float = 1.0
 	const FADE_DURATION_SEC: float = 0.7
 	const LABEL_DURATION_SEC: float = 3.0
 	#var canvas: CanvasLayer = CanvasLayer.new()
@@ -33,6 +33,7 @@ func _ready() -> void:
 	#label.set_anchor_and_offset(SIDE_TOP, 1.0, -32.0)
 	#label.set_anchor_and_offset(SIDE_LEFT, 0.0, 16.0)
 	var tw: Tween = create_tween().set_trans(Tween.TRANS_CIRC)
+	tw.tween_interval(DELAY_SEC)
 	tw.tween_property(label, ^"modulate:a", 1.0, FADE_DURATION_SEC)
 	tw.tween_interval(LABEL_DURATION_SEC)
 	tw.tween_property(label, ^"modulate:a", 0.0, FADE_DURATION_SEC)

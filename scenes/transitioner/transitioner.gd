@@ -12,6 +12,11 @@ var progress: Array = [0.0]
 var message_tw: Tween
 
 
+func _ready() -> void:
+	if Engine.is_editor_hint(): return
+	$BG.modulate.a 
+
+
 func _process(delta: float) -> void:
 	if not scene_path:
 		set_process(false)
@@ -42,7 +47,7 @@ func enter_new_scene() -> void:
 	scene_path = ""
 	
 	get_tree().node_added.connect(tween.bind(false).unbind(1), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
-	get_tree().node_added.connect(load_label.set_text.bind("...").unbind(1), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	get_tree().node_added.connect(load_label.set_text.bind("Entering level...").unbind(1), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	
 	var err: int = get_tree().change_scene_to_packed(scene)
 	assert(err == OK, "ERR: Packed Scene Instantiation (%s)" % error_string(err))
@@ -51,8 +56,8 @@ func enter_new_scene() -> void:
 
 func tween(is_start: bool) -> Tween:
 	var tw: Tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN).set_parallel(true)
-	tw.tween_property($Elements, "modulate:a", float(is_start), SCENE_FADE_TIME).set_delay(BG_FADE_TIME_SEC - SCENE_FADE_TIME)
-	tw.tween_property($BG, "modulate:a", float(is_start), BG_FADE_TIME_SEC)
+	tw.tween_property($Elements, "modulate:a", float(is_start), SCENE_FADE_TIME).set_delay(BG_FADE_TIME_SEC - SCENE_FADE_TIME).from(1.0 - float(is_start))
+	tw.tween_property($BG, "modulate:a", float(is_start), BG_FADE_TIME_SEC).from(1.0 - float(is_start))
 	if not is_start: 
 		tw.chain().tween_callback(reset).set_delay(0.1)
 	return tw

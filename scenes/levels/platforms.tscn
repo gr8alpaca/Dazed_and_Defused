@@ -742,10 +742,16 @@ material_override = ExtResource("3_qm67m")
 use_collision = true
 size = Vector3(4.5, 0.25, 5)
 
+[node name="StartPlatform2" type="CSGBox3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.75, -0.125, 0)
+material_override = ExtResource("3_qm67m")
+use_collision = true
+size = Vector3(4.5, 0.25, 2.5)
+
 [node name="Player" parent="." instance=ExtResource("4_gjcrb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.5, 0.5, 0)
 physics_material_override = SubResource("PhysicsMaterial_ql3nd")
-starting_camera_angle = -1.0472
+starting_camera_angle = -1.5708
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866024, -0.433016, 0.25, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 20, 0)
@@ -765,5 +771,5 @@ script = ExtResource("5_cd7sb")
 metadata/_custom_type_script = ExtResource("5_cd7sb")
 
 [node name="Goal" parent="." instance=ExtResource("6_ksrci")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.25, 0, 5.32907e-14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.75, 0, 5.32907e-14)
 input_ray_pickable = false

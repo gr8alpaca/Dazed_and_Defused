@@ -1,6 +1,9 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cntck7qneev4w"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cntck7qneev4w"]
 
+[ext_resource type="FontFile" uid="uid://bx8qweglvu8be" path="res://assets/ChubbyCrayon-Regular.ttf" id="1_cjfk0"]
 [ext_resource type="FontFile" uid="uid://cugsxjn7n3v2c" path="res://assets/Children-Regular.ttf" id="1_e1x85"]
 
 [resource]
 default_font = ExtResource("1_e1x85")
+HeaderLarge/font_sizes/font_size = 48
+HeaderLarge/fonts/font = ExtResource("1_cjfk0")

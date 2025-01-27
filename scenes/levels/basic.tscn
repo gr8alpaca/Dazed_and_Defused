@@ -180,7 +180,7 @@ physics_material_override = SubResource("PhysicsMaterial_ql3nd")
 starting_camera_angle = -1.5708
 
 [node name="Goal" parent="." instance=ExtResource("4_ijh0y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.6661, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.6661, -0.25, 0)
 input_ray_pickable = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
