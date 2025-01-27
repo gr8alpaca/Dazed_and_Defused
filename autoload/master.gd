@@ -1,7 +1,5 @@
 extends Node
 
-enum {DEVICE_KEYBOARD, DEVICE_XBOX, DEVICE_PLAYSTATION}
-
 const LEVEL_PATHS:PackedStringArray = [
 	"res://scenes/levels/basic.tscn",
 	"res://scenes/levels/tightrope.tscn",
@@ -12,23 +10,13 @@ const LEVEL_PATHS:PackedStringArray = [
 	"res://scenes/levels/traffic_light.tscn",
 	
 	# End Scene Here...
-	"res://scenes/menus/end.tscn",
+	"res://scenes/menus/end/end.tscn",
 ]
-
-signal device_type_changed(new_device_type: int)
 
 var messager: Messager
 var transitioner: Transitioner
 
 var current_level: int = 1
-
-var device_type: int = DEVICE_KEYBOARD:
-	set(val):
-		if device_type == val: return
-		device_type = val
-		update_device_type()
-
-
 
 func _ready() -> void:
 	
@@ -71,20 +59,6 @@ func reset_to_main() -> void:
 	transitioner.transition(ProjectSettings.get_setting("application/run/main_scene"))
 	current_level = 1
 
-func _input(event: InputEvent) -> void:
-	if (event is InputEventJoypadButton or event is InputEventJoypadMotion) and (device_type != DEVICE_PLAYSTATION or device_type != DEVICE_XBOX):
-		device_type = get_device_type(event.device)
-	if event is InputEventKey and device_type != DEVICE_KEYBOARD:
-		device_type = DEVICE_KEYBOARD
-
-
-func get_device_type(device: int) -> int:
-	var input_name:= Input.get_joy_name(device)
-	if input_name.containsn("PS4") or input_name.containsn("PS5") or input_name.containsn("Playstation"):
-		return DEVICE_PLAYSTATION
-	return DEVICE_XBOX
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_echo() or not event.is_pressed(): return
 	
@@ -106,12 +80,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		change_level(7)
 	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_END):
 		change_level(LEVEL_PATHS.size())
-
+	
 	else:
 		return
 	
 	get_viewport().set_input_as_handled()
-
-func update_device_type() -> void:
-	messager.update_input_device(device_type)
-	device_type_changed.emit(device_type)

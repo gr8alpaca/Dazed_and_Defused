@@ -7,6 +7,8 @@ const SCENE_PATH: String = "res://scenes/player/player.tscn"
 const ACCELERATION: float = 125.0
 const MAX_TILT_DEGREES: float = 20.0
 
+const SETTINGS: Settings = preload("res://resources/settings.tres")
+
 signal dead(collider: Node)
 
 @export_tool_button("Select Camera", "Camera3D")
@@ -86,7 +88,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 
 func get_force_vector(delta: float,) -> Vector3:
-	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1) if input_active else Vector2.ZERO
+	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", SETTINGS.movment_deadzone) if input_active else Vector2.ZERO
 	
 	var yaw: float = get_viewport().get_camera_3d().global_rotation.y 
 	var local_input: Vector2 = input.rotated(-yaw)

@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/environment/trap.gd" id="3_tx7ej"]
 [ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="4_p3bfi"]
 [ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="5_f0b36"]
-[ext_resource type="Texture2D" uid="uid://bdiqhgu1kf5ps" path="res://assets/textures/prototype/Red/texture_03.png" id="6_wj2ho"]
+[ext_resource type="Texture2D" uid="uid://bdiqhgu1kf5ps" path="res://assets/textures/prototype/red_solid.png" id="6_wj2ho"]
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="7_6utlk"]
 [ext_resource type="Script" uid="uid://cr3r4feojithi" path="res://scripts/environment/obstacle.gd" id="8_n6p06"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="9_j46fw"]

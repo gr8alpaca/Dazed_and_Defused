@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InputTextures" load_steps=3 format=3 uid="uid://cu07k71uv78xl"]
+
+[ext_resource type="Script" uid="uid://c8ndv3wdyd6pm" path="res://scripts/UI/input_textures.gd" id="1_ppo5j"]
+
+[sub_resource type="Resource" id="Resource_pvx34"]
+metadata/__load_path__ = "res://autoload/input_prompts.gd"
+
+[resource]
+script = ExtResource("1_ppo5j")
+metadata/_custom_type_script = SubResource("Resource_pvx34")

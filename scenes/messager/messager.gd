@@ -1,6 +1,6 @@
 @tool
 class_name Messager extends CanvasLayer
-const GRAYSCALE_MATERIAL: ShaderMaterial = preload("res://scenes/messager/grayscale_material.tres")
+const INPUT_TEXTURES: InputTextures = preload("res://resources/input_textures.tres")
 const ENVIRONMENT : Environment = preload("res://resources/environment/environment.tres")
 
 const FADE_IN_TIME: float = 0.5
@@ -14,6 +14,7 @@ func _ready() -> void:
 		connect_scene(get_tree().current_scene)
 	
 	get_tree().root.child_entered_tree.connect(_on_root_child_entered_tree)
+	INPUT_TEXTURES.changed.connect(update_input_device)
 
 func connect_scene(level: Level) -> void:
 	level.goal_reached.connect(_on_goal_reached)
@@ -43,9 +44,8 @@ func hide_all() -> void:
 	tw.tween_method(ENVIRONMENT.set_adjustment_saturation , 1.0, 1.0, FADE_IN_TIME)
 	%Rect.modulate.a = 0.0
 
-func update_input_device(type: int) -> void:
-	%ButtonTexture.texture = InputPrompt.TEXTURES[type].reset
-
+func update_input_device() -> void:
+	%ButtonTexture.texture = INPUT_TEXTURES.get_texture(&"reset")
 
 func _on_goal_reached() -> void:
 	show_message("Level Clear", 0.1)

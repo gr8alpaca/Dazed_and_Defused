@@ -3,6 +3,8 @@
 class_name PlayerCamera extends Node3D
 const GROUP: StringName = &"player_camera"
 
+const SETTINGS: Settings = preload("res://resources/settings.tres")
+
 @export_tool_button("Select Camera", "Camera3D") 
 var select_camera: Callable = select_camera_in_editor
 
@@ -19,15 +21,11 @@ const DISTANCE_FROM_PIVOT: float = 3.0
 
 const CAMERA_OFFSET: Vector3 = Vector3(0, 0.5, 0)
 
-
 const STARTING_PITCH: float = deg_to_rad(-30.0)
 const MIN_PITCH: float =  deg_to_rad(-55.0)
 const MAX_PITCH: float =  deg_to_rad(-5.0)
 
-
-
-const HORIZONTAL_CAMERA_SENSITIVITY: float = 3.0
-const VERTICAL_CAMERA_SENSITIVITY: float = 1.0
+const VERTICAL_CAMERA_SENSITIVITY_RATIO: float = 0.4
 
 @onready var player: Player = get_parent()
 
@@ -49,7 +47,8 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	_on_att_changed.call_deferred()
+	update_position()
+
 
 func _process(delta: float) -> void:
 	position = player.position
@@ -59,13 +58,10 @@ func _process(delta: float) -> void:
 
 
 func process_input(delta: float) -> void:
-	const HORIZONTAL_CAMERA_SENSITIVITY: float = 3.0
-	const VERTICAL_CAMERA_SENSITIVITY: float = 1.0
+	var input:= Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", SETTINGS.camera_deadzone)
+	cam.rotation.x = clampf(cam.rotation.x - input.y * SETTINGS.camera_sensitivity * VERTICAL_CAMERA_SENSITIVITY_RATIO * delta, MIN_PITCH, MAX_PITCH)
 	
-	var input:= Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", 0.2)
-	cam.rotation.x = clampf(cam.rotation.x - input.y * VERTICAL_CAMERA_SENSITIVITY * delta, MIN_PITCH, MAX_PITCH)
-	
-	rotation_pivot.rotation.y = fmod(rotation_pivot.rotation.y - input.x * HORIZONTAL_CAMERA_SENSITIVITY * delta, TAU)
+	rotation_pivot.rotation.y = fmod(rotation_pivot.rotation.y - input.x * SETTINGS.camera_sensitivity * delta, TAU)
 	#att.yaw = rotation_pivot.global_rotation_degrees.y
 	update_position()
 
@@ -74,22 +70,8 @@ func update_position() -> void:
 	var pre_offset_position: Vector3 = Vector3.FORWARD.rotated(Vector3.RIGHT, PI + cam.rotation.x) * (DISTANCE_FROM_PIVOT + 0.5)
 	cam.position = pre_offset_position + CAMERA_OFFSET
 
-
-
-# NOTE: For editor only!
-func _on_att_changed() -> void:
-	if not is_inside_tree(): 
-		await tree_entered
-	#update_rotation()
-	update_position()
-
-#func get_camera_dir() -> Vector2:
-	#var position_deltas := global_position - cam.global_position
-	#return Vector2(position_deltas.x, position_deltas.z).normalized()
-
 func get_yaw() -> float:
 	return rotation_pivot.rotation.y
-
 
 func select_camera_in_editor() -> void:
 	if not Engine.has_singleton(&"EditorInterface"): return
