@@ -76,8 +76,6 @@ func _ready() -> void:
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if Engine.is_editor_hint(): return
 	
-	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1) if input_active else Vector2.ZERO
-	
 	state.apply_central_force(get_force_vector(state.step))
 	
 	if debug_raycast:
@@ -100,7 +98,7 @@ func get_force_vector(delta: float,) -> Vector3:
 	var z_force: float = z_inp * ACCELERATION * delta
 	
 	return Vector3(x_force, 0, z_force)
-	#
+	
 
 
 func set_collision_sensor_enabled(enabled: bool) -> void:

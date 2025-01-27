@@ -1,4 +1,11 @@
-[gd_scene format=3 uid="uid://q41nl8axoysq"]
+[gd_scene load_steps=5 format=3 uid="uid://q41nl8axoysq"]
+
+[ext_resource type="Script" uid="uid://opj77j7k0eiy" path="res://models/floor.gd" id="1_qiond"]
+[ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_bv6an"]
+[ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_bep8a"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_w7cc5"]
+friction = 0.4
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -19,8 +26,35 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
 
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+metadata/_edit_lock_ = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+size = Vector2i(480, 360)
+
+[node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="Floor" type="Node3D" parent="SubViewportContainer/SubViewport/Node3D"]
+script = ExtResource("1_qiond")
+box_dimensions = Vector3(100, 0.1, 100)
+material = ExtResource("2_bv6an")
+metadata/_custom_type_script = ExtResource("1_qiond")
+
+[node name="Player" parent="SubViewportContainer/SubViewport/Node3D" instance=ExtResource("3_bep8a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.428537, 0.5, 0.478307)
+physics_material_override = SubResource("PhysicsMaterial_w7cc5")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Node3D"]
+transform = Transform3D(0.855364, -0.139308, 0.498944, 0, 0.963163, 0.26892, -0.518027, -0.230024, 0.823855, 1.72896, 1.74247, 2.7318)
+
 [node name="ButtonVBox" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
