@@ -1,0 +1,264 @@
+[gd_scene load_steps=22 format=3 uid="uid://btn5ttt5jwlnq"]
+
+[ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_k3aax"]
+[ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_dyjfh"]
+[ext_resource type="Script" uid="uid://cr3r4feojithi" path="res://scripts/environment/obstacle.gd" id="3_l52nm"]
+[ext_resource type="Material" uid="uid://bsdn0sngysfln" path="res://resources/materials/prototype_green.tres" id="4_618so"]
+[ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="5_444k1"]
+[ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/environment/trap.gd" id="5_k3aax"]
+[ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="6_dyjfh"]
+[ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="7_e5r6t"]
+[ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="7_l52nm"]
+[ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="8_cjlm8"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_d2tr0"]
+height = 22.0
+radius = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hhxix"]
+material = ExtResource("2_dyjfh")
+top_radius = 2.0
+bottom_radius = 2.0
+height = 22.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hhxix"]
+size = Vector3(1, 1.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xmsj2"]
+material = ExtResource("4_618so")
+size = Vector3(1, 1.5, 0.5)
+
+[sub_resource type="Resource" id="Resource_618so"]
+script = ExtResource("7_l52nm")
+start_value = 28.0
+end_value = 33.0
+action_speed_sec = 0.301
+idle_duration_sec = 1.001
+tween_ease = 1
+tween_trans = 3
+target_node_path = NodePath("../EndPlatform")
+path = "position:x"
+reset_speed_sec = 1.0
+arguments = []
+metadata/_custom_type_script = ExtResource("7_l52nm")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dyjfh"]
+size = Vector3(1, 5, 5)
+
+[sub_resource type="Resource" id="Resource_l52nm"]
+script = ExtResource("6_dyjfh")
+target_node_path = NodePath("../EndTrap")
+path = "disable"
+reset_speed_sec = 0.001
+arguments = []
+metadata/_custom_type_script = ExtResource("6_dyjfh")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k3aax"]
+size = Vector3(20, 5, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k3aax"]
+material = ExtResource("2_dyjfh")
+size = Vector3(6, 4, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l52nm"]
+size = Vector3(6, 4, 10)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ql3nd"]
+friction = 0.4
+rough = true
+
+[node name="Turbine" type="Node3D"]
+script = ExtResource("1_k3aax")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Environment"]
+transform = Transform3D(0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(0.906297, -0.422615, 0, 0.422615, 0.906297, 0, 0, 0, 1, 0.633923, -1.35944, 0)
+use_collision = true
+size = Vector3(6, 4, 10)
+material = ExtResource("2_dyjfh")
+
+[node name="Shaft" type="AnimatableBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0.000185315, 0, -0.000185315, 1, 14, -2, 0)
+script = ExtResource("3_l52nm")
+property_path = "rotation:x"
+end_val = 6.283
+duration_sec = 2.001
+metadata/_custom_type_script = ExtResource("3_l52nm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_d2tr0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_hhxix")
+
+[node name="PegCollision1" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 0.000416958)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh1" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 0.000416958)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="PegCollision2" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 4.75, 1.94877, -1.12464)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh2" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 4.75, 1.94877, -1.12464)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="PegCollision3" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -1.45039e-07, 1, 0, -1, -1.45039e-07, 4.75, 0.000416756, -2.25)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh3" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -1.45039e-07, 1, 0, -1, -1.45039e-07, 4.75, 0.000416756, -2.25)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="PegCollision4" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, -3.25, -0.582746, 2.17323)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh4" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, -3.25, -0.582746, 2.17323)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="PegCollision5" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -0.965926, -0.258819, 0, 0.258819, -0.965926, -6.5, -2.17344, 0.58194)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh5" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -0.965926, -0.258819, 0, 0.258819, -0.965926, -6.5, -2.17344, 0.58194)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="PegCollision6" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866026, 0, -0.866026, -0.5, -8, -1.12464, -1.94877)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh6" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866026, 0, -0.866026, -0.5, -8, -1.12464, -1.94877)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="PegCollision7" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -8, 2.17323, 0.582746)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh7" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -8, 2.17323, 0.582746)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="PegCollision8" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -0.866026, 0.5, 0, -0.5, -0.866026, -3.25, -1.94835, -1.12536)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh8" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -0.866026, 0.5, 0, -0.5, -0.866026, -3.25, -1.94835, -1.12536)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="PegCollision9" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -0.965926, -0.258819, 0, 0.258819, -0.965926, 1.5, -2.17344, 0.581941)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh9" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -0.965926, -0.258819, 0, 0.258819, -0.965926, 1.5, -2.17344, 0.581941)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="PegCollision11" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, 0.866026, -0.5, 0, 0.5, 0.866026, 9.25, 1.94835, 1.12536)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh11" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, 0.866026, -0.5, 0, 0.5, 0.866026, 9.25, 1.94835, 1.12536)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="PegCollision10" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -1, -1.74754e-07, 0, 1.74754e-07, -1, 7.25, -2.25, -0.000416565)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh10" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -1, -1.74754e-07, 0, 1.74754e-07, -1, 7.25, -2.25, -0.000416565)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="PegCollision12" type="CollisionShape3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -1, -1.74754e-07, 0, 1.74754e-07, -1, -10.425, -2.25, -0.000416565)
+shape = SubResource("BoxShape3D_hhxix")
+
+[node name="PegMesh12" type="MeshInstance3D" parent="Environment/Shaft"]
+transform = Transform3D(1, 0, 0, 0, -1, -1.74754e-07, 0, 1.74754e-07, -1, -10.425, -2.25, -0.000416565)
+mesh = SubResource("BoxMesh_xmsj2")
+
+[node name="EndTrap" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.25, -1.5, 0.25)
+script = ExtResource("5_k3aax")
+area_trigger = NodePath("Area3D")
+actions = Array[ExtResource("6_dyjfh")]([SubResource("Resource_618so")])
+metadata/_custom_type_script = ExtResource("5_k3aax")
+
+[node name="Area3D" type="Area3D" parent="Environment/EndTrap"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/EndTrap/Area3D"]
+shape = SubResource("BoxShape3D_dyjfh")
+
+[node name="TimeTrap" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.25, -1.5, 0.25)
+script = ExtResource("5_k3aax")
+area_trigger = NodePath("Area3D")
+delay_sec = 6.001
+actions = Array[ExtResource("6_dyjfh")]([SubResource("Resource_l52nm")])
+metadata/_custom_type_script = ExtResource("5_k3aax")
+
+[node name="Area3D" type="Area3D" parent="Environment/TimeTrap"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/TimeTrap/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.75, 0, 0)
+shape = SubResource("BoxShape3D_k3aax")
+
+[node name="EndPlatform" type="AnimatableBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/EndPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+mesh = SubResource("BoxMesh_k3aax")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/EndPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+shape = SubResource("BoxShape3D_l52nm")
+
+[node name="Goal" parent="Environment/EndPlatform" instance=ExtResource("7_e5r6t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6661, 0, 0)
+input_ray_pickable = false
+
+[node name="Player" parent="." instance=ExtResource("5_444k1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499998, 0)
+physics_material_override = SubResource("PhysicsMaterial_ql3nd")
+starting_camera_angle = -1.5708
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.25, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 9, 0)
+light_energy = 0.5
+shadow_enabled = true
+shadow_opacity = 0.7
+directional_shadow_mode = 0
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 35.0
+
+[node name="DeathBox" type="Area3D" parent="."]
+transform = Transform3D(0.999941, 0, 0.0108732, 0, 1, 0, -0.0108732, 0, 0.999941, 4, -6.25, 0)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("8_cjlm8")
+metadata/_custom_type_script = ExtResource("8_cjlm8")

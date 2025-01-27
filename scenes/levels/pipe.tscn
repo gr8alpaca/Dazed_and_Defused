@@ -94,7 +94,7 @@ size = Vector3(9, 4.75, 8)
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2n3hm"]
 friction = 0.4
 
-[node name="3" type="Node3D"]
+[node name="Pipe" type="Node3D"]
 script = ExtResource("1_t3mkv")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

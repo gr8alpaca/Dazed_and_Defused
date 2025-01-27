@@ -21,7 +21,7 @@ const CAMERA_OFFSET: Vector3 = Vector3(0, 0.5, 0)
 
 
 const STARTING_PITCH: float = deg_to_rad(-30.0)
-const MIN_PITCH: float =  deg_to_rad(-45.0)
+const MIN_PITCH: float =  deg_to_rad(-55.0)
 const MAX_PITCH: float =  deg_to_rad(-5.0)
 
 
@@ -30,12 +30,6 @@ const HORIZONTAL_CAMERA_SENSITIVITY: float = 3.0
 const VERTICAL_CAMERA_SENSITIVITY: float = 1.0
 
 @onready var player: Player = get_parent()
-
-@export var att: ControllerAttributes:
-	set(val):
-		att = val if val else ControllerAttributes.new()
-		att.pivot_distance_changed.connect(update_position)
-		att.changed.connect(_on_att_changed)
 
 var rotation_pivot: Node3D
 var cam: Camera3D
@@ -72,47 +66,14 @@ func process_input(delta: float) -> void:
 	cam.rotation.x = clampf(cam.rotation.x - input.y * VERTICAL_CAMERA_SENSITIVITY * delta, MIN_PITCH, MAX_PITCH)
 	
 	rotation_pivot.rotation.y = fmod(rotation_pivot.rotation.y - input.x * HORIZONTAL_CAMERA_SENSITIVITY * delta, TAU)
-	att.yaw = rotation_pivot.global_rotation_degrees.y
+	#att.yaw = rotation_pivot.global_rotation_degrees.y
 	update_position()
 
-
-func update_cam(input: Vector2, state: PhysicsDirectBodyState3D) -> void:
-	return
-	assert(is_inside_tree(), "Method 'update_cam' called outside of tree!")
-	var rotation_delta: float = att.tilt_speed * state.step
-
-	var target_pitch: float = lerpf(0.0, att.pitch_limit_deg, -input.y)
-	att.pitch = move_toward(att.pitch, target_pitch, rotation_delta)
-
-	var target_roll: float = lerpf(0.0, att.roll_limit_deg, input.x)
-	
-	
-	att.roll = move_toward(att.roll, target_roll, rotation_delta)
-	#update_rotation()
-	update_yaw(state)
-	update_position()
 
 func update_position() -> void:
 	var pre_offset_position: Vector3 = Vector3.FORWARD.rotated(Vector3.RIGHT, PI + cam.rotation.x) * (DISTANCE_FROM_PIVOT + 0.5)
 	cam.position = pre_offset_position + CAMERA_OFFSET
 
-
-func update_yaw(state: PhysicsDirectBodyState3D) -> void:
-	const YAW_SPEED: float = 0.2
-	const MAX_RADIANS_PER_SECOND: float = PI
-	const DEFAULT_VELOCITY_DIR := Vector2.UP
-	
-	var vel_dir: Vector2 = Vector2(state.linear_velocity.x, state.linear_velocity.z, )
-	#var cam_dir: Vector2 = get_camera_dir()
-	var vel_norm: Vector2 = vel_dir.normalized()
-	var ang_delta: float = vel_norm.angle() - DEFAULT_VELOCITY_DIR.angle()
-	var t: float = (vel_dir.length() * state.step)
-	
-	var rotated_angle: float = lerp_angle(rotation_pivot.global_rotation.y, -ang_delta, t)
-	var max_move: float = state.step * MAX_RADIANS_PER_SECOND
-	var new_ang: float = move_toward(rotation_pivot.global_rotation.y, rotated_angle, max_move)
-	rotation_pivot.global_rotation.y = new_ang
-	att.yaw = rotation_pivot.global_rotation_degrees.y
 
 
 # NOTE: For editor only!
@@ -129,10 +90,6 @@ func _on_att_changed() -> void:
 func get_yaw() -> float:
 	return rotation_pivot.rotation.y
 
-func set_att(att: ControllerAttributes) -> PlayerCamera:
-	self.att = att
-	#if Engine.is_editor_hint(): _on_att_changed()
-	return self
 
 func select_camera_in_editor() -> void:
 	if not Engine.has_singleton(&"EditorInterface"): return

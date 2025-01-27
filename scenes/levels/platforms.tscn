@@ -1,0 +1,769 @@
+[gd_scene load_steps=10 format=3 uid="uid://bb1rbmvm7gof5"]
+
+[ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_g5im7"]
+[ext_resource type="Script" uid="uid://cr3r4feojithi" path="res://scripts/environment/obstacle.gd" id="2_824rm"]
+[ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="3_qm67m"]
+[ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="4_gjcrb"]
+[ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="5_cd7sb"]
+[ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="6_ksrci"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_oi4me"]
+material = ExtResource("3_qm67m")
+size = Vector3(1, 0.25, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b1hel"]
+size = Vector3(1, 0.25, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ql3nd"]
+friction = 0.4
+rough = true
+
+[node name="Platforms" type="Node3D"]
+script = ExtResource("1_g5im7")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="Tile" type="AnimatableBody3D" parent="Environment"]
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 0.0
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX-" type="AnimatableBody3D" parent="Environment/Tile"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX+" type="AnimatableBody3D" parent="Environment/Tile"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ-" type="AnimatableBody3D" parent="Environment/Tile"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ+" type="AnimatableBody3D" parent="Environment/Tile"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="Tile2" type="AnimatableBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 0.0
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX-" type="AnimatableBody3D" parent="Environment/Tile2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile2/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile2/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX-2" type="AnimatableBody3D" parent="Environment/Tile2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile2/TileX-2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile2/TileX-2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ-" type="AnimatableBody3D" parent="Environment/Tile2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile2/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile2/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ+" type="AnimatableBody3D" parent="Environment/Tile2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile2/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile2/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="Tile3" type="AnimatableBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 0.0
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX+" type="AnimatableBody3D" parent="Environment/Tile3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile3/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile3/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ-" type="AnimatableBody3D" parent="Environment/Tile3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile3/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile3/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ+" type="AnimatableBody3D" parent="Environment/Tile3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile3/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile3/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="Tile4" type="AnimatableBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, 5)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 0.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX-" type="AnimatableBody3D" parent="Environment/Tile4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile4/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile4/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX+" type="AnimatableBody3D" parent="Environment/Tile4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile4/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile4/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ-" type="AnimatableBody3D" parent="Environment/Tile4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile4/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile4/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ+" type="AnimatableBody3D" parent="Environment/Tile4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile4/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile4/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="Tile5" type="AnimatableBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, -5)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 0.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX-" type="AnimatableBody3D" parent="Environment/Tile5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile5/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile5/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX+" type="AnimatableBody3D" parent="Environment/Tile5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile5/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile5/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ-" type="AnimatableBody3D" parent="Environment/Tile5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile5/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile5/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ+" type="AnimatableBody3D" parent="Environment/Tile5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile5/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile5/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="Tile6" type="AnimatableBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 0.0
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX-" type="AnimatableBody3D" parent="Environment/Tile6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile6/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile6/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX+" type="AnimatableBody3D" parent="Environment/Tile6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile6/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile6/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX+2" type="AnimatableBody3D" parent="Environment/Tile6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile6/TileX+2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile6/TileX+2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ-" type="AnimatableBody3D" parent="Environment/Tile6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile6/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile6/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ+" type="AnimatableBody3D" parent="Environment/Tile6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile6/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile6/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="Tile7" type="AnimatableBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -1.5)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 0.0
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX-" type="AnimatableBody3D" parent="Environment/Tile7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile7/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile7/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX+" type="AnimatableBody3D" parent="Environment/Tile7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile7/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile7/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX+2" type="AnimatableBody3D" parent="Environment/Tile7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile7/TileX+2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile7/TileX+2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ-" type="AnimatableBody3D" parent="Environment/Tile7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile7/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile7/TileZ-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="Tile8" type="AnimatableBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 1.5)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 0.0
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX-" type="AnimatableBody3D" parent="Environment/Tile8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = -3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile8/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile8/TileX-"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX+" type="AnimatableBody3D" parent="Environment/Tile8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile8/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile8/TileX+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileX+2" type="AnimatableBody3D" parent="Environment/Tile8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("2_824rm")
+property_path = "position:x"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile8/TileX+2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile8/TileX+2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="TileZ+" type="AnimatableBody3D" parent="Environment/Tile8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+script = ExtResource("2_824rm")
+property_path = "position:z"
+end_val = 3.0
+duration_sec = 2.001
+tween_both_ways = true
+tween_as_relative = true
+metadata/_custom_type_script = ExtResource("2_824rm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Tile8/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+mesh = SubResource("BoxMesh_oi4me")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Tile8/TileZ+"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+shape = SubResource("BoxShape3D_b1hel")
+
+[node name="StartPlatform" type="CSGBox3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.25, -0.125, 0)
+material_override = ExtResource("3_qm67m")
+use_collision = true
+size = Vector3(4.5, 0.25, 5)
+
+[node name="Player" parent="." instance=ExtResource("4_gjcrb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.5, 0.5, 0)
+physics_material_override = SubResource("PhysicsMaterial_ql3nd")
+starting_camera_angle = -1.0472
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.25, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 20, 0)
+light_energy = 0.5
+shadow_enabled = true
+shadow_opacity = 0.7
+directional_shadow_mode = 0
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 35.0
+
+[node name="DeathBox" type="Area3D" parent="."]
+transform = Transform3D(0.999941, 0, 0.0108732, 0, 1, 0, -0.0108732, 0, 0.999941, 4, -2, 0)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("5_cd7sb")
+metadata/_custom_type_script = ExtResource("5_cd7sb")
+
+[node name="Goal" parent="." instance=ExtResource("6_ksrci")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.25, 0, 5.32907e-14)
+input_ray_pickable = false

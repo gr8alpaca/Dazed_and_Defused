@@ -1,18 +1,18 @@
 [gd_scene load_steps=28 format=4 uid="uid://blg8v1lrpbae3"]
 
-[ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="1_mpdjq"]
-[ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_souht"]
-[ext_resource type="Script" uid="uid://cr3r4feojithi" path="res://scripts/environment/obstacle.gd" id="2_afygv"]
-[ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="2_mx7cr"]
-[ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_afygv"]
-[ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/environment/trap.gd" id="5_8jtne"]
-[ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="5_kt1qv"]
-[ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="6_fnalb"]
-[ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="6_mp0kl"]
-[ext_resource type="Texture2D" uid="uid://bdiqhgu1kf5ps" path="res://assets/textures/prototype/Red/texture_03.png" id="7_fnalb"]
+[ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_5ruh6"]
+[ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_mroia"]
+[ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/environment/trap.gd" id="3_tx7ej"]
+[ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="4_p3bfi"]
+[ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="5_f0b36"]
+[ext_resource type="Texture2D" uid="uid://bdiqhgu1kf5ps" path="res://assets/textures/prototype/Red/texture_03.png" id="6_wj2ho"]
+[ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="7_6utlk"]
+[ext_resource type="Script" uid="uid://cr3r4feojithi" path="res://scripts/environment/obstacle.gd" id="8_n6p06"]
+[ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="9_j46fw"]
+[ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="10_2u7fu"]
 
 [sub_resource type="Resource" id="Resource_sipdq"]
-script = ExtResource("6_fnalb")
+script = ExtResource("5_f0b36")
 start_value = 10.0
 end_value = 1.0
 action_speed_sec = 0.201
@@ -23,14 +23,14 @@ target_node_path = NodePath("Piston")
 path = "position:y"
 reset_speed_sec = 8.001
 arguments = []
-metadata/_custom_type_script = ExtResource("6_fnalb")
+metadata/_custom_type_script = ExtResource("5_f0b36")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fnalb"]
 size = Vector3(3.25, 1, 2.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ci58i"]
 depth_draw_mode = 1
-albedo_texture = ExtResource("7_fnalb")
+albedo_texture = ExtResource("6_wj2ho")
 distance_fade_mode = 1
 distance_fade_min_distance = 20.0
 distance_fade_max_distance = 0.0
@@ -49,7 +49,7 @@ _surfaces = [{
 "aabb": AABB(-10, -0.25, -1.5, 20, 0.5, 3),
 "attribute_data": PackedByteArray("AAAAP6uqaj8AAIA/AACAPwAAAD+rqqo9AAAAP6uqqj0AAAAAAAAAAAAAAACrqqo9AAAAP6uqqj0AAIA/AAAAAAAAAAAAAAAAq6qqPQAAAAAAAAAAAAAAAKuqqj0AAIA/AAAAAAAAgD8AAAA/q6pqPwAAAACrqmo/AACAPwAAgD8AAAA/q6pqPwAAAAAAAIA/q6pqPwAAAAAAAIA/AACAPwAAgD8AAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAAAAAAAA/q6qqPQAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAAAAAAAA/q6qqPQAAgD8AAIA/q6qqPQAAgD8AAAAAAAAAAAAAAAAAAIA/AACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/AAAAAAAAgD8AAAA/q6pqPwAAAACrqmo/AACAPwAAgD8AAAA/q6pqPwAAAAAAAIA/q6pqPwAAgD8AAIA/AACAP6uqaj8AAAAAAAAAP6uqqj0AAAAAAAAAAAAAAACrqqo9AAAAP6uqqj0AAIA/AAAAAAAAAAAAAAAAAAAAP6uqaj8AAIA/AACAPwAAAD+rqqo9AAAAAAAAAAAAAIA/AACAPwAAgD8AAAAAAAAAAAAAAAAAAIA/AACAPwAAgD8AAAAAAAAAAAAAgD8AAIA/AAAAPwAAgD8AAIA/AAAAAAAAAD8AAIA/AAAAAAAAgD8AAAA/AACAPwAAAAAAAAAAAAAAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAD8AAAAAAACAPwAAAAAAAAA/"),
 "format": 34359738391,
-"material": ExtResource("1_mpdjq"),
+"material": ExtResource("2_mroia"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 84,
@@ -60,7 +60,7 @@ _surfaces = [{
 data = PackedVector3Array(10, 0, -1.25, 10, -0.25, -1.5, 10, 0, 1.25, 10, 0, 1.25, 10, 0.25, 1.5, 10, 0.25, 1.25, 10, 0, 1.25, 10, -0.25, 1.5, 10, 0.25, 1.5, 10, 0.25, 1.25, 10, 0.25, 1.5, -10, 0.25, 1.25, 10, 0.25, -1.5, 10, 0, -1.25, 10, 0.25, -1.25, 10, -0.25, -1.5, 10, 0, -1.25, 10, 0.25, -1.5, 10, 0.25, -1.25, -10, 0.25, -1.5, 10, 0.25, -1.5, 10, -0.25, -1.5, 10, 0.25, -1.5, -10, 0.25, -1.5, 10, -0.25, 1.5, 10, 0, 1.25, 10, -0.25, -1.5, 10, 0.25, 1.5, 10, -0.25, 1.5, -10, -0.25, 1.5, -10, -0.25, 1.5, 10, -0.25, 1.5, 10, -0.25, -1.5, -10, -0.25, -1.5, -10, 0, -1.25, -10, -0.25, 1.5, -10, 0.25, 1.25, 10, 0.25, 1.5, -10, 0.25, 1.5, -10, 0.25, 1.5, 10, 0.25, 1.5, -10, -0.25, 1.5, -10, 0.25, 1.5, -10, 0, 1.25, -10, 0.25, 1.25, -10, -0.25, 1.5, -10, 0, 1.25, -10, 0.25, 1.5, -10, 0.25, -1.25, -10, 0.25, -1.5, 10, 0.25, -1.25, -10, 0, -1.25, -10, 0.25, -1.5, -10, 0.25, -1.25, -10, 0, -1.25, -10, -0.25, -1.5, -10, 0.25, -1.5, -10, 0, 1.25, -10, -0.25, 1.5, -10, 0, -1.25, 10, -0.25, -1.5, -10, 0.25, -1.5, -10, -0.25, -1.5, -10, -0.25, 1.5, 10, -0.25, -1.5, -10, -0.25, -1.5, 10, 0, 1.25, -10, 0.25, 1.25, -10, 0, 1.25, 10, 0.25, -1.25, -10, 0, -1.25, -10, 0.25, -1.25, -10, 0, -1.25, 10, 0.25, -1.25, 10, 0, -1.25, -10, 0, -1.25, 10, 0, -1.25, -10, 0, 1.25, 10, 0, -1.25, 10, 0, 1.25, -10, 0, 1.25, -10, 0.25, 1.25, 10, 0, 1.25, 10, 0.25, 1.25)
 
 [sub_resource type="Resource" id="Resource_0v1d0"]
-script = ExtResource("6_fnalb")
+script = ExtResource("5_f0b36")
 start_value = 1.0
 end_value = -2.0
 action_speed_sec = 0.001
@@ -71,10 +71,10 @@ target_node_path = NodePath("..")
 path = "cushion"
 reset_speed_sec = 3.001
 arguments = []
-metadata/_custom_type_script = ExtResource("6_fnalb")
+metadata/_custom_type_script = ExtResource("5_f0b36")
 
 [sub_resource type="Resource" id="Resource_i33xw"]
-script = ExtResource("6_fnalb")
+script = ExtResource("5_f0b36")
 start_value = 0.0
 end_value = -90.0
 action_speed_sec = 0.301
@@ -85,13 +85,13 @@ target_node_path = NodePath("..")
 path = "rotation_degrees:z"
 reset_speed_sec = 1.501
 arguments = []
-metadata/_custom_type_script = ExtResource("6_fnalb")
+metadata/_custom_type_script = ExtResource("5_f0b36")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_souht"]
 size = Vector3(3.5, 2, 3)
 
 [sub_resource type="Resource" id="Resource_kt1qv"]
-script = ExtResource("6_fnalb")
+script = ExtResource("5_f0b36")
 start_value = 0.0
 end_value = 90.0
 action_speed_sec = 0.301
@@ -102,10 +102,10 @@ target_node_path = NodePath("..")
 path = "rotation_degrees:z"
 reset_speed_sec = 1.501
 arguments = []
-metadata/_custom_type_script = ExtResource("6_fnalb")
+metadata/_custom_type_script = ExtResource("5_f0b36")
 
 [sub_resource type="Resource" id="Resource_64ba3"]
-script = ExtResource("6_fnalb")
+script = ExtResource("5_f0b36")
 start_value = -2.0
 end_value = 3.0
 action_speed_sec = 0.151
@@ -116,13 +116,13 @@ target_node_path = NodePath("../Bridge3")
 path = "position:x"
 reset_speed_sec = 4.001
 arguments = []
-metadata/_custom_type_script = ExtResource("6_fnalb")
+metadata/_custom_type_script = ExtResource("5_f0b36")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sipdq"]
 size = Vector3(2.25, 1, 3.5)
 
 [sub_resource type="Resource" id="Resource_76eh3"]
-script = ExtResource("6_fnalb")
+script = ExtResource("5_f0b36")
 start_value = 0.0
 end_value = -4.0
 action_speed_sec = 0.151
@@ -133,13 +133,13 @@ target_node_path = NodePath("../Bridge3")
 path = "position:z"
 reset_speed_sec = 4.001
 arguments = []
-metadata/_custom_type_script = ExtResource("6_fnalb")
+metadata/_custom_type_script = ExtResource("5_f0b36")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pcsq5"]
 size = Vector3(14, 1, 3.5)
 
 [sub_resource type="Resource" id="Resource_7lk5s"]
-script = ExtResource("6_fnalb")
+script = ExtResource("5_f0b36")
 start_value = 0.0
 end_value = 4.0
 action_speed_sec = 0.151
@@ -150,13 +150,13 @@ target_node_path = NodePath("../Bridge3")
 path = "position:z"
 reset_speed_sec = 4.001
 arguments = []
-metadata/_custom_type_script = ExtResource("6_fnalb")
+metadata/_custom_type_script = ExtResource("5_f0b36")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fnalb"]
 friction = 0.4
 
-[node name="2" type="Node3D"]
-script = ExtResource("1_souht")
+[node name="Bridge" type="Node3D"]
+script = ExtResource("1_5ruh6")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 10, 0)
@@ -175,13 +175,13 @@ use_collision = true
 [node name="Base" type="CSGBox3D" parent="Environment/Bridge"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25, 0, 0)
 size = Vector3(14.5, 0.5, 3)
-material = ExtResource("1_mpdjq")
+material = ExtResource("2_mroia")
 
 [node name="Subtraction" type="CSGBox3D" parent="Environment/Bridge"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.375, 0.25, 0)
 operation = 2
 size = Vector3(14.25, 0.5, 2.5)
-material = ExtResource("1_mpdjq")
+material = ExtResource("2_mroia")
 
 [node name="Bridge2" type="CSGCombiner3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0)
@@ -190,20 +190,20 @@ metadata/cushion = 0.0
 
 [node name="Base" type="CSGBox3D" parent="Environment/Bridge2"]
 size = Vector3(20, 0.5, 3)
-material = ExtResource("1_mpdjq")
+material = ExtResource("2_mroia")
 
 [node name="Subtraction" type="CSGBox3D" parent="Environment/Bridge2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.125, 0.25, 0)
 operation = 2
 size = Vector3(19.75, 0.5, 2.5)
-material = ExtResource("1_mpdjq")
+material = ExtResource("2_mroia")
 
 [node name="PistonTrap" type="Node3D" parent="Environment/Bridge2" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.125, 0, 0)
-script = ExtResource("5_8jtne")
+script = ExtResource("3_tx7ej")
 area_trigger = NodePath("Area3D")
-actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_sipdq")])
-metadata/_custom_type_script = ExtResource("5_8jtne")
+actions = Array[ExtResource("4_p3bfi")]([SubResource("Resource_sipdq")])
+metadata/_custom_type_script = ExtResource("3_tx7ej")
 
 [node name="Area3D" type="Area3D" parent="Environment/Bridge2/PistonTrap"]
 collision_layer = 0
@@ -230,21 +230,21 @@ use_collision = true
 [node name="Base" type="CSGBox3D" parent="Environment/Bridge3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.875, 0, 0)
 size = Vector3(11.75, 0.5, 2)
-material = ExtResource("1_mpdjq")
+material = ExtResource("2_mroia")
 
 [node name="Subtraction" type="CSGBox3D" parent="Environment/Bridge3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.25, 0)
 operation = 2
 size = Vector3(11, 0.5, 1.5)
-material = ExtResource("1_mpdjq")
+material = ExtResource("2_mroia")
 
-[node name="Goal2" parent="Environment/Bridge3" instance=ExtResource("2_mx7cr")]
+[node name="Goal2" parent="Environment/Bridge3" instance=ExtResource("7_6utlk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.75, -0.25, 0)
 input_ray_pickable = false
 
 [node name="SpinningBridge" type="AnimatableBody3D" parent="Environment"]
 transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 19.5, 0, 0)
-script = ExtResource("2_afygv")
+script = ExtResource("8_n6p06")
 property_path = "rotation:y"
 start_val = -1.571
 end_val = 4.713
@@ -260,12 +260,12 @@ shape = SubResource("ConcavePolygonShape3D_mp0kl")
 
 [node name="BridgeFlipper" type="Node3D" parent="Environment/SpinningBridge" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0.000185315, 0, 1, 0, -0.000185315, 0, 1, -6.5, 0, 0.00120455)
-script = ExtResource("5_8jtne")
+script = ExtResource("3_tx7ej")
 area_trigger = NodePath("Area3D")
 delay_sec = 2.501
 cancel_on_player_exit = true
-actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_0v1d0"), SubResource("Resource_i33xw")])
-metadata/_custom_type_script = ExtResource("5_8jtne")
+actions = Array[ExtResource("4_p3bfi")]([SubResource("Resource_0v1d0"), SubResource("Resource_i33xw")])
+metadata/_custom_type_script = ExtResource("3_tx7ej")
 
 [node name="Area3D" type="Area3D" parent="Environment/SpinningBridge/BridgeFlipper"]
 transform = Transform3D(1, -2.98023e-08, -0.000185315, 0, 1, 0, 0.000185315, -5.52281e-12, 1, 0, 0, -0.00120455)
@@ -279,12 +279,12 @@ shape = SubResource("BoxShape3D_souht")
 
 [node name="BridgeFlipper2" type="Node3D" parent="Environment/SpinningBridge" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0.000185315, 0, 1, 0, -0.000185315, 0, 1, 9, 0, -0.00166783)
-script = ExtResource("5_8jtne")
+script = ExtResource("3_tx7ej")
 area_trigger = NodePath("Area3D")
 delay_sec = 2.501
 cancel_on_player_exit = true
-actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_0v1d0"), SubResource("Resource_kt1qv")])
-metadata/_custom_type_script = ExtResource("5_8jtne")
+actions = Array[ExtResource("4_p3bfi")]([SubResource("Resource_0v1d0"), SubResource("Resource_kt1qv")])
+metadata/_custom_type_script = ExtResource("3_tx7ej")
 
 [node name="Area3D" type="Area3D" parent="Environment/SpinningBridge/BridgeFlipper2"]
 transform = Transform3D(1, -2.98023e-08, -0.000185315, 0, 1, 0, 0.000185315, -5.52281e-12, 1, 0, 0, -0.00120455)
@@ -298,11 +298,11 @@ shape = SubResource("BoxShape3D_souht")
 
 [node name="UnderneathTrap" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -1, 0)
-script = ExtResource("5_8jtne")
+script = ExtResource("3_tx7ej")
 area_trigger = NodePath("UnderneathTrapArea")
 delay_sec = 0.501
-actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_64ba3")])
-metadata/_custom_type_script = ExtResource("5_8jtne")
+actions = Array[ExtResource("4_p3bfi")]([SubResource("Resource_64ba3")])
+metadata/_custom_type_script = ExtResource("3_tx7ej")
 
 [node name="UnderneathTrapArea" type="Area3D" parent="Environment/UnderneathTrap"]
 collision_layer = 0
@@ -314,11 +314,11 @@ shape = SubResource("BoxShape3D_sipdq")
 
 [node name="UnderneathTrap2" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, -1, 3.5)
-script = ExtResource("5_8jtne")
+script = ExtResource("3_tx7ej")
 area_trigger = NodePath("UnderneathTrapArea")
 delay_sec = 0.501
-actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_76eh3")])
-metadata/_custom_type_script = ExtResource("5_8jtne")
+actions = Array[ExtResource("4_p3bfi")]([SubResource("Resource_76eh3")])
+metadata/_custom_type_script = ExtResource("3_tx7ej")
 
 [node name="UnderneathTrapArea" type="Area3D" parent="Environment/UnderneathTrap2"]
 collision_layer = 0
@@ -330,11 +330,11 @@ shape = SubResource("BoxShape3D_pcsq5")
 
 [node name="UnderneathTrap3" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, -1, -3.5)
-script = ExtResource("5_8jtne")
+script = ExtResource("3_tx7ej")
 area_trigger = NodePath("UnderneathTrapArea")
 delay_sec = 0.501
-actions = Array[ExtResource("5_kt1qv")]([SubResource("Resource_7lk5s")])
-metadata/_custom_type_script = ExtResource("5_8jtne")
+actions = Array[ExtResource("4_p3bfi")]([SubResource("Resource_7lk5s")])
+metadata/_custom_type_script = ExtResource("3_tx7ej")
 
 [node name="UnderneathTrapArea" type="Area3D" parent="Environment/UnderneathTrap3"]
 collision_layer = 0
@@ -344,11 +344,11 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/UnderneathTrap3/UnderneathTrapArea"]
 shape = SubResource("BoxShape3D_pcsq5")
 
-[node name="Goal" parent="." instance=ExtResource("2_mx7cr")]
+[node name="Goal" parent="." instance=ExtResource("7_6utlk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.25, 0, 0)
 input_ray_pickable = false
 
-[node name="Player" parent="." instance=ExtResource("3_afygv")]
+[node name="Player" parent="." instance=ExtResource("9_j46fw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.675, 0)
 physics_material_override = SubResource("PhysicsMaterial_fnalb")
 starting_camera_angle = -1.5708
@@ -362,5 +362,5 @@ monitorable = false
 gravity_space_override = 3
 gravity = 19.6
 linear_damp_space_override = 3
-script = ExtResource("6_mp0kl")
-metadata/_custom_type_script = ExtResource("6_mp0kl")
+script = ExtResource("10_2u7fu")
+metadata/_custom_type_script = ExtResource("10_2u7fu")

@@ -147,6 +147,10 @@ godmode={
 
 3d_physics/layer_2="player"
 
+[physics]
+
+3d/solver/default_contact_bias=1.0
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

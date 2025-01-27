@@ -10,6 +10,7 @@ var execute: Callable = start
 @export var end_val: float = 1.0
 @export_range(0.001, 5.0, 0.05, "or_greater", "suffix:s") var duration_sec: float = 1.0
 @export var tween_both_ways: bool = false
+@export var tween_as_relative: bool = false
 
 @export var tween_ease: Tween.EaseType = Tween.EASE_IN_OUT
 @export var tween_trans: Tween.TransitionType = Tween.TRANS_LINEAR
@@ -29,11 +30,23 @@ func _ready() -> void:
 
 
 func start() -> void:
+	if get_indexed(property_path) == null:
+		printerr("Property path '%s' not valid for %s" % [property_path, owner.get_path_to(self)])
+		return
+	
 	if not tween or not tween.is_valid():
 		tween = create_tween().set_ease(tween_ease).set_trans(tween_trans).set_loops(int(Engine.is_editor_hint()))
-		tween.tween_property(self, property_path, end_val, duration_sec).from(start_val)
+		
+		if tween_as_relative:
+			tween.tween_property(self, property_path, end_val, duration_sec).as_relative()
+		else:
+			tween.tween_property(self, property_path, end_val, duration_sec).from(start_val)
+			
 		if tween_both_ways:
-			tween.tween_property(self, property_path, start_val, duration_sec).from(end_val)
+			if tween_as_relative:
+				tween.tween_property(self, property_path, -end_val, duration_sec).as_relative()
+			else:
+				tween.tween_property(self, property_path, start_val, duration_sec).from(end_val)
 		return
 	
 	tween.play()

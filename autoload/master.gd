@@ -1,8 +1,16 @@
 extends Node
 
-#signal input_device_changed(new_type: int)
-
 enum {DEVICE_KEYBOARD, DEVICE_XBOX, DEVICE_PLAYSTATION}
+
+const LEVEL_PATHS:PackedStringArray = [
+	"res://scenes/levels/basic.tscn",
+	"res://scenes/levels/tightrope.tscn",
+	"res://scenes/levels/bridge.tscn",
+	"res://scenes/levels/pipe.tscn",
+	"res://scenes/levels/platforms.tscn",
+	"res://scenes/levels/turbine.tscn",
+	"res://scenes/levels/traffic_light.tscn",
+]
 
 var messager: Messager
 var transitioner: Transitioner
@@ -18,6 +26,11 @@ var device_type: int = DEVICE_KEYBOARD:
 
 
 func _ready() -> void:
+	
+	for path: String in LEVEL_PATHS:
+		if ResourceLoader.exists(path, "PackedScene"): continue
+		push_warning("Level path '%s' does not exist..." % path)
+	
 	if Engine.is_editor_hint(): return
 	messager = load("res://scenes/messager/messager.tscn").instantiate()
 	transitioner = load("res://scenes/transitioner/transitioner.tscn").instantiate()
@@ -31,7 +44,7 @@ func _ready() -> void:
 	root.add_child.call_deferred(transitioner)
 
 func change_level(level_number: int) -> void:
-	var level_path: String = "res://scenes/levels/%d.tscn" % level_number
+	var level_path: String = LEVEL_PATHS[clampi(level_number-1, 0, LEVEL_PATHS.size()-1)]
 	print("Transitioning to level #%d" % level_number)
 	if ResourceLoader.exists(level_path, "PackedScene"):
 		transitioner.transition(level_path)
@@ -45,6 +58,9 @@ func change_level(level_number: int) -> void:
 
 func reset_level() -> void:
 	get_tree().reload_current_scene()
+
+func get_current_level() -> int:
+	return LEVEL_PATHS.find(get_tree().current_scene.scene_file_path) + 1
 
 
 func _input(event: InputEvent) -> void:

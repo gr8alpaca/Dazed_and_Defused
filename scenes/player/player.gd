@@ -12,10 +12,6 @@ signal dead(collider: Node)
 @export_tool_button("Select Camera", "Camera3D")
 var select_camera: Callable
 
-@export var att: ControllerAttributes = ControllerAttributes.new():
-	set(val):
-		att = val
-		camera.set_att(att)
 
 @export var input_active: bool = true:
 	set(val):
@@ -61,7 +57,7 @@ func _init() -> void:
 	raycast.debug_shape_custom_color = Color(0.957, 0.224, 0.98, 0.361)
 	add_child(raycast, true)
 	raycast.top_level= true
-	raycast.visible = false
+	#raycast.visible = false
 	
 
 
@@ -80,27 +76,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	
 	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1) if input_active else Vector2.ZERO
 	
-	
-	
-	var yaw: float = camera.get_yaw()
-	var local_input: Vector2 = input.rotated(-yaw)
-	#input = input.rotated(-yaw)
-	
-	var x_inp: float = local_input.x * 5.0 * tilt_sensitivity
-	var z_inp: float = local_input.y * 5.0 * tilt_sensitivity
-	
-	var x_force: float = x_inp * ACCELERATION * state.step
-	var z_force: float = z_inp * ACCELERATION * state.step
-	
-	
 	state.apply_central_force(get_force_vector(state.step))
-	
-	camera.update_cam(input, state)
-	
-	data["Input"] = input
-	data["LinVel"] = linear_velocity
-	for prop: String in ["roll", "pitch", "yaw"]:
-		data[prop] = att.get(prop)
 	
 	if debug_raycast:
 		var raycast: RayCast3D = $DebugRayCast
