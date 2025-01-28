@@ -1,10 +1,21 @@
 @icon("res://assets/textures/ClassIcons16x16/settings_save.png")
 @tool
-class_name Settings extends Resource # "movement_sensitivity",
-const PROPERTIES: PackedStringArray = [ "movment_deadzone", "camera_sensitivity", "camera_deadzone", "sfx_volume", "music_volume",]
+class_name Settings extends Resource
+
+const PATH: String = "user://settings.tres"
+
+const PROPERTIES: PackedStringArray = ["movement_sensitivity", "movment_deadzone", "camera_sensitivity", "camera_deadzone", "master_volume", "sfx_volume", "music_volume",]
+
+signal volume_changed(bus: int, value: float)
 
 @export_range(0.1, 15.0, 0.1, "exp")
-var movement_sensitivity: float = 3.0
+var movement_sensitivity: float = 3.0:
+	set(val):
+		movement_sensitivity = val
+		#remap(val, )
+		ease_value = lerpf(9.0, 0.05, val/15.0)
+
+var ease_value: float = 15.0
 
 @export_range(0.1, 1.0, 0.1) 
 var movment_deadzone: float = 0.2:
@@ -26,19 +37,34 @@ var camera_deadzone: float = 0.2:
 			InputMap.action_set_deadzone(action, val)
 
 @export_range(1.0, 100.0, 1.0, "suffix:%")
+var master_volume: float = 100.0:
+	set(val):
+		master_volume = val
+		volume_changed.emit(Audio.BUS_MASTER, val)
+
+@export_range(1.0, 100.0, 1.0, "suffix:%")
 var sfx_volume: float = 100.0:
 	set(val):
 		sfx_volume = val
-		linear_to_db(val/100.0)
+		volume_changed.emit(Audio.BUS_SFX, val)
 
 @export_range(1.0, 100.0, 1.0, "suffix:%") 
 var music_volume: float = 100.0:
 	set(val):
 		music_volume = val
-		linear_to_db(val/100.0)
+		volume_changed.emit(Audio.BUS_MUSIC, val)
 
-func SET(property: StringName, value: Variant) -> void:
-	set(property, value)
+func save_settings() -> void:
+	ResourceSaver.save(duplicate(), PATH, ResourceSaver.FLAG_CHANGE_PATH)
 
-
-#endregion
+func load_settings() -> void:
+	if Engine.is_editor_hint(): return
+	
+	if not ResourceLoader.exists(PATH, "Settings"): 
+		print("Settings resource does not exist...")
+		return
+	print("Settings loading...")
+	var settings: Settings = ResourceLoader.load(PATH, "Settings")
+	for prop: String in PROPERTIES:
+		set(prop, settings.get(prop))
+		

@@ -1,21 +1,21 @@
 @tool
 class_name MainMenu extends Node3D
 
-const PLAYER_START_POSITION: Vector3 = Vector3(3.0, 2.5, 1.0)
-
 @export var player_scene: PackedScene
 
-var starting_player_position: Vector3
-
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
 	create_player()
-	
+	#OS.is_userfs_persistent()
 
 func _on_player_dead(collider: Node) -> void:
 	create_player()
 
 func create_player() -> void:
+	const PLAYER_START_POSITION: Vector3 = Vector3(3.0, 2.5, 1.0)
 	var player: Player = player_scene.instantiate()
+	var mouse_controller:= MouseController.new()
+	player.add_child(mouse_controller)
 	player.dead.connect(_on_player_dead)
 	player.input_active = false
 	player.set_collision_sensor_enabled(false)
@@ -23,13 +23,11 @@ func create_player() -> void:
 	add_child(player)
 	player.position = PLAYER_START_POSITION
 	player.visible = true
-	player.body_entered.connect(enable_player.bind(player), CONNECT_ONE_SHOT)
+	player.body_entered.connect(_on_player_body_entered.bind(player, mouse_controller), CONNECT_ONE_SHOT)
 
-func enable_player(collider: Node, player: Player) -> void:
-	player.input_active = true
+func _on_player_body_entered(collider: Node, player: Player, mouse_controller: MouseController) -> void:
 	player.set_collision_sensor_enabled(true)
-
-
+	mouse_controller.disabled = false
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()

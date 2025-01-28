@@ -1,5 +1,6 @@
 @tool
 class_name Messager extends CanvasLayer
+
 const INPUT_TEXTURES: InputTextures = preload("res://resources/input_textures.tres")
 const ENVIRONMENT : Environment = preload("res://resources/environment/environment.tres")
 

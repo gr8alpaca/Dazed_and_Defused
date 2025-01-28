@@ -1,5 +1,5 @@
-@tool
 @icon("res://assets/textures/ClassIcons16x16/key_t.png")
+@tool
 class_name InputTextures extends Resource
 
 enum {KEYBOARD, XBOX, PLAYSTATION}
@@ -18,7 +18,7 @@ func get_texture(action_name: StringName) -> Texture2D:
 	return TEXTURES[action_name][device_type]
 
 func _input(event: InputEvent) -> void:
-	if (event is InputEventJoypadButton or event is InputEventJoypadMotion) and (device_type != PLAYSTATION or device_type != XBOX):
+	if (event is InputEventJoypadButton or (event is InputEventJoypadMotion and event.axis_value > 0.5)) and (device_type != PLAYSTATION or device_type != XBOX):
 		device_type = get_joy_type(event.device)
 	if event is InputEventKey and device_type != KEYBOARD:
 		device_type = KEYBOARD

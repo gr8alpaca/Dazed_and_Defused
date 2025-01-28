@@ -8,6 +8,7 @@ movement_sensitivity = 3.0
 movment_deadzone = 0.2
 camera_sensitivity = 3.0
 camera_deadzone = 0.2
+master_volume = 100.0
 sfx_volume = 100.0
 music_volume = 100.0
 metadata/_custom_type_script = ExtResource("1_7mn18")

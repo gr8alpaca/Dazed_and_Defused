@@ -75,30 +75,14 @@ func _ready() -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if Engine.is_editor_hint(): return
-	
-	state.apply_central_force(get_force_vector(state.step))
-	
-	if debug_raycast:
-		var raycast: RayCast3D = $DebugRayCast
-		raycast.position = position
-		raycast.target_position = state.linear_velocity
+	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", SETTINGS.movment_deadzone) if input_active else Vector2.ZERO
+	state.apply_central_force(get_force_vector(state.step, input))
 
 
-
-func get_force_vector(delta: float,) -> Vector3:
-	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", SETTINGS.movment_deadzone).limit_length(1.0) if input_active else Vector2.ZERO
-	
-	var yaw: float = get_viewport().get_camera_3d().global_rotation.y 
-	var local_input: Vector2 = input.rotated(-yaw)
-	
-	var x_inp: float = local_input.x * 5.0 * tilt_sensitivity
-	var z_inp: float = local_input.y * 5.0 * tilt_sensitivity
-	
-	var x_force: float = x_inp * ACCELERATION * delta
-	var z_force: float = z_inp * ACCELERATION * delta
-	
-	return Vector3(x_force, 0, z_force)
-	
+func get_force_vector(delta: float, input: Vector2) -> Vector3:
+	input = input.rotated(-get_viewport().get_camera_3d().global_rotation.y) * SETTINGS.movement_sensitivity/3.0
+	input = input.limit_length(1.0) * 5.0 * ACCELERATION * delta
+	return Vector3(input.x, 0, input.y)
 
 
 func set_collision_sensor_enabled(enabled: bool) -> void:
@@ -129,14 +113,12 @@ func set_godmode(active: bool) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_echo() or not event.is_pressed(): return
+	if not OS.is_debug_build() or event.is_echo() or not event.is_pressed(): return
 	
 	if Input.is_key_pressed(KEY_PAGEUP):
 		$CollisionSensor.enabled = !$CollisionSensor.enabled
-	
 	elif event.is_action_pressed(&"godmode"):
 		set_godmode(!godmode)
-	
 	else:
 		return
 	

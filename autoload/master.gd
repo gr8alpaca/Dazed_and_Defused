@@ -13,6 +13,7 @@ const LEVEL_PATHS:PackedStringArray = [
 	"res://scenes/menus/end/end.tscn",
 ]
 
+#var audio: Audio = Audio.new()
 var messager: Messager
 var transitioner: Transitioner
 
@@ -35,6 +36,7 @@ func _ready() -> void:
 	
 	root.add_child.call_deferred(messager)
 	root.add_child.call_deferred(transitioner)
+
 
 func change_level(level_number: int) -> void:
 	var level_path: String = LEVEL_PATHS[clampi(level_number-1, 0, LEVEL_PATHS.size()-1)]

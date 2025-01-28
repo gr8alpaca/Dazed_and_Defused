@@ -11,17 +11,9 @@ signal unsafe_collision(collider: Node)
 	set(val):
 		enabled = val
 		if enabled:
-			#position = body.position
 			enable_buffer = ENABLE_BUFFER_MAX
-			#velocity = (body.position - position) / delta
-@export var debug: bool = false #: set = set_debug
 
 @export var max_safe_linear_delta_magnitude: float = 2.0
-
-#var linear_velocity: Vector3 = Vector3.ZERO
-#var current_collider: Node
-
-#var raycast: RayCast3D = RayCast3D.new()
 
 var velocity: Vector3
 var position: Vector3 
@@ -30,10 +22,6 @@ var last_collider: Node
 
 const ENABLE_BUFFER_MAX: int = 5
 var enable_buffer: int = 0
-#
-#func set_debug(val: bool) -> void:
-	#debug = val
-	#raycast.visible = debug
 
 func _ready() -> void:
 	body.can_sleep = false
@@ -53,9 +41,9 @@ func _physics_process(delta: float) -> void:
 	velocity = real_velocity
 	position = body.position
 	
-	#last_collider = last_collider if bodies.is_empty() else bodies[0]
 	if enable_buffer > 0:
 		enable_buffer -= 1
+	
 	if not enabled or enable_buffer: return
 	
 	var bodies:= body.get_colliding_bodies()

@@ -10,8 +10,10 @@ signal request_close
 var populate_callable: Callable = populate_menu
 
 func _ready() -> void:
+	SETTINGS.load_settings()
 	populate_menu()
 	%BackButton.pressed.connect(emit_signal.bind(&"request_close"))
+	request_close.connect(SETTINGS.save_settings)
 
 func populate_menu() -> void:
 	var grid: GridContainer = %Grid
@@ -22,7 +24,7 @@ func populate_menu() -> void:
 	for prop: Dictionary in SETTINGS.get_property_list():
 		if prop.name not in SETTINGS.PROPERTIES: continue
 		create_setting_slider(prop, grid)
-
+		
 
 func create_setting_slider(property: Dictionary, parent: Control) -> void:
 	var label:= Label.new()
@@ -57,12 +59,7 @@ func create_setting_slider(property: Dictionary, parent: Control) -> void:
 	parent.add_child(slider, true)
 	parent.add_child(spinbox, true)
 	
-	label.owner = parent
-	slider.owner = parent
-	spinbox.owner = parent
-	
-	
 	slider.value_changed.connect(_on_value_changed.bind(property.name))
 
 func _on_value_changed(value: float, property: StringName) -> void:
-	SETTINGS.SET(property, value)
+	SETTINGS.set(property, value)

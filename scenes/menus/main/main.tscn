@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://m687fwwg288h"]
 
-[ext_resource type="Script" uid="uid://db0fl44jb2ep7" path="res://scenes/main.gd" id="1_0wfyh"]
+[ext_resource type="Script" uid="uid://db0fl44jb2ep7" path="res://scenes/menus/main/main.gd" id="1_0wfyh"]
 [ext_resource type="Script" uid="uid://opj77j7k0eiy" path="res://models/floor.gd" id="2_jyhfs"]
 [ext_resource type="Material" uid="uid://p8h7kpk70bg3" path="res://resources/materials/sheet_metal.tres" id="3_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="4_tefeu"]
@@ -37,22 +37,22 @@ current = true
 fov = 77.3196
 far = 50.0
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Boundaries" type="StaticBody3D" parent="."]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -3.4, 0, -8.5)
 metadata/cushion = 10000.0
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Boundaries"]
 shape = SubResource("WorldBoundaryShape3D_tbgi4")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Boundaries"]
 transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 10.3923, 0, 6)
 shape = SubResource("WorldBoundaryShape3D_tbgi4")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Boundaries"]
 transform = Transform3D(-0.642788, 0, 0.766044, 0, 1, 0, -0.766044, 0, -0.642788, -10.2729, 0, 6.19327)
 shape = SubResource("WorldBoundaryShape3D_tbgi4")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Boundaries"]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 6.72532, 0, 13.3514)
 shape = SubResource("WorldBoundaryShape3D_tbgi4")
 
@@ -64,6 +64,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="ButtonVBox" type="VBoxContainer" parent="Menu"]
 layout_mode = 1
