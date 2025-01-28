@@ -86,7 +86,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 
 func get_force_vector(delta: float,) -> Vector3:
-	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", SETTINGS.movment_deadzone) if input_active else Vector2.ZERO
+	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", SETTINGS.movment_deadzone).limit_length(1.0) if input_active else Vector2.ZERO
 	
 	var yaw: float = get_viewport().get_camera_3d().global_rotation.y 
 	var local_input: Vector2 = input.rotated(-yaw)
@@ -113,15 +113,12 @@ func _on_unsafe_collision(collider: Node) -> void:
 	$SphereMesh.hide()
 	dead.emit(collider)
 
-
-
 func _process(delta: float) -> void:
-	if camera and input_active:
-		pass
 	if not godmode: return
 	const GODMODE_SPEED: float = 10.0
 	var xz_dir:= Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1).rotated(-camera.get_yaw()) * delta
 	position += Vector3(xz_dir.x, Input.get_axis(&"crouch", &"jump") * delta, xz_dir.y) * GODMODE_SPEED
+
 
 func set_godmode(active: bool) -> void:
 	godmode = active

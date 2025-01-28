@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://p8h7kpk70bg3"]
+
+[ext_resource type="Texture2D" uid="uid://71ecgubkbwj5" path="res://assets/materials/SheetMetal002_1K-PNG/SheetMetal002_1K-PNG_Color.png" id="1_asw4o"]
+[ext_resource type="Shader" uid="uid://bwdy7rciiv4rb" path="res://resources/materials/sheet_metal_shader.tres" id="1_tw2ui"]
+[ext_resource type="Texture2D" uid="uid://w2qe0ycinsc6" path="res://assets/materials/SheetMetal002_1K-PNG/SheetMetal002_1K-PNG_Opacity.png" id="2_ila7w"]
+[ext_resource type="Texture2D" uid="uid://dua1nh17bk1tr" path="res://assets/materials/SheetMetal002_1K-PNG/SheetMetal002_1K-PNG_Metalness.png" id="2_onxit"]
+[ext_resource type="Texture2D" uid="uid://cddka11w03pf3" path="res://assets/materials/SheetMetal002_1K-PNG/SheetMetal002_1K-PNG_NormalGL.png" id="3_tw2ui"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_tw2ui")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("1_asw4o")
+shader_parameter/albedo_texture_size = Vector2i(1024, 1024)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/texture_metallic = ExtResource("2_onxit")
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 1.0
+shader_parameter/texture_normal = ExtResource("3_tw2ui")
+shader_parameter/normal_scale = 5.0
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv1_scale = Vector3(0.5, 0.5, 0.5)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/alpha_texture = ExtResource("2_ila7w")

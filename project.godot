@@ -15,6 +15,10 @@ run/main_scene="uid://drh50l3xjd3m3"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/show_image=false
 
+[audio]
+
+buses/default_bus_layout=""
+
 [autoload]
 
 Master="*res://autoload/master.gd"
@@ -46,6 +50,7 @@ window/size/window_width_override=960
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/per_pixel_transparency/allowed=true
 
 [editor]
 

@@ -26,6 +26,7 @@ func populate_menu() -> void:
 
 func create_setting_slider(property: Dictionary, parent: Control) -> void:
 	var label:= Label.new()
+	
 	label.text = property.name.capitalize()
 	
 	var slider: HSlider = HSlider.new()
@@ -39,7 +40,7 @@ func create_setting_slider(property: Dictionary, parent: Control) -> void:
 	slider.value = SETTINGS[property.name]
 	slider.exp_edit = bound_strings[-1] == "exp"
 	
-	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	#label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	
 	slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -47,9 +48,19 @@ func create_setting_slider(property: Dictionary, parent: Control) -> void:
 	
 	spinbox.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	
-	parent.add_child(label)
-	parent.add_child(slider)
-	parent.add_child(spinbox)
+	label.name = property.name.to_pascal_case() + "Label"
+	slider.name = property.name.to_pascal_case() + "Slider"
+	spinbox.name = property.name.to_pascal_case() + "Spinbox"
+	
+	
+	parent.add_child(label, true)
+	parent.add_child(slider, true)
+	parent.add_child(spinbox, true)
+	
+	label.owner = parent
+	slider.owner = parent
+	spinbox.owner = parent
+	
 	
 	slider.value_changed.connect(_on_value_changed.bind(property.name))
 
