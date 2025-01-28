@@ -24,7 +24,7 @@ func populate_menu() -> void:
 	for prop: Dictionary in SETTINGS.get_property_list():
 		if prop.name not in SETTINGS.PROPERTIES: continue
 		create_setting_slider(prop, grid)
-		
+
 
 func create_setting_slider(property: Dictionary, parent: Control) -> void:
 	var label:= Label.new()

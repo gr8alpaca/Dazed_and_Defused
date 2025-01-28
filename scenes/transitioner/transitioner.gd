@@ -13,6 +13,7 @@ var message_tw: Tween
 
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	if Engine.is_editor_hint(): return
 	$BG.modulate.a 
 

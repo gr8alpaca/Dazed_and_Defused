@@ -75,12 +75,12 @@ func _ready() -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if Engine.is_editor_hint(): return
-	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", SETTINGS.movment_deadzone) if input_active else Vector2.ZERO
+	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", SETTINGS.get_movement_deadzone()) if input_active else Vector2.ZERO
 	state.apply_central_force(get_force_vector(state.step, input))
 
 
 func get_force_vector(delta: float, input: Vector2) -> Vector3:
-	input = input.rotated(-get_viewport().get_camera_3d().global_rotation.y) * SETTINGS.movement_sensitivity/3.0
+	input = input.rotated(-get_viewport().get_camera_3d().global_rotation.y) * SETTINGS.get_movement_sensitivity()/3.0
 	input = input.limit_length(1.0) * 5.0 * ACCELERATION * delta
 	return Vector3(input.x, 0, input.y)
 

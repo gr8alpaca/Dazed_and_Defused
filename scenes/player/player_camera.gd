@@ -58,11 +58,10 @@ func _process(delta: float) -> void:
 
 
 func process_input(delta: float) -> void:
-	var input:= Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", SETTINGS.camera_deadzone)
-	cam.rotation.x = clampf(cam.rotation.x - input.y * SETTINGS.camera_sensitivity * VERTICAL_CAMERA_SENSITIVITY_RATIO * delta, MIN_PITCH, MAX_PITCH)
+	var input: Vector2 = Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", SETTINGS.get_camera_deadzone())  * SETTINGS.get_camera_sensitivity()
+	cam.rotation.x = clampf(cam.rotation.x - input.y * VERTICAL_CAMERA_SENSITIVITY_RATIO * delta, MIN_PITCH, MAX_PITCH)
 	
-	rotation_pivot.rotation.y = fmod(rotation_pivot.rotation.y - input.x * SETTINGS.camera_sensitivity * delta, TAU)
-	#att.yaw = rotation_pivot.global_rotation_degrees.y
+	rotation_pivot.rotation.y = fmod(rotation_pivot.rotation.y - input.x * delta, TAU)
 	update_position()
 
 

@@ -67,4 +67,12 @@ func load_settings() -> void:
 	var settings: Settings = ResourceLoader.load(PATH, "Settings")
 	for prop: String in PROPERTIES:
 		set(prop, settings.get(prop))
-		
+
+func get_movement_sensitivity() -> float:
+	return movement_sensitivity
+func get_movement_deadzone() -> float:
+	return movment_deadzone
+func get_camera_sensitivity() -> float:
+	return camera_sensitivity
+func get_camera_deadzone() -> float:
+	return camera_deadzone

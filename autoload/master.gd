@@ -20,7 +20,7 @@ var transitioner: Transitioner
 var current_level: int = 1
 
 func _ready() -> void:
-	
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	for path: String in LEVEL_PATHS:
 		if ResourceLoader.exists(path, "PackedScene"): continue
 		push_warning("Level path '%s' does not exist..." % path)
