@@ -36,7 +36,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var real_velocity: Vector3 = (body.position - position) / delta
-	var velocity_delta: Vector3 = real_velocity - velocity
+	var velocity_delta: Vector3 = (real_velocity - velocity) / delta
 	
 	velocity = real_velocity
 	position = body.position
@@ -46,14 +46,14 @@ func _physics_process(delta: float) -> void:
 	
 	if not enabled or enable_buffer: return
 	
-	var bodies:= body.get_colliding_bodies()
+	#var bodies:= body.get_colliding_bodies()
 	var linear_strength:= velocity_delta.length()
 	var cushion: float = last_collider.get_meta(META_TAG, 1.0) if last_collider else 1.0
 	var strength: float = linear_strength * cushion
 	
 	if max_safe_linear_delta_magnitude < strength:
-		print("Collision: Force: %1.2f | Delta: %1.2v | Delta: %1.2f" % [linear_strength, velocity_delta, cushion])
-		unsafe_collision.emit(bodies.front())
+		print("Velocity: %1.2v | Collision: Force: %1.2f | Delta: %1.2v | Cushion: %1.2f" % [real_velocity, linear_strength, velocity_delta, cushion])
+		unsafe_collision.emit(last_collider)
 
 
 func get_cushion() -> float:

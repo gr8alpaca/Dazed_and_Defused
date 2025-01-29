@@ -81,14 +81,18 @@ func select_camera_in_editor() -> void:
 
 func shake() -> void:
 	const DURATION_SEC: float = 0.6
+	
 	const MAX_YAW: float = deg_to_rad(2.0)
-	const YAW_LOOPS: int = 9
+	const YAW_LOOPS: int = 10
+	const YAW_TWEEN_TIME: float = DURATION_SEC/YAW_LOOPS/4.0
+	
 	const MAX_PITCH: float = deg_to_rad(2.0)
 	const PITCH_LOOPS: int = 7
-	
-	const YAW_TWEEN_TIME: float = DURATION_SEC/YAW_LOOPS/4.0
 	const PITCH_TWEEN_TIME: float = DURATION_SEC/PITCH_LOOPS/4.0
 	
+	const MAX_ROLL: float = deg_to_rad(3.0)
+	const ROLL_LOOPS: int = 5
+	const ROLL_TWEEN_TIME: float = DURATION_SEC/ROLL_LOOPS/4.0
 	
 	var yaw_tw: Tween = create_tween()
 	for i: int in YAW_LOOPS:
@@ -103,8 +107,12 @@ func shake() -> void:
 		pitch_tw.tween_property(self, ^"rotation:x", value, PITCH_TWEEN_TIME).as_relative()
 		pitch_tw.tween_property(self, ^"rotation:x", -value*2.0, PITCH_TWEEN_TIME).as_relative()
 		pitch_tw.tween_property(self, ^"rotation:x", value, PITCH_TWEEN_TIME).as_relative()
+	
+	var roll_tw: Tween = create_tween()
+	for i: int in ROLL_LOOPS:
+		var value: float = lerp(MAX_ROLL, 0.0, inverse_lerp(0, ROLL_LOOPS, i))
+		roll_tw.tween_property(self, ^"rotation:z", value, ROLL_TWEEN_TIME).as_relative()
+		roll_tw.tween_property(self, ^"rotation:z", -value*2.0, ROLL_TWEEN_TIME).as_relative()
+		roll_tw.tween_property(self, ^"rotation:z", value, ROLL_TWEEN_TIME).as_relative()
 
-func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_key_pressed(KEY_L):
-		shake()
 	

@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://drh50l3xjd3m3"]
+[gd_scene load_steps=15 format=3 uid="uid://drh50l3xjd3m3"]
 
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_0absb"]
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_4o7q8"]
+[ext_resource type="Material" uid="uid://p8h7kpk70bg3" path="res://resources/materials/sheet_metal.tres" id="2_vg6do"]
 [ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="3_4o7q8"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_kpjit"]
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="4_ijh0y"]
@@ -46,18 +47,19 @@ use_collision = true
 
 [node name="CSGFloor2" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.625, 0, 0)
-material_override = ExtResource("2_4o7q8")
+material_override = ExtResource("2_vg6do")
 use_collision = true
 size = Vector3(33.25, 1, 10)
-material = ExtResource("2_4o7q8")
+material = ExtResource("2_vg6do")
 
 [node name="CSGSubtract" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.125, 0)
-material_override = ExtResource("2_4o7q8")
+visible = false
+material_override = ExtResource("2_vg6do")
 operation = 2
 use_collision = true
 size = Vector3(9, 3.25, 8)
-material = ExtResource("2_4o7q8")
+material = ExtResource("2_vg6do")
 
 [node name="CSGSubtract2" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.875, 1.625, 0)

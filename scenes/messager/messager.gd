@@ -29,7 +29,7 @@ func show_message(msg: String, label_fade_time_sec: float = FADE_IN_TIME) -> voi
 	tw = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUART)
 	tw.tween_method(ENVIRONMENT.set_adjustment_saturation , 1.0, 0.0, FADE_IN_TIME)
 	tw.set_parallel().tween_property(%Rect, ^"modulate:a", 1.0, FADE_IN_TIME).from(0.0)
-	tw.chain().tween_property(%MainLabel, ^"modulate:a", 1.0, label_fade_time_sec).from(0.0)
+	tw.chain().tween_property(%MainLabel, ^"modulate:a", 1.0, FADE_IN_TIME)
 	tw.tween_property(%Corner, ^"modulate:a", 1.0, FADE_IN_TIME).from(0.0)
 
 
@@ -49,7 +49,9 @@ func update_input_device() -> void:
 	%ButtonTexture.texture = INPUT_TEXTURES.get_texture(&"reset")
 
 func _on_goal_reached() -> void:
-	show_message("Level Clear", 0.1)
+	%MainLabel.text = "Defused"
+	%MainLabel.modulate.a = 1.0
+	show_message("Defused", 0.0)
 
 func _on_player_dead(collider: Node) -> void:
 	show_message("You died")

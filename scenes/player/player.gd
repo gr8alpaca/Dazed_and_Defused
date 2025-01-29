@@ -110,6 +110,8 @@ func set_godmode(active: bool) -> void:
 	#freeze = godmode
 	set_process(godmode)
 
+func defuse() -> void:
+	$SphereMesh/StemMesh/GPUParticles3D.emitting = false
 
 func to_local_input(input: Vector2) -> Vector2:
 	return input.rotated(-get_camera_yaw())

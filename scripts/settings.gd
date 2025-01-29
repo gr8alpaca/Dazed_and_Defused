@@ -52,6 +52,7 @@ var music_volume: float = 100.0:
 		volume_changed.emit(Audio.BUS_MUSIC, val)
 
 @export var camera_shake: bool = true
+@export var is_first_load: bool
 
 var is_loaded: bool = false
 

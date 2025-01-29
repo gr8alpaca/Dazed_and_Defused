@@ -1,6 +1,7 @@
+@icon("res://assets/textures/ClassIcons16x16/main_menu.png")
 @tool
 class_name MainMenu extends Node3D
-const PLAYER_SCENE: PackedScene = preload("res://scenes/player/player.tscn")
+
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
@@ -15,6 +16,7 @@ func _input(event: InputEvent) -> void:
 			%Quit.grab_focus()
 
 func create_player() -> void:
+	const PLAYER_SCENE: PackedScene = preload("res://scenes/player/player.tscn")
 	const PLAYER_START_POSITION: Vector3 = Vector3(3.0, 2.5, 1.0)
 	var player: Player = PLAYER_SCENE.instantiate()
 	var mouse_controller:= MouseController.new()
@@ -36,16 +38,13 @@ func _on_player_dead(collider: Node) -> void:
 	create_player()
 
 func _on_quit_pressed() -> void:
-	if Engine.is_editor_hint(): return
-	get_tree().quit()
+	if not Engine.is_editor_hint(): get_tree().quit()
 
 func _settings_pressed() -> void:
-	if Engine.is_editor_hint(): return
 	%Menu.hide()
 	%SettingsMenu.show()
 
 func _request_close() -> void:
-	if Engine.is_editor_hint(): return
 	%SettingsMenu.hide()
 	%Menu.show()
 
@@ -53,8 +52,8 @@ func _start() -> void:
 	Master.change_level(1)
 
 func _draw() -> void:
-	if Engine.is_editor_hint(): return
-	if not %Start.has_focus(): %Start.grab_focus()
+	if not %Start.has_focus() and not Engine.is_editor_hint(): 
+		%Start.grab_focus()
 
 func _hidden() -> void:
 	if Engine.is_editor_hint(): return

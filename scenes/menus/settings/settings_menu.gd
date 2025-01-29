@@ -52,7 +52,6 @@ func populate_menu() -> void:
 
 func create_setting_slider(property: Dictionary, parent: Control) -> void:
 	var label:= Label.new()
-	
 	label.text = property.name.capitalize()
 	
 	var slider: HSlider = HSlider.new()

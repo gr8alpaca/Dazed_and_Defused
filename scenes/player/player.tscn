@@ -113,11 +113,6 @@ draw_order = 3
 process_material = SubResource("ParticleProcessMaterial_0owmy")
 draw_pass_1 = SubResource("QuadMesh_5gtgg")
 
-[node name="CollisionSensor" type="Node" parent="."]
-script = ExtResource("5_p47bc")
-max_safe_linear_delta_magnitude = 5.0
-metadata/_custom_type_script = ExtResource("5_p47bc")
-
 [node name="Explosion" type="GPUParticles3D" parent="."]
 process_mode = 1
 material_override = ExtResource("6_75vfm")
@@ -131,3 +126,8 @@ explosiveness = 0.93
 randomness = 0.5
 process_material = SubResource("ParticleProcessMaterial_qek5x")
 draw_pass_1 = SubResource("QuadMesh_h17s1")
+
+[node name="CollisionSensor" type="Node" parent="."]
+script = ExtResource("5_p47bc")
+max_safe_linear_delta_magnitude = 300.0
+metadata/_custom_type_script = ExtResource("5_p47bc")

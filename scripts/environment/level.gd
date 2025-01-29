@@ -48,5 +48,6 @@ func _on_goal_entered(player: Node3D, goal: Goal) -> void:
 	player.set_collision_sensor_enabled(false)
 	player.input_active = false
 	player.linear_damp = 10.0
+	player.defuse()
 	goal_reached.emit()
 	Master.change_level.call_deferred(Master.current_level + 1)
