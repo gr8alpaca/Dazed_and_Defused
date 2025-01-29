@@ -6,6 +6,7 @@
 color = Color(0.505882, 0.505882, 0.505882, 1)
 grow_begin = -32.0
 grow_end = -32.0
+thickness = 2
 
 [node name="SettingsMenu" type="Control"]
 layout_mode = 3
@@ -55,9 +56,23 @@ size_flags_vertical = 3
 theme_override_constants/v_separation = 4
 columns = 3
 
-[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 1
 text = "Back"
+
+[node name="ButtonMargin" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Reset" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+text = "Reset Default"

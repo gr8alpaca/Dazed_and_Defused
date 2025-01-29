@@ -12,10 +12,7 @@ signal volume_changed(bus: int, value: float)
 var movement_sensitivity: float = 3.0:
 	set(val):
 		movement_sensitivity = val
-		#remap(val, )
-		ease_value = lerpf(9.0, 0.05, val/15.0)
 
-var ease_value: float = 15.0
 
 @export_range(0.1, 1.0, 0.1) 
 var movment_deadzone: float = 0.2:
@@ -54,12 +51,16 @@ var music_volume: float = 100.0:
 		music_volume = val
 		volume_changed.emit(Audio.BUS_MUSIC, val)
 
+@export var camera_shake: bool = true
+
+var is_loaded: bool = false
+
 func save_settings() -> void:
 	ResourceSaver.save(duplicate(), PATH, ResourceSaver.FLAG_CHANGE_PATH)
 
 func load_settings() -> void:
 	if Engine.is_editor_hint(): return
-	
+	is_loaded = true
 	if not ResourceLoader.exists(PATH, "Settings"): 
 		print("Settings resource does not exist...")
 		return
@@ -67,6 +68,12 @@ func load_settings() -> void:
 	var settings: Settings = ResourceLoader.load(PATH, "Settings")
 	for prop: String in PROPERTIES:
 		set(prop, settings.get(prop))
+
+func reset_to_default() -> void:
+	var script: Script = get_script()
+	for dict: Dictionary in script.get_script_property_list():
+		set(dict.name, script.get_property_default_value(dict.name))
+		#print("resetting %s to value %s" % [prop, script.get_property_default_value(prop)])
 
 func get_movement_sensitivity() -> float:
 	return movement_sensitivity
@@ -76,3 +83,5 @@ func get_camera_sensitivity() -> float:
 	return camera_sensitivity
 func get_camera_deadzone() -> float:
 	return camera_deadzone
+func get_camera_shake() -> bool:
+	return camera_shake

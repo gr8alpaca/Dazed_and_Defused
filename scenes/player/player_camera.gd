@@ -33,6 +33,7 @@ var rotation_pivot: Node3D
 var cam: Camera3D
 
 func _init() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	add_to_group(GROUP)
 	top_level = true
 	
@@ -78,27 +79,32 @@ func select_camera_in_editor() -> void:
 	select.clear()
 	select.add_node(cam)
 
+func shake() -> void:
+	const DURATION_SEC: float = 0.6
+	const MAX_YAW: float = deg_to_rad(2.0)
+	const YAW_LOOPS: int = 9
+	const MAX_PITCH: float = deg_to_rad(2.0)
+	const PITCH_LOOPS: int = 7
+	
+	const YAW_TWEEN_TIME: float = DURATION_SEC/YAW_LOOPS/4.0
+	const PITCH_TWEEN_TIME: float = DURATION_SEC/PITCH_LOOPS/4.0
+	
+	
+	var yaw_tw: Tween = create_tween()
+	for i: int in YAW_LOOPS:
+		var value: float = lerp(MAX_YAW, 0.0, inverse_lerp(0, YAW_LOOPS, i))
+		yaw_tw.tween_property(self, ^"rotation:y", value, YAW_TWEEN_TIME).as_relative()
+		yaw_tw.tween_property(self, ^"rotation:y", -value*2.0, YAW_TWEEN_TIME).as_relative()
+		yaw_tw.tween_property(self, ^"rotation:y", value, YAW_TWEEN_TIME).as_relative()
+		
+	var pitch_tw: Tween = create_tween()
+	for i: int in PITCH_LOOPS:
+		var value: float = lerp(MAX_PITCH, 0.0, inverse_lerp(0, PITCH_LOOPS, i))
+		pitch_tw.tween_property(self, ^"rotation:x", value, PITCH_TWEEN_TIME).as_relative()
+		pitch_tw.tween_property(self, ^"rotation:x", -value*2.0, PITCH_TWEEN_TIME).as_relative()
+		pitch_tw.tween_property(self, ^"rotation:x", value, PITCH_TWEEN_TIME).as_relative()
 
-#func _notification(what: int) -> void:
-	#pass
-
-
-#func _on_edited_object_changed(inspector: EditorInspector) -> void:
-	#print("Object changed...")
-	#
-#
-#func _get_property_list() -> Array[Dictionary]:
-	#var props: Array[Dictionary] 
-	#props.assign(ClassDB.class_get_property_list(&"Camera3D", true))
-	#props.push_front({ "name": "Camera3D", "class_name": &"", "type": 0, "hint": 0, "hint_string": "Camera3D", "usage": 128 })
-	#return props
-#
-#func _get(property: StringName) -> Variant:
-	#return cam.get(property) if property in ClassDB.class_get_property_list(&"Camera3D", true).map(func(d: Dictionary) -> StringName: return d.name) else null
-#
-#func _set(property: StringName, value: Variant) -> bool:
-	#if property in ClassDB.class_get_property_list(&"Camera3D", true).map(func(d: Dictionary) -> StringName: return d.name):
-		#cam.set(property, value)
-		#notify_property_list_changed()
-		#return true
-	#return false
+func _unhandled_input(event: InputEvent) -> void:
+	if Input.is_key_pressed(KEY_L):
+		shake()
+	

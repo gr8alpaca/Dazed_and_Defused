@@ -1,13 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://ca38c7oafrli"]
+[gd_scene load_steps=17 format=3 uid="uid://ca38c7oafrli"]
 
 [ext_resource type="Script" uid="uid://265ioi7d3q7c" path="res://scenes/player/player.gd" id="1_8afob"]
-[ext_resource type="Resource" uid="uid://5np8ylpjol61" path="res://resources/controller_attributes.tres" id="2_75vfm"]
 [ext_resource type="Material" uid="uid://ndqemuv2cft8" path="res://resources/materials/player.tres" id="3_gmlin"]
 [ext_resource type="Texture2D" uid="uid://d3sufsikrdg5q" path="res://resources/fire_gradient.tres" id="4_lvxji"]
 [ext_resource type="Script" uid="uid://25tgv36t2oc5" path="res://scenes/player/CollisionSensor.gd" id="5_p47bc"]
 [ext_resource type="Material" uid="uid://cxhaa6i7bto07" path="res://scenes/player/Explosion/ExplosionMaterial.tres" id="6_75vfm"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_75vfm"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p47bc"]
 friction = 0.4
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gmlin"]
@@ -82,12 +81,11 @@ scale_max = 2.0
 
 [node name="Player" type="RigidBody3D"]
 collision_layer = 3
-physics_material_override = SubResource("PhysicsMaterial_75vfm")
+physics_material_override = SubResource("PhysicsMaterial_p47bc")
 max_contacts_reported = 10
 linear_damp = 0.2
 angular_damp = 0.1
 script = ExtResource("1_8afob")
-att = ExtResource("2_75vfm")
 debug_raycast = true
 metadata/_custom_type_script = ExtResource("1_8afob")
 
@@ -117,7 +115,6 @@ draw_pass_1 = SubResource("QuadMesh_5gtgg")
 
 [node name="CollisionSensor" type="Node" parent="."]
 script = ExtResource("5_p47bc")
-debug = true
 max_safe_linear_delta_magnitude = 5.0
 metadata/_custom_type_script = ExtResource("5_p47bc")
 

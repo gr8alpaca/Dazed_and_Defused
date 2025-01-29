@@ -14,7 +14,6 @@ signal dead(collider: Node)
 @export_tool_button("Select Camera", "Camera3D")
 var select_camera: Callable
 
-
 @export var input_active: bool = true:
 	set(val):
 		input_active = val
@@ -39,8 +38,6 @@ var starting_camera_angle: float = 0.0:
 
 var camera: PlayerCamera
 
-#var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
-var data: Dictionary = {"Input": Vector2(), "LinVel": 0.0, "pitch": 0.0, "roll": 0.0, "yaw": 0.0, "scale": Vector3.ONE}
 var godmode: bool = false
 
 func _init() -> void:
@@ -80,7 +77,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 
 func get_force_vector(delta: float, input: Vector2) -> Vector3:
-	input = input.rotated(-get_viewport().get_camera_3d().global_rotation.y) * SETTINGS.get_movement_sensitivity()/3.0
+	input = to_local_input(input) * SETTINGS.get_movement_sensitivity()/3.0
 	input = input.limit_length(1.0) * 5.0 * ACCELERATION * delta
 	return Vector3(input.x, 0, input.y)
 
@@ -95,12 +92,14 @@ func _on_unsafe_collision(collider: Node) -> void:
 	$Explosion.visible = true
 	$Explosion.emitting = true
 	$SphereMesh.hide()
+	if SETTINGS.get_camera_shake():
+		camera.shake()
 	dead.emit(collider)
 
 func _process(delta: float) -> void:
 	if not godmode: return
 	const GODMODE_SPEED: float = 10.0
-	var xz_dir:= Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1).rotated(-camera.get_yaw()) * delta
+	var xz_dir:= to_local_input(Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1)) * delta
 	position += Vector3(xz_dir.x, Input.get_axis(&"crouch", &"jump") * delta, xz_dir.y) * GODMODE_SPEED
 
 
@@ -111,6 +110,12 @@ func set_godmode(active: bool) -> void:
 	#freeze = godmode
 	set_process(godmode)
 
+
+func to_local_input(input: Vector2) -> Vector2:
+	return input.rotated(-get_camera_yaw())
+
+func get_camera_yaw() -> float:
+	return get_viewport().get_camera_3d().global_rotation.y
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build() or event.is_echo() or not event.is_pressed(): return

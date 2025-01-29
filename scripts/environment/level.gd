@@ -38,6 +38,7 @@ func _ready() -> void:
 	pause_menu = PauseMenu.new()
 	add_child(pause_menu)
 
+
 func _on_dead(collider: Node) -> void:
 	pause_menu.set_process_input(false)
 	player_dead.emit(collider)

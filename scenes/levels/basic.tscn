@@ -69,7 +69,6 @@ material = ExtResource("2_4o7q8")
 
 [node name="CSGSubtract14" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.25, 0.75, 0)
-material_override = ExtResource("2_4o7q8")
 use_collision = true
 size = Vector3(20.5, 0.5, 10)
 material = ExtResource("2_4o7q8")

@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://m687fwwg288h"]
+[gd_scene load_steps=6 format=3 uid="uid://m687fwwg288h"]
 
 [ext_resource type="Script" uid="uid://db0fl44jb2ep7" path="res://scenes/menus/main/main.gd" id="1_0wfyh"]
 [ext_resource type="Script" uid="uid://opj77j7k0eiy" path="res://models/floor.gd" id="2_jyhfs"]
 [ext_resource type="Material" uid="uid://p8h7kpk70bg3" path="res://resources/materials/sheet_metal.tres" id="3_tbgi4"]
-[ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="4_tefeu"]
 [ext_resource type="PackedScene" uid="uid://ck43pilejktc4" path="res://scenes/menus/settings/settings_menu.tscn" id="6_tefeu"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tbgi4"]
@@ -11,7 +10,6 @@ plane = Plane(0, 0, 1, 0)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_0wfyh")
-player_scene = ExtResource("4_tefeu")
 
 [node name="Environment" type="Node3D" parent="."]
 
@@ -80,15 +78,35 @@ theme_override_constants/separation = 32
 alignment = 1
 
 [node name="Start" type="Button" parent="Menu/ButtonVBox"]
+unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Settings")
+focus_next = NodePath(".")
+focus_previous = NodePath("../Quit")
 text = "Start"
 
 [node name="Settings" type="Button" parent="Menu/ButtonVBox"]
 layout_mode = 2
+focus_neighbor_left = NodePath("../Settings")
+focus_neighbor_top = NodePath("../Start")
+focus_neighbor_right = NodePath("../Settings")
+focus_neighbor_bottom = NodePath("../Quit")
+focus_next = NodePath("../Quit")
+focus_previous = NodePath("../Start")
 text = "Settings"
 
 [node name="Quit" type="Button" parent="Menu/ButtonVBox"]
+unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Settings")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Start")
+focus_next = NodePath("../Start")
+focus_previous = NodePath("../Settings")
 text = "Quit"
 
 [node name="Title" type="Label" parent="Menu"]
@@ -108,6 +126,8 @@ metadata/_edit_lock_ = true
 unique_name_in_owner = true
 visible = false
 
+[connection signal="draw" from="Menu" to="." method="_draw"]
+[connection signal="hidden" from="Menu" to="." method="_hidden"]
 [connection signal="pressed" from="Menu/ButtonVBox/Start" to="." method="_start"]
 [connection signal="pressed" from="Menu/ButtonVBox/Settings" to="." method="_settings_pressed"]
 [connection signal="pressed" from="Menu/ButtonVBox/Quit" to="." method="_on_quit_pressed"]

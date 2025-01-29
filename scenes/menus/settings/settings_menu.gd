@@ -10,10 +10,18 @@ signal request_close
 var populate_callable: Callable = populate_menu
 
 func _ready() -> void:
-	SETTINGS.load_settings()
+	if not Engine.is_editor_hint() and not SETTINGS.is_loaded: 
+		SETTINGS.load_settings()
 	populate_menu()
+	if Engine.is_editor_hint(): return
 	%BackButton.pressed.connect(emit_signal.bind(&"request_close"))
+	%Reset.pressed.connect(reset_default)
 	request_close.connect(SETTINGS.save_settings)
+	visibility_changed.connect(_on_visibility_changed)
+
+func reset_default() -> void:
+	SETTINGS.reset_to_default()
+	populate_menu()
 
 func populate_menu() -> void:
 	var grid: GridContainer = %Grid
@@ -24,6 +32,22 @@ func populate_menu() -> void:
 	for prop: Dictionary in SETTINGS.get_property_list():
 		if prop.name not in SETTINGS.PROPERTIES: continue
 		create_setting_slider(prop, grid)
+	
+	var label:= Label.new()
+	label.name = &"CameraShakeLabel"
+	label.text = "Camera Shake"
+	label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	
+	var check:= CheckBox.new()
+	check.name = &"CameraShakeCheck"
+	check.button_pressed = SETTINGS.get_camera_shake()
+	check.toggled.connect(_on_value_changed.bind(&"camera_shake"))
+	check.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	check.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	
+	grid.add_child(label)
+	grid.add_child(Control.new())
+	grid.add_child(check)
 
 
 func create_setting_slider(property: Dictionary, parent: Control) -> void:
@@ -54,12 +78,21 @@ func create_setting_slider(property: Dictionary, parent: Control) -> void:
 	slider.name = property.name.to_pascal_case() + "Slider"
 	spinbox.name = property.name.to_pascal_case() + "Spinbox"
 	
-	
 	parent.add_child(label, true)
 	parent.add_child(slider, true)
 	parent.add_child(spinbox, true)
 	
-	slider.value_changed.connect(_on_value_changed.bind(property.name))
+	if not Engine.is_editor_hint():
+		slider.value_changed.connect(_on_value_changed.bind(property.name))
 
 func _on_value_changed(value: float, property: StringName) -> void:
 	SETTINGS.set(property, value)
+
+func _on_visibility_changed() -> void:
+	if visible and %Grid.get_child_count() > 1:
+		var control: Control = %Grid.get_child(1)
+		if control.visible and not control.has_focus():
+			control.grab_focus()
+	else:
+		propagate_call(&"release_focus")
+	
