@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://ca38c7oafrli"]
+[gd_scene load_steps=18 format=3 uid="uid://ca38c7oafrli"]
 
 [ext_resource type="Script" uid="uid://265ioi7d3q7c" path="res://scenes/player/player.gd" id="1_8afob"]
 [ext_resource type="Material" uid="uid://ndqemuv2cft8" path="res://resources/materials/player.tres" id="3_gmlin"]
 [ext_resource type="Texture2D" uid="uid://d3sufsikrdg5q" path="res://resources/fire_gradient.tres" id="4_lvxji"]
 [ext_resource type="Script" uid="uid://25tgv36t2oc5" path="res://scenes/player/CollisionSensor.gd" id="5_p47bc"]
+[ext_resource type="Script" uid="uid://cn8alwpa6bwti" path="res://scenes/player/player_audio.gd" id="6_0owmy"]
 [ext_resource type="Material" uid="uid://cxhaa6i7bto07" path="res://scenes/player/Explosion/ExplosionMaterial.tres" id="6_75vfm"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p47bc"]
@@ -131,3 +132,7 @@ draw_pass_1 = SubResource("QuadMesh_h17s1")
 script = ExtResource("5_p47bc")
 max_safe_linear_delta_magnitude = 300.0
 metadata/_custom_type_script = ExtResource("5_p47bc")
+
+[node name="PlayerAudio" type="Node3D" parent="."]
+script = ExtResource("6_0owmy")
+metadata/_custom_type_script = ExtResource("6_0owmy")

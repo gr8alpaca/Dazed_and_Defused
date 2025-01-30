@@ -2,6 +2,7 @@ class_name CollisionSensor extends Node
 
 const META_TAG: StringName = &"cushion"
 
+signal collision(strength: float)
 signal unsafe_collision(collider: Node)
 
 @onready var body: RigidBody3D = get_parent()
@@ -21,7 +22,7 @@ var position: Vector3
 var last_collider: Node
 
 const ENABLE_BUFFER_MAX: int = 5
-var enable_buffer: int = 0
+var enable_buffer: int = 5
 
 func _ready() -> void:
 	body.can_sleep = false
@@ -44,10 +45,16 @@ func _physics_process(delta: float) -> void:
 	if enable_buffer > 0:
 		enable_buffer -= 1
 	
-	if not enabled or enable_buffer: return
-	
-	#var bodies:= body.get_colliding_bodies()
 	var linear_strength:= velocity_delta.length()
+	
+	if enable_buffer: return
+	
+	collision.emit(linear_strength)
+	
+	if not enabled: return
+	
+	
+	
 	var cushion: float = last_collider.get_meta(META_TAG, 1.0) if last_collider else 1.0
 	var strength: float = linear_strength * cushion
 	

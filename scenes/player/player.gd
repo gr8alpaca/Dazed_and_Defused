@@ -94,6 +94,7 @@ func _on_unsafe_collision(collider: Node) -> void:
 	$SphereMesh.hide()
 	if SETTINGS.get_camera_shake():
 		camera.shake()
+	#Audio.play
 	dead.emit(collider)
 
 func _process(delta: float) -> void:
