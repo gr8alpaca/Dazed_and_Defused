@@ -7,6 +7,6 @@ material = ExtResource("1_a7w0p")
 flip_faces = true
 size = Vector2(2, 2)
 
-[node name="MeshInstance3D" type="MeshInstance3D"]
+[node name="PSXPostProcess" type="MeshInstance3D"]
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_rjwde")

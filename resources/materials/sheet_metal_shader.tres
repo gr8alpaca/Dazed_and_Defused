@@ -62,12 +62,15 @@ vec4 triplanar_texture(sampler2D p_sampler, vec3 p_weights, vec3 p_triplanar_pos
 }
 
 void fragment() {
+	if (dot(NORMAL, vec3(0.,1.,0.)) < -0.1)
+		discard;
 	vec4 albedo_tex = triplanar_texture(texture_albedo, uv1_power_normal, uv1_triplanar_pos);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
 	
 	vec4 alpha_tex = triplanar_texture(alpha_texture, uv1_power_normal, uv1_triplanar_pos);
-	ALPHA = alpha_tex.r;
-	
+	//ALPHA = alpha_tex.r;
+	if (alpha_tex.r <= 0.25)
+		discard;
 	float metallic_tex = dot(triplanar_texture(texture_metallic, uv1_power_normal, uv1_triplanar_pos), metallic_texture_channel);
 	METALLIC = metallic_tex * metallic;
 	SPECULAR = specular;

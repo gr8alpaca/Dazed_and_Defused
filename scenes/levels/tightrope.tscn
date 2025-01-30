@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://dhv3fkt5cbd0f"]
+[gd_scene load_steps=19 format=4 uid="uid://dhv3fkt5cbd0f"]
 
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_r1e5f"]
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_7h611"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="4_vlp1d"]
 [ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="5_ourro"]
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="6_oej2b"]
+[ext_resource type="Material" uid="uid://p8h7kpk70bg3" path="res://resources/materials/sheet_metal.tres" id="7_368nu"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="7_jqlyr"]
 [ext_resource type="PackedScene" uid="uid://dx13yaq0krj3g" path="res://scenes/psx_post.tscn" id="7_r1e5f"]
 [ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="9_ppnyf"]
@@ -31,6 +32,7 @@ size = Vector3(2, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ljm8n"]
 material = ExtResource("2_7h611")
+flip_faces = true
 size = Vector3(20, 0.25, 0.25)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ljm8n"]
@@ -104,7 +106,7 @@ shape = SubResource("BoxShape3D_p5xfs")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Rope"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
 mesh = SubResource("BoxMesh_ljm8n")
-surface_material_override/0 = ExtResource("2_368nu")
+surface_material_override/0 = ExtResource("7_368nu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Rope"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
@@ -124,6 +126,7 @@ skeleton = NodePath("../..")
 
 [node name="Goal" parent="Environment/PlatformEnd" instance=ExtResource("6_oej2b")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.46393e-08, 0, 1.25)
+visible = false
 input_ray_pickable = false
 
 [node name="MeshInstance3D" parent="Environment" instance=ExtResource("7_r1e5f")]
