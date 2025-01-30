@@ -31,11 +31,6 @@ var starting_camera_angle: float = 0.0:
 		starting_camera_angle = val
 		camera.rotation_pivot.rotation.y = starting_camera_angle
 
-@export var debug_raycast: bool = false:
-	set(val):
-		debug_raycast = val
-		$DebugRayCast.visible = val
-
 var camera: PlayerCamera
 
 var godmode: bool = false
@@ -47,25 +42,14 @@ func _init() -> void:
 	camera = PlayerCamera.new()
 	select_camera = camera.select_camera_in_editor
 	add_child(camera)
-	
-	#if OS.is_debug_build() and not Engine.is_editor_hint():
-	var raycast:= RayCast3D.new()
-	raycast.name = &"DebugRayCast"
-	raycast.collide_with_bodies = false
-	raycast.collision_mask = 0
-	raycast.debug_shape_custom_color = Color(0.957, 0.224, 0.98, 0.361)
-	add_child(raycast, true)
-	raycast.top_level= true
-	#raycast.visible = false
-	
 
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	var explosion: GPUParticles3D = $Explosion
-	explosion.finished.connect(explosion.set_lifetime.bind(explosion.lifetime), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
-	explosion.lifetime = 0.01
-	explosion.emitting = true
+	#explosion.lifetime = 0.01
+	#explosion.emitting = true
+	#explosion.finished.connect(explosion.set_lifetime.bind(explosion.lifetime), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	
 	$CollisionSensor.unsafe_collision.connect(_on_unsafe_collision)
 

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0f6tt2ttqr3x"
-path.s3tc="res://.godot/imported/SheetMetal002.png-766a22c2a6fa089d93a3c7be78328760.s3tc.ctex"
+uid="uid://bixue0w8rsmpv"
+path.s3tc="res://.godot/imported/MetalPlates001_1K-JPG_NormalGL.jpg-39a8d1089928328decfd6e6f33264aa4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/materials/SheetMetal002_1K-PNG/SheetMetal002.png"
-dest_files=["res://.godot/imported/SheetMetal002.png-766a22c2a6fa089d93a3c7be78328760.s3tc.ctex"]
+source_file="res://assets/materials/MetalPlates001_1K-JPG/MetalPlates001_1K-JPG_NormalGL.jpg"
+dest_files=["res://.godot/imported/MetalPlates001_1K-JPG_NormalGL.jpg-39a8d1089928328decfd6e6f33264aa4.s3tc.ctex"]
 
 [params]
 
@@ -20,12 +20,12 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=0
+compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=1
+roughness/src_normal="res://assets/materials/MetalPlates001_1K-JPG/MetalPlates001_1K-JPG_NormalGL.jpg"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

@@ -8,12 +8,12 @@
 
 [resource]
 albedo_texture = ExtResource("1_8xiy6")
-metallic = 0.98
+metallic = 1.0
 metallic_texture = ExtResource("3_usdta")
+roughness = 0.56
 roughness_texture = ExtResource("5_ckac1")
 normal_enabled = true
 normal_texture = ExtResource("4_dq2bt")
 heightmap_texture = ExtResource("2_b6w8n")
-uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_scale = Vector3(0.2, 0.2, 0.2)
 uv1_triplanar = true
-uv1_triplanar_sharpness = 0.0412347

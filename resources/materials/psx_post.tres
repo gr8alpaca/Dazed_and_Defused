@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://duvfo81jhd45k"]
+
+[ext_resource type="Shader" uid="uid://b4dq3n4saebjg" path="res://resources/environment/psx.gdshader" id="1_6m74r"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_6m74r")
+shader_parameter/color_depth = 8
+shader_parameter/dithering = true
+shader_parameter/resolution_scale = 2

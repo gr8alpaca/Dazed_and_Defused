@@ -5,9 +5,8 @@ enum {BUS_MASTER = 0, BUS_SFX = 1, BUS_MUSIC = 2}
 var music_stream: AudioStreamPlayer
 var sfx_stream: AudioStreamPlayer
 
-const SFX:={
+const SFX_LIBRARY:={
 	explosion = preload("res://assets/sfx/explosion_metallic.wav"),
-	#moving = preload("res://assets/sfx/explosion_metallic.wav"),
 	thud = preload("res://assets/sfx/explosion_metallic.wav"),
 	roll = preload("res://assets/sfx/explosion_metallic.wav"),
 }

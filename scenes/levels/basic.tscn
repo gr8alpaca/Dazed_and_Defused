@@ -1,19 +1,23 @@
-[gd_scene load_steps=15 format=3 uid="uid://drh50l3xjd3m3"]
+[gd_scene load_steps=19 format=3 uid="uid://drh50l3xjd3m3"]
 
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_0absb"]
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_4o7q8"]
+[ext_resource type="Material" uid="uid://bduwtottg1auy" path="res://resources/materials/metal_plate.tres" id="2_es0gi"]
 [ext_resource type="Material" uid="uid://p8h7kpk70bg3" path="res://resources/materials/sheet_metal.tres" id="2_vg6do"]
 [ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="3_4o7q8"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="3_kpjit"]
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="4_ijh0y"]
 [ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/environment/trap.gd" id="5_ql3nd"]
+[ext_resource type="PackedScene" uid="uid://dx13yaq0krj3g" path="res://scenes/psx_post.tscn" id="5_vjyib"]
 [ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="7_ijh0y"]
 [ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="8_ql3nd"]
+[ext_resource type="AudioStream" uid="uid://c5e02b3rway66" path="res://assets/sfx/metal-moving.wav" id="9_066fj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ql3nd"]
 friction = 0.2
 
 [sub_resource type="Resource" id="Resource_x6e36"]
+resource_name = "RotateBody"
 script = ExtResource("8_ql3nd")
 start_value = 0.0
 end_value = -90.0
@@ -23,9 +27,20 @@ tween_ease = 2
 tween_trans = 0
 target_node_path = NodePath("Trap")
 path = "rotation_degrees:x"
+additional_delay_sec = 0.0
 reset_speed_sec = 1.501
 arguments = []
 metadata/_custom_type_script = ExtResource("8_ql3nd")
+
+[sub_resource type="Resource" id="Resource_066fj"]
+resource_name = "PlaySound"
+script = ExtResource("7_ijh0y")
+target_node_path = NodePath("Trap/AudioStreamPlayer3D")
+path = "play"
+additional_delay_sec = 0.0
+reset_speed_sec = 1.0
+arguments = []
+metadata/_custom_type_script = ExtResource("7_ijh0y")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_22n3q"]
 size = Vector3(1, 1, 3)
@@ -34,7 +49,7 @@ size = Vector3(1, 1, 3)
 size = Vector3(1, 3, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_22n3q"]
-material = ExtResource("2_4o7q8")
+material = ExtResource("2_es0gi")
 size = Vector3(1, 3, 1)
 
 [node name="Basic" type="Node3D"]
@@ -43,6 +58,7 @@ script = ExtResource("1_0absb")
 [node name="Environment" type="Node3D" parent="."]
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="Environment"]
+material_override = ExtResource("2_es0gi")
 use_collision = true
 
 [node name="CSGFloor2" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
@@ -97,11 +113,11 @@ size = Vector3(15.75, 3, 3)
 material = ExtResource("2_4o7q8")
 
 [node name="CSGSubtract12" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.525, 1.5, 0.125)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.4461, 1.5, 0.125)
 material_override = ExtResource("2_4o7q8")
 operation = 2
 use_collision = true
-size = Vector3(15.75, 3, 6.25)
+size = Vector3(15.9077, 3, 6.25)
 material = ExtResource("2_4o7q8")
 
 [node name="CSGSubtract7" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
@@ -175,6 +191,8 @@ use_collision = true
 polygon = PackedVector2Array(0, 0, 0, 0.75, 2.5, 0)
 depth = 0.5
 
+[node name="MeshInstance3D" parent="Environment" instance=ExtResource("5_vjyib")]
+
 [node name="Player" parent="." instance=ExtResource("3_kpjit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 physics_material_override = SubResource("PhysicsMaterial_ql3nd")
@@ -197,7 +215,7 @@ directional_shadow_max_distance = 35.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.75, 0, 0)
 script = ExtResource("5_ql3nd")
 area_trigger = NodePath("Trigger")
-actions = Array[ExtResource("7_ijh0y")]([SubResource("Resource_x6e36")])
+actions = Array[ExtResource("7_ijh0y")]([SubResource("Resource_x6e36"), SubResource("Resource_066fj")])
 
 [node name="Trigger" type="Area3D" parent="Trap"]
 collision_layer = 0
@@ -217,6 +235,10 @@ shape = SubResource("BoxShape3D_g7cpj")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Trap/Trap"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.5, 0.5)
 mesh = SubResource("BoxMesh_22n3q")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Trap/Trap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+stream = ExtResource("9_066fj")
 
 [node name="DeathBox" type="Area3D" parent="."]
 transform = Transform3D(0.999941, 0, 0.0108732, 0, 1, 0, -0.0108732, 0, 0.999941, 4, -3, 0)

@@ -20,10 +20,10 @@ func create_player() -> void:
 	const PLAYER_START_POSITION: Vector3 = Vector3(3.0, 2.5, 1.0)
 	var player: Player = PLAYER_SCENE.instantiate()
 	var mouse_controller:= MouseController.new()
+	player.set_collision_sensor_enabled(false)
 	player.add_child(mouse_controller)
 	player.dead.connect(_on_player_dead)
 	player.input_active = false
-	player.set_collision_sensor_enabled(false)
 	player.visible = false
 	add_child(player)
 	player.position = PLAYER_START_POSITION

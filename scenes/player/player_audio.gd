@@ -35,13 +35,13 @@ func _ready() -> void:
 	create_tween().tween_callback(roll_stream.play).set_delay(3.0)
 	
 	player = get_parent()
-	player.get_node(^"CollisionSensor").collision.connect.call_deferred(_on_collision)
+	#player.get_node(^"CollisionSensor").collision.connect.call_deferred(_on_collision)
 	player.dead.connect(_on_dead)
 	
-	#player.body_entered.connect(_on_collision)
+	PhysicsServer3D.body_set_force_integration_callback(player.get_rid(), integrate_forces)
+	
 
 func _physics_process(delta: float) -> void:
-	#
 	
 	if not player.get_contact_count():
 		roll_stream.volume_db = move_toward(roll_stream.volume_db, MIN_DB, delta * MAX_DB_DELTA)
@@ -51,14 +51,27 @@ func _physics_process(delta: float) -> void:
 	var t:= clampf(inverse_lerp(MIN_LINEAR_VELOCITY, MAX_LINEAR_VELOCITY, linear), 0.0, 1.0)
 	var target_db:= lerpf(MIN_DB, MAX_DB, t)
 	
-	var delta_modifier: float = 0.5 if roll_stream.volume_db > target_db else 1.0
+	const SOUND_FALLOFF_RATE: float = 0.5
+	var delta_modifier: float = SOUND_FALLOFF_RATE if roll_stream.volume_db > target_db else 1.0
 	roll_stream.volume_db = move_toward(roll_stream.volume_db, target_db, delta * MAX_DB_DELTA * delta_modifier )
 
-
-func _on_collision(strength: float) -> void:
-	if strength > 200.0:
-		print("PLAYING THUD...")
+func integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	const THRESHOLD: float = 3.5
+	
+	for i: int in state.get_contact_count():
+		var impulse:= state.get_contact_impulse(i)
+		if impulse.length() < THRESHOLD: continue
+		print("Thud Played @\t%3.2f..." % (Time.get_ticks_msec() / 1000.0))
 		thud_stream.play()
+		break
+	
+	
+	
+#
+#func _on_collision(strength: float) -> void:
+	#if strength > 200.0:
+		#print("Thud Played @\t%3.2f..." % (Time.get_ticks_msec() / 1000.0))
+		#thud_stream.play()
 
 func _on_dead(collider: Node) -> void:
 	thud_stream.stop()

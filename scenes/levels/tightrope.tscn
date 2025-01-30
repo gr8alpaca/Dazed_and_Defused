@@ -1,12 +1,14 @@
-[gd_scene load_steps=16 format=4 uid="uid://dhv3fkt5cbd0f"]
+[gd_scene load_steps=18 format=4 uid="uid://dhv3fkt5cbd0f"]
 
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_r1e5f"]
 [ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_7h611"]
+[ext_resource type="Material" uid="uid://bduwtottg1auy" path="res://resources/materials/metal_plate.tres" id="2_368nu"]
 [ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/environment/trap.gd" id="3_368nu"]
 [ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="4_vlp1d"]
 [ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="5_ourro"]
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="6_oej2b"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="7_jqlyr"]
+[ext_resource type="PackedScene" uid="uid://dx13yaq0krj3g" path="res://scenes/psx_post.tscn" id="7_r1e5f"]
 [ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="9_ppnyf"]
 
 [sub_resource type="Resource" id="Resource_v24ps"]
@@ -19,6 +21,7 @@ tween_ease = 2
 tween_trans = 0
 target_node_path = NodePath("../PlatformEnd")
 path = "position:y"
+additional_delay_sec = 0.0
 reset_speed_sec = 1.0
 arguments = []
 metadata/_custom_type_script = ExtResource("5_ourro")
@@ -41,7 +44,7 @@ _surfaces = [{
 "aabb": AABB(-3.125, -0.25, -5, 6.25, 0.5, 10),
 "attribute_data": PackedByteArray("AAAAPzMzcz8AAIA/AACAPwAAAD/NzEw9AAAAP83MTD0AAAAAAAAAAAAAAADNzEw9AAAAP83MTD0AAIA/AAAAAAAAAAAAAAAAzcxMPR+Faz/NzEw9AAAAAAAAAAAAAAAAAAAAAAAAgD8AAAA/MzNzPwAAAAAzM3M/AAAAAAAAgD8AAIA/AACAPwAAAD8zM3M/MzNzPx+Faz8AAIA/AAAAADMzcz8AAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAAAAAAAA/zcxMPQAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAzcxMPR+Faz8AAAAAAAAAAAAAAAAAAIA/AACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/zcxMPR+Faz8AAAAAAACAPzMzcz8fhWs/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/MzNzPx+Faz8AAIA/AACAPwAAgD8AAAAAMzNzPx+Faz8AAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAIA/AACAPwAAgD8AAAAAAAAAAAAAAAAAAIA/AACAPwAAgD8AAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAAAAAAAAAAAAAAAAAIA/AACAPwAAAAAAAIA/AACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAAAAAAIA/AACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAIA/AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/"),
 "format": 34359738391,
-"material": ExtResource("2_7h611"),
+"material": ExtResource("2_368nu"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 84,
@@ -58,6 +61,7 @@ script = ExtResource("1_r1e5f")
 [node name="Environment" type="Node3D" parent="."]
 
 [node name="BoxPair" type="CSGCombiner3D" parent="Environment"]
+material_override = ExtResource("2_368nu")
 use_collision = true
 collision_priority = 2.0
 
@@ -76,6 +80,7 @@ material = ExtResource("2_7h611")
 
 [node name="Rope" type="CSGBox3D" parent="Environment/BoxPair"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+visible = false
 size = Vector3(20, 0.25, 0.25)
 material = ExtResource("2_7h611")
 
@@ -99,6 +104,7 @@ shape = SubResource("BoxShape3D_p5xfs")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Rope"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
 mesh = SubResource("BoxMesh_ljm8n")
+surface_material_override/0 = ExtResource("2_368nu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Rope"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
@@ -119,6 +125,8 @@ skeleton = NodePath("../..")
 [node name="Goal" parent="Environment/PlatformEnd" instance=ExtResource("6_oej2b")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.46393e-08, 0, 1.25)
 input_ray_pickable = false
+
+[node name="MeshInstance3D" parent="Environment" instance=ExtResource("7_r1e5f")]
 
 [node name="Player" parent="." instance=ExtResource("7_jqlyr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, 0.5, 2.75)

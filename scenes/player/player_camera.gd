@@ -82,7 +82,7 @@ func select_camera_in_editor() -> void:
 func shake() -> void:
 	const DURATION_SEC: float = 0.6
 	
-	const MAX_YAW: float = deg_to_rad(2.0)
+	const MAX_YAW: float = deg_to_rad(0.0)
 	const YAW_LOOPS: int = 10
 	const YAW_TWEEN_TIME: float = DURATION_SEC/YAW_LOOPS/4.0
 	
@@ -94,12 +94,12 @@ func shake() -> void:
 	const ROLL_LOOPS: int = 5
 	const ROLL_TWEEN_TIME: float = DURATION_SEC/ROLL_LOOPS/4.0
 	
-	var yaw_tw: Tween = create_tween()
-	for i: int in YAW_LOOPS:
-		var value: float = lerp(MAX_YAW, 0.0, inverse_lerp(0, YAW_LOOPS, i))
-		yaw_tw.tween_property(self, ^"rotation:y", value, YAW_TWEEN_TIME).as_relative()
-		yaw_tw.tween_property(self, ^"rotation:y", -value*2.0, YAW_TWEEN_TIME).as_relative()
-		yaw_tw.tween_property(self, ^"rotation:y", value, YAW_TWEEN_TIME).as_relative()
+	#var yaw_tw: Tween = create_tween()
+	#for i: int in YAW_LOOPS:
+		#var value: float = lerp(MAX_YAW, 0.0, inverse_lerp(0, YAW_LOOPS, i))
+		#yaw_tw.tween_property(self, ^"rotation:y", value, YAW_TWEEN_TIME).as_relative()
+		#yaw_tw.tween_property(self, ^"rotation:y", -value*2.0, YAW_TWEEN_TIME).as_relative()
+		#yaw_tw.tween_property(self, ^"rotation:y", value, YAW_TWEEN_TIME).as_relative()
 		
 	var pitch_tw: Tween = create_tween()
 	for i: int in PITCH_LOOPS:

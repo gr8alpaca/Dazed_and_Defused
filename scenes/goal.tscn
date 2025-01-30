@@ -5,15 +5,14 @@
 [ext_resource type="FontFile" uid="uid://bx8qweglvu8be" path="res://assets/ChubbyCrayon-Regular.ttf" id="3_w3gav"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_q5bgg"]
-lightmap_size_hint = Vector2i(17, 11)
+lightmap_size_hint = Vector2i(33, 16)
 material = ExtResource("2_jvyg3")
 top_radius = 1.0
 bottom_radius = 1.0
 height = 0.5
-cap_bottom = false
+radial_segments = 12
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c16ly"]
-depth_draw_mode = 2
 specular_mode = 2
 disable_receive_shadows = true
 
@@ -35,10 +34,11 @@ script = ExtResource("1_w3gav")
 
 [node name="CylinderMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+extra_cull_margin = 16384.0
 mesh = SubResource("CylinderMesh_q5bgg")
 
 [node name="Text" type="MeshInstance3D" parent="CylinderMesh"]
-transform = Transform3D(0.734654, 0, 0.678442, 0, 1, 0, -0.678442, 0, 0.734654, 0, 0.52527, 0)
+transform = Transform3D(0.91325, 0, 0.407399, 0, 1, 0, -0.407399, 0, 0.91325, 0, 0.727694, 0)
 mesh = SubResource("TextMesh_rlg85")
 skeleton = NodePath("../..")
 
