@@ -33,8 +33,6 @@ var starting_camera_angle: float = 0.0:
 
 var camera: PlayerCamera
 
-var godmode: bool = false
-
 func _init() -> void:
 	add_to_group(GROUP)
 	physics_material_override = PhysicsMaterial.new()
@@ -46,13 +44,13 @@ func _init() -> void:
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
-	var explosion: GPUParticles3D = $Explosion
-	#explosion.lifetime = 0.01
-	#explosion.emitting = true
+	#var explosion: GPUParticles3D = $Explosion
 	#explosion.finished.connect(explosion.set_lifetime.bind(explosion.lifetime), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	#explosion.lifetime = 0.0
+	#explosion.emitting = true
 	
 	$CollisionSensor.unsafe_collision.connect(_on_unsafe_collision)
-
+	
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if Engine.is_editor_hint(): return
@@ -78,40 +76,16 @@ func _on_unsafe_collision(collider: Node) -> void:
 	$SphereMesh.hide()
 	if SETTINGS.get_camera_shake():
 		camera.shake()
-	#Audio.play
 	dead.emit(collider)
 
-func _process(delta: float) -> void:
-	if not godmode: return
-	const GODMODE_SPEED: float = 10.0
-	var xz_dir:= to_local_input(Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", 0.1)) * delta
-	position += Vector3(xz_dir.x, Input.get_axis(&"crouch", &"jump") * delta, xz_dir.y) * GODMODE_SPEED
-
-
-func set_godmode(active: bool) -> void:
-	godmode = active
-	$CollisionSensor.enabled = !godmode
-	gravity_scale = 0.0 if godmode else 1.0
-	#freeze = godmode
-	set_process(godmode)
 
 func defuse() -> void:
 	$SphereMesh/StemMesh/GPUParticles3D.emitting = false
+	$PlayerAudio.play_defused()
+	#Audio.play_sfx(Audio.SFX_LIBRARY.defused)
 
 func to_local_input(input: Vector2) -> Vector2:
 	return input.rotated(-get_camera_yaw())
 
 func get_camera_yaw() -> float:
 	return get_viewport().get_camera_3d().global_rotation.y
-
-func _unhandled_input(event: InputEvent) -> void:
-	if not OS.is_debug_build() or event.is_echo() or not event.is_pressed(): return
-	
-	if Input.is_key_pressed(KEY_PAGEUP):
-		$CollisionSensor.enabled = !$CollisionSensor.enabled
-	elif event.is_action_pressed(&"godmode"):
-		set_godmode(!godmode)
-	else:
-		return
-	
-	get_viewport().set_input_as_handled()

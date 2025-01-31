@@ -1,9 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://btn5ttt5jwlnq"]
+[gd_scene load_steps=21 format=3 uid="uid://btn5ttt5jwlnq"]
 
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_k3aax"]
-[ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_dyjfh"]
+[ext_resource type="Material" uid="uid://bduwtottg1auy" path="res://resources/materials/metal_plate.tres" id="2_dyjfh"]
 [ext_resource type="Script" uid="uid://cr3r4feojithi" path="res://scripts/environment/obstacle.gd" id="3_l52nm"]
-[ext_resource type="Material" uid="uid://bsdn0sngysfln" path="res://resources/materials/prototype_green.tres" id="4_618so"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="5_444k1"]
 [ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/environment/trap.gd" id="5_k3aax"]
 [ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="6_dyjfh"]
@@ -25,7 +24,7 @@ height = 22.0
 size = Vector3(1, 1.5, 0.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_xmsj2"]
-material = ExtResource("4_618so")
+material = ExtResource("2_dyjfh")
 size = Vector3(1, 1.5, 0.5)
 
 [sub_resource type="Resource" id="Resource_618so"]
@@ -38,6 +37,7 @@ tween_ease = 1
 tween_trans = 3
 target_node_path = NodePath("../EndPlatform")
 path = "position:x"
+additional_delay_sec = 0.0
 reset_speed_sec = 1.0
 arguments = []
 metadata/_custom_type_script = ExtResource("7_l52nm")
@@ -49,6 +49,7 @@ size = Vector3(1, 5, 5)
 script = ExtResource("6_dyjfh")
 target_node_path = NodePath("../EndTrap")
 path = "disable"
+additional_delay_sec = 0.0
 reset_speed_sec = 0.001
 arguments = []
 metadata/_custom_type_script = ExtResource("6_dyjfh")
@@ -247,13 +248,16 @@ physics_material_override = SubResource("PhysicsMaterial_ql3nd")
 starting_camera_angle = -1.5708
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866024, -0.433016, 0.25, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 9, 0)
-light_energy = 0.5
+transform = Transform3D(-0.866024, -0.433016, 0.25, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 20, 0)
+light_energy = 2.0
+light_indirect_energy = 1.96
+light_specular = 0.3
 shadow_enabled = true
 shadow_opacity = 0.7
 directional_shadow_mode = 0
 directional_shadow_blend_splits = true
 directional_shadow_max_distance = 35.0
+sky_mode = 1
 
 [node name="DeathBox" type="Area3D" parent="."]
 transform = Transform3D(0.999941, 0, 0.0108732, 0, 1, 0, -0.0108732, 0, 0.999941, 4, -6.25, 0)

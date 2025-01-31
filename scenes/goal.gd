@@ -10,7 +10,6 @@ func _ready() -> void:
 	collision_layer = 0
 	collision_mask = 2
 	monitorable = false
-	if Engine.is_editor_hint(): return
 
 
 func _process(delta: float) -> void:

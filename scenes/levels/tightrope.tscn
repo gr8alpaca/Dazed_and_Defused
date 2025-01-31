@@ -1,15 +1,12 @@
-[gd_scene load_steps=19 format=4 uid="uid://dhv3fkt5cbd0f"]
+[gd_scene load_steps=16 format=4 uid="uid://dhv3fkt5cbd0f"]
 
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_r1e5f"]
-[ext_resource type="Material" uid="uid://dce8bj2no3pyn" path="res://resources/materials/prototype_dark.tres" id="2_7h611"]
 [ext_resource type="Material" uid="uid://bduwtottg1auy" path="res://resources/materials/metal_plate.tres" id="2_368nu"]
 [ext_resource type="Script" uid="uid://brx8nin43uye7" path="res://scripts/environment/trap.gd" id="3_368nu"]
 [ext_resource type="Script" uid="uid://trmcio4w813p" path="res://scripts/environment/trap_action.gd" id="4_vlp1d"]
 [ext_resource type="Script" uid="uid://nfqotka7ofne" path="res://scripts/environment/trap_tween.gd" id="5_ourro"]
 [ext_resource type="PackedScene" uid="uid://b7l0ssrmhfv0a" path="res://scenes/goal.tscn" id="6_oej2b"]
-[ext_resource type="Material" uid="uid://p8h7kpk70bg3" path="res://resources/materials/sheet_metal.tres" id="7_368nu"]
 [ext_resource type="PackedScene" uid="uid://ca38c7oafrli" path="res://scenes/player/player.tscn" id="7_jqlyr"]
-[ext_resource type="PackedScene" uid="uid://dx13yaq0krj3g" path="res://scenes/psx_post.tscn" id="7_r1e5f"]
 [ext_resource type="Script" uid="uid://67y6b3cnojc0" path="res://scripts/environment/death_box.gd" id="9_ppnyf"]
 
 [sub_resource type="Resource" id="Resource_v24ps"]
@@ -31,8 +28,7 @@ metadata/_custom_type_script = ExtResource("5_ourro")
 size = Vector3(2, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ljm8n"]
-material = ExtResource("2_7h611")
-flip_faces = true
+material = ExtResource("2_368nu")
 size = Vector3(20, 0.25, 0.25)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ljm8n"]
@@ -62,30 +58,6 @@ script = ExtResource("1_r1e5f")
 
 [node name="Environment" type="Node3D" parent="."]
 
-[node name="BoxPair" type="CSGCombiner3D" parent="Environment"]
-material_override = ExtResource("2_368nu")
-use_collision = true
-collision_priority = 2.0
-
-[node name="BoxPlatform2" type="CSGCombiner3D" parent="Environment/BoxPair"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="Environment/BoxPair/BoxPlatform2"]
-size = Vector3(6.25, 0.5, 10)
-material = ExtResource("2_7h611")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Environment/BoxPair/BoxPlatform2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.125, 0)
-operation = 2
-size = Vector3(5.75, 0.25, 9)
-material = ExtResource("2_7h611")
-
-[node name="Rope" type="CSGBox3D" parent="Environment/BoxPair"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
-visible = false
-size = Vector3(20, 0.25, 0.25)
-material = ExtResource("2_7h611")
-
 [node name="Trap" type="Node3D" parent="Environment" node_paths=PackedStringArray("area_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 0)
 script = ExtResource("3_368nu")
@@ -106,11 +78,21 @@ shape = SubResource("BoxShape3D_p5xfs")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Rope"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
 mesh = SubResource("BoxMesh_ljm8n")
-surface_material_override/0 = ExtResource("7_368nu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Rope"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
 shape = SubResource("BoxShape3D_ljm8n")
+
+[node name="StartPlatform" type="StaticBody3D" parent="Environment"]
+
+[node name="CSGBakedCollisionShape3D2" type="CollisionShape3D" parent="Environment/StartPlatform"]
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -13, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ljm8n")
+
+[node name="CSGBakedMeshInstance3D2" type="MeshInstance3D" parent="Environment/StartPlatform"]
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -13, 0, 0)
+mesh = SubResource("ArrayMesh_p5xfs")
+skeleton = NodePath("../..")
 
 [node name="PlatformEnd" type="AnimatableBody3D" parent="Environment"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 13, 0, 0)
@@ -126,10 +108,7 @@ skeleton = NodePath("../..")
 
 [node name="Goal" parent="Environment/PlatformEnd" instance=ExtResource("6_oej2b")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.46393e-08, 0, 1.25)
-visible = false
 input_ray_pickable = false
-
-[node name="MeshInstance3D" parent="Environment" instance=ExtResource("7_r1e5f")]
 
 [node name="Player" parent="." instance=ExtResource("7_jqlyr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, 0.5, 2.75)
@@ -138,12 +117,15 @@ starting_camera_angle = -1.0472
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866024, -0.433016, 0.25, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 20, 0)
-light_energy = 0.5
+light_energy = 2.0
+light_indirect_energy = 1.96
+light_specular = 0.3
 shadow_enabled = true
 shadow_opacity = 0.7
 directional_shadow_mode = 0
 directional_shadow_blend_splits = true
 directional_shadow_max_distance = 35.0
+sky_mode = 1
 
 [node name="DeathBox" type="Area3D" parent="."]
 transform = Transform3D(0.999941, 0, 0.0108732, 0, 1, 0, -0.0108732, 0, 0.999941, 0, -5, 0)

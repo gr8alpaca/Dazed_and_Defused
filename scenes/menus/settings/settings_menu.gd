@@ -10,7 +10,7 @@ signal request_close
 var populate_callable: Callable = populate_menu
 
 func _ready() -> void:
-	if not Engine.is_editor_hint() and not SETTINGS.is_loaded: 
+	if not Engine.is_editor_hint() and not SETTINGS.is_loaded(): 
 		SETTINGS.load_settings()
 	populate_menu()
 	if Engine.is_editor_hint(): return
@@ -18,6 +18,8 @@ func _ready() -> void:
 	%Reset.pressed.connect(reset_default)
 	request_close.connect(SETTINGS.save_settings)
 	visibility_changed.connect(_on_visibility_changed)
+	get_tree().current_scene.propagate_call(&"set_volume_linear", [SETTINGS.get_sfx_volume()/100.0])
+	#SETTINGS.volume_changed.connect(_on_volume_changed)
 
 func reset_default() -> void:
 	SETTINGS.reset_to_default()
@@ -94,4 +96,5 @@ func _on_visibility_changed() -> void:
 			control.grab_focus()
 	else:
 		propagate_call(&"release_focus")
-	
+
+#func _on_volume_changed(bus: int, volume:)

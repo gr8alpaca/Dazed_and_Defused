@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://cn8alwpa6bwti" path="res://scenes/player/player_audio.gd" id="6_0owmy"]
 [ext_resource type="Material" uid="uid://cxhaa6i7bto07" path="res://scenes/player/Explosion/ExplosionMaterial.tres" id="6_75vfm"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p47bc"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_75vfm"]
 friction = 0.4
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gmlin"]
@@ -82,12 +82,11 @@ scale_max = 2.0
 
 [node name="Player" type="RigidBody3D"]
 collision_layer = 3
-physics_material_override = SubResource("PhysicsMaterial_p47bc")
+physics_material_override = SubResource("PhysicsMaterial_75vfm")
 max_contacts_reported = 10
 linear_damp = 0.2
 angular_damp = 0.1
 script = ExtResource("1_8afob")
-debug_raycast = true
 metadata/_custom_type_script = ExtResource("1_8afob")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

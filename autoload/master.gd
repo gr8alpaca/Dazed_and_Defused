@@ -52,7 +52,8 @@ func change_level(level_number: int) -> void:
 
 
 func reset_level() -> void:
-	get_tree().reload_current_scene()
+	if get_tree().current_scene is Level:
+		get_tree().reload_current_scene()
 
 func get_current_level() -> int:
 	return LEVEL_PATHS.find(get_tree().current_scene.scene_file_path) + 1
@@ -66,24 +67,21 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed(&"reset"):
 		reset_level()
-	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_1):
+		get_viewport().set_input_as_handled()
+		
+	if not OS.is_debug_build(): return
+	
+	if Input.is_key_pressed(KEY_1):
 		change_level(1)
-	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_2):
+	elif Input.is_key_pressed(KEY_2):
 		change_level(2)
-	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_3):
+	elif Input.is_key_pressed(KEY_3):
 		change_level(3)
-	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_4):
+	elif Input.is_key_pressed(KEY_4):
 		change_level(4)
-	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_5):
+	elif Input.is_key_pressed(KEY_5):
 		change_level(5)
-	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_6):
+	elif Input.is_key_pressed(KEY_6):
 		change_level(6)
-	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_RIGHT):
+	elif Input.is_key_pressed(KEY_7):
 		change_level(7)
-	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_END):
-		change_level(LEVEL_PATHS.size())
-	
-	else:
-		return
-	
-	get_viewport().set_input_as_handled()
