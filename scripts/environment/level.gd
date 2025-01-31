@@ -10,6 +10,7 @@ var pause_menu: PauseMenu
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
+	Audio.play_music(Audio.MUSIC_LIBRARY.main_theme)
 	for goal: Goal in find_children("*", "Goal"):
 		goal.body_entered.connect(_on_goal_entered.bind(goal), CONNECT_ONE_SHOT)
 	

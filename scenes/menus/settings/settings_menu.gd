@@ -10,7 +10,7 @@ signal request_close
 var populate_callable: Callable = populate_menu
 
 func _ready() -> void:
-	if not Engine.is_editor_hint() and not SETTINGS.is_loaded: 
+	if not Engine.is_editor_hint() and not SETTINGS.is_loaded(): 
 		SETTINGS.load_settings()
 	populate_menu()
 	if Engine.is_editor_hint(): return

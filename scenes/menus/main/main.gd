@@ -5,7 +5,13 @@ class_name MainMenu extends Node3D
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
+	Audio.play_music(Audio.MUSIC_LIBRARY.main_theme)
 	create_player()
+	var explosion: GPUParticles3D = $Player/Explosion
+	explosion.finished.connect(explosion.set_lifetime.bind(explosion.lifetime), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	explosion.lifetime = 0.02
+	explosion.emitting = true
+	
 
 func _input(event: InputEvent) -> void:
 	if Engine.is_editor_hint(): return
@@ -25,7 +31,7 @@ func create_player() -> void:
 	player.dead.connect(_on_player_dead)
 	player.input_active = false
 	player.visible = false
-	add_child(player)
+	add_child(player, true)
 	player.position = PLAYER_START_POSITION
 	player.visible = true
 	player.body_entered.connect(_on_player_body_entered.bind(player, mouse_controller), CONNECT_ONE_SHOT)

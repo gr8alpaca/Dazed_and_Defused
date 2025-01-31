@@ -8,8 +8,6 @@ render_mode blend_mix, depth_draw_opaque, cull_front, diffuse_burley, specular_s
 
 uniform vec4 albedo : source_color;
 uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
-uniform ivec2 albedo_texture_size;
-uniform float point_size : hint_range(0.1, 128.0, 0.1);
 
 uniform float roughness : hint_range(0.0, 1.0);
 uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
@@ -28,8 +26,6 @@ varying vec3 uv1_power_normal;
 
 uniform vec3 uv1_scale;
 uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
 
 uniform sampler2D alpha_texture: hint_roughness_normal, filter_linear_mipmap, repeat_enable;
 
@@ -62,11 +58,12 @@ vec4 triplanar_texture(sampler2D p_sampler, vec3 p_weights, vec3 p_triplanar_pos
 }
 
 void fragment() {
-	if (dot(NORMAL, vec3(0.,1.,0.)) < -0.1)
+	if (dot(NORMAL, vec3(0.,1.,0.)) < -0.00)
 		discard;
+
 	vec4 albedo_tex = triplanar_texture(texture_albedo, uv1_power_normal, uv1_triplanar_pos);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	
+
 	vec4 alpha_tex = triplanar_texture(alpha_texture, uv1_power_normal, uv1_triplanar_pos);
 	//ALPHA = alpha_tex.r;
 	if (alpha_tex.r <= 0.25)
@@ -82,6 +79,6 @@ void fragment() {
 	// Normal Map: Enabled
 	NORMAL_MAP = triplanar_texture(texture_normal, uv1_power_normal, uv1_triplanar_pos).rgb;
 	NORMAL_MAP_DEPTH = normal_scale;
-	
+
 }
 "

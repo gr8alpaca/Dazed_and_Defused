@@ -1,16 +1,18 @@
 [gd_resource type="Environment" load_steps=3 format=3 uid="uid://bnmt5yys6egho"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n5ql1"]
+[ext_resource type="Material" uid="uid://d2j3lttn43gtr" path="res://resources/environment/sky/sky_material.tres" id="1_rdvjn"]
 
 [sub_resource type="Sky" id="Sky_sugp2"]
-sky_material = SubResource("ProceduralSkyMaterial_n5ql1")
+sky_material = ExtResource("1_rdvjn")
 radiance_size = 0
 
 [resource]
 background_mode = 2
+background_energy_multiplier = 0.8
 sky = SubResource("Sky_sugp2")
+ambient_light_source = 1
 tonemap_mode = 2
-tonemap_exposure = 0.8
+tonemap_exposure = 1.94
 fog_mode = 1
 fog_light_color = Color(0, 0, 0, 1)
 fog_density = 1.0
