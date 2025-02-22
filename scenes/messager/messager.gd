@@ -10,6 +10,7 @@ var tw: Tween
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
+	%Reset.hide()
 	hide_all.call_deferred()
 	if get_tree().current_scene is Level: 
 		connect_scene(get_tree().current_scene)

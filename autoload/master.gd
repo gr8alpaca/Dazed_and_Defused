@@ -13,7 +13,6 @@ const LEVEL_PATHS:PackedStringArray = [
 	"res://scenes/menus/end/end.tscn",
 ]
 
-#var audio: Audio = Audio.new()
 var messager: Messager
 var transitioner: Transitioner
 
@@ -36,7 +35,7 @@ func _ready() -> void:
 	
 	root.add_child.call_deferred(messager)
 	root.add_child.call_deferred(transitioner)
-
+	
 
 func change_level(level_number: int) -> void:
 	var level_path: String = LEVEL_PATHS[clampi(level_number-1, 0, LEVEL_PATHS.size()-1)]
@@ -68,10 +67,15 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"reset"):
 		reset_level()
 		get_viewport().set_input_as_handled()
-		
+	
 	if not OS.is_debug_build(): return
 	
-	if Input.is_key_pressed(KEY_1):
+	if Input.is_key_pressed(KEY_PERIOD):
+		change_level(wrapi(current_level + 1, 1, LEVEL_PATHS.size() + 1))
+	elif Input.is_key_pressed(KEY_COMMA):
+		change_level(wrapi(current_level - 1, 1, LEVEL_PATHS.size() + 1))
+	
+	elif Input.is_key_pressed(KEY_1):
 		change_level(1)
 	elif Input.is_key_pressed(KEY_2):
 		change_level(2)

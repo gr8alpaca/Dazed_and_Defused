@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://71ecgubkbwj5"
 path.s3tc="res://.godot/imported/SheetMetal002_1K-PNG_Color.png-db02c714af3abf9025739359915ec736.s3tc.ctex"
+path.etc2="res://.godot/imported/SheetMetal002_1K-PNG_Color.png-db02c714af3abf9025739359915ec736.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/SheetMetal002_1K-PNG/SheetMetal002_1K-PNG_Color.png"
-dest_files=["res://.godot/imported/SheetMetal002_1K-PNG_Color.png-db02c714af3abf9025739359915ec736.s3tc.ctex"]
+dest_files=["res://.godot/imported/SheetMetal002_1K-PNG_Color.png-db02c714af3abf9025739359915ec736.s3tc.ctex", "res://.godot/imported/SheetMetal002_1K-PNG_Color.png-db02c714af3abf9025739359915ec736.etc2.ctex"]
 
 [params]
 

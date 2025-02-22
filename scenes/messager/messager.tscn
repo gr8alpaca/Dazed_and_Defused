@@ -59,6 +59,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "to reset "
 
+[node name="Reset" type="Button" parent="Control/Corner"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "reset"
+
 [node name="MainVbox" type="VBoxContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 15

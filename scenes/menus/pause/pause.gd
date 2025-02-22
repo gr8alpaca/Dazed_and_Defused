@@ -11,12 +11,14 @@ var panel_container: PanelContainer
 
 func open() -> void:
 	if visible: return
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().paused = true
 	tween(true)
 	panel_container.show()
 	show()
 
 func close() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if visible and settings_menu.visible:
 		settings_menu.hide()
 		panel_container.show()
@@ -30,6 +32,9 @@ func close() -> void:
 	get_tree().paused = false
 	tween(false).tween_callback(hide)
 
+func toggle() -> void:
+	if visible:		close()
+	else:			open()
 
 func tween(to_visible: bool) -> Tween:
 	var tw: Tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
@@ -77,14 +82,12 @@ func _init() -> void:
 	settings_menu = SETTINGS_MENU_SCENE.instantiate()
 	settings_menu.request_close.connect(close)
 	add_child(settings_menu)
+	
 	settings_menu.hide()
 	
 	hide()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"pause"):
-		if visible:
-			close()
-		else:
-			open()
+		toggle()
 		accept_event()

@@ -8,15 +8,6 @@ const SETTINGS: Settings = preload("res://resources/settings.tres")
 @export_tool_button("Select Camera", "Camera3D") 
 var select_camera: Callable = select_camera_in_editor
 
-#@export_range(-180, 180, 2.5, "radians_as_degrees") 
-#var starting_pitch: float = deg_to_rad(-30.0)
-#
-#@export_range(-180, 180, 2.5, "radians_as_degrees") 
-#var pitch_min: float = deg_to_rad(-50.0)
-#
-#@export_range(-180, 180, 2.5, "radians_as_degrees") 
-#var pitch_max: float = deg_to_rad(-5.0)
-
 const DISTANCE_FROM_PIVOT: float = 3.0
 
 const CAMERA_OFFSET: Vector3 = Vector3(0, 0.5, 0)
@@ -26,6 +17,9 @@ const MIN_PITCH: float =  deg_to_rad(-55.0)
 const MAX_PITCH: float =  deg_to_rad(-5.0)
 
 const VERTICAL_CAMERA_SENSITIVITY_RATIO: float = 0.4
+
+const TOUCH_SENSITIVITY_MODIFIER: float = 0.002
+const GAMEPAD_SENSITIVITY_MODIFIER: float = 0.005
 
 @onready var player: Player = get_parent()
 
@@ -53,18 +47,19 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	position = player.position
-	if Engine.is_editor_hint(): return
-	if player.input_active:
-		process_input(delta)
+	move_camera(Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", SETTINGS.get_camera_deadzone()) \
+	* SETTINGS.get_camera_sensitivity() * delta  )
 
-
-func process_input(delta: float) -> void:
-	var input: Vector2 = Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", SETTINGS.get_camera_deadzone())  * SETTINGS.get_camera_sensitivity()
-	cam.rotation.x = clampf(cam.rotation.x - input.y * VERTICAL_CAMERA_SENSITIVITY_RATIO * delta, MIN_PITCH, MAX_PITCH)
-	
-	rotation_pivot.rotation.y = fmod(rotation_pivot.rotation.y - input.x * delta, TAU)
+func move_camera(input: Vector2) -> void:
+	if not player.input_active: return
+	input.limit_length(1.0)
+	cam.rotation.x = clampf(cam.rotation.x - input.y * VERTICAL_CAMERA_SENSITIVITY_RATIO, MIN_PITCH, MAX_PITCH)
+	rotation_pivot.rotation.y = fmod(rotation_pivot.rotation.y - input.x, TAU)
 	update_position()
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		move_camera(event.relative * SETTINGS.get_camera_sensitivity() * TOUCH_SENSITIVITY_MODIFIER)
 
 func update_position() -> void:
 	var pre_offset_position: Vector3 = Vector3.FORWARD.rotated(Vector3.RIGHT, PI + cam.rotation.x) * (DISTANCE_FROM_PIVOT + 0.5)

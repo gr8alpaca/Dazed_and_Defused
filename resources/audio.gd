@@ -5,18 +5,15 @@ enum {BUS_MASTER = 0, BUS_MUSIC = 1, BUS_SFX = 2,}
 var music_stream: AudioStreamPlayer
 var sfx_stream: AudioStreamPlayer
 
-
 const SFX_LIBRARY:={
 	explosion = preload("res://assets/sfx/explosion_metallic.wav"),
 	extinguish =  preload("res://assets/sfx/cig_extinguish.wav"),
 	defused = preload("res://assets/sfx/defused.wav"),
 }
 
-
 const MUSIC_LIBRARY:={
 	main_theme = preload("res://assets/music/main_theme.wav"),
 }
-
 
 func _init() -> void:
 	if Engine.is_editor_hint(): return
@@ -35,7 +32,6 @@ func _init() -> void:
 	music_stream = AudioStreamPlayer.new()
 	music_stream.bus = BUS_MUSIC_NAME
 	music_stream.max_polyphony = 1
-	#music_stream.volume_linear = 0.0
 	add_child(music_stream)
 	
 	sfx_stream = AudioStreamPlayer.new()
@@ -48,8 +44,7 @@ func _init() -> void:
 
 
 func change_bus_volume(bus: int, percent_value: float) -> void:
-	print("Setting bus %s to %3.0f" % ["SFX" if bus == BUS_SFX else "Music", percent_value])
-	#AudioServer.set_bus_volume_linear(bus, percent_value/100.0)
+	
 	match bus:
 		BUS_MUSIC:
 			music_stream.volume_db = linear_to_db(percent_value/100.0)
@@ -70,10 +65,10 @@ func play_music(track: AudioStream) -> void:
 	
 	if not music_stream.playing:
 		music_stream.play()
-		#var previous_valume : float = SETTINGS.get_music_volume()/100.0
-		#music_stream.volume_linear = 0.0
-		#var tw:= create_tween()
-		#tw.tween_callback(music_stream.play)
-		#tw.tween_method(music_stream.set_volume_linear, 0.0, previous_valume, 0.5)
-		#music_stream
-		
+
+func pause_music() -> void:
+	var tw: Tween = create_tween()
+	tw.tween_property(music_stream, ^"volume_linear", 0.0, 1.0)
+	tw.tween_callback(music_stream.stop)
+	tw.tween_property(music_stream, ^"volume_linear", preload("res://resources/settings.tres").get_music_volume()/100.0, 1.0)
+	

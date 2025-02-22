@@ -14,11 +14,12 @@ signal dead(collider: Node)
 @export_tool_button("Select Camera", "Camera3D")
 var select_camera: Callable
 
-@export var input_active: bool = true:
+var input_active: bool = true:
 	set(val):
 		input_active = val
 		set_process_input(val)
 		set_process_unhandled_input(val)
+		camera.set_process_unhandled_input(val)
 
 @export_category("Movement")
 
@@ -44,17 +45,12 @@ func _init() -> void:
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
-	#var explosion: GPUParticles3D = $Explosion
-	#explosion.finished.connect(explosion.set_lifetime.bind(explosion.lifetime), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
-	#explosion.lifetime = 0.0
-	#explosion.emitting = true
-	
 	$CollisionSensor.unsafe_collision.connect(_on_unsafe_collision)
-	
+
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if Engine.is_editor_hint(): return
-	var input: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", SETTINGS.get_movement_deadzone()) if input_active else Vector2.ZERO
+	var input: Vector2 = get_input() 
 	state.apply_central_force(get_force_vector(state.step, input))
 
 
@@ -63,6 +59,12 @@ func get_force_vector(delta: float, input: Vector2) -> Vector3:
 	input = input.limit_length(1.0) * 5.0 * ACCELERATION * delta
 	return Vector3(input.x, 0, input.y)
 
+
+func get_input() -> Vector2:
+	if not input_active: 
+		return Vector2.ZERO
+	
+	return Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", SETTINGS.get_movement_deadzone())
 
 func set_collision_sensor_enabled(enabled: bool) -> void:
 	$CollisionSensor.enabled = enabled
@@ -82,7 +84,9 @@ func _on_unsafe_collision(collider: Node) -> void:
 func defuse() -> void:
 	$SphereMesh/StemMesh/GPUParticles3D.emitting = false
 	$PlayerAudio.play_defused()
-	#Audio.play_sfx(Audio.SFX_LIBRARY.defused)
+	
+	if randi() % 2: 
+		Audio.play_sfx(Audio.SFX_LIBRARY.defused)
 
 func to_local_input(input: Vector2) -> Vector2:
 	return input.rotated(-get_camera_yaw())

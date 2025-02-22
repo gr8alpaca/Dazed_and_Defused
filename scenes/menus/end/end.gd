@@ -6,7 +6,7 @@ const INPUT_TEXTURES: InputTextures = preload("res://resources/input_textures.tr
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	INPUT_TEXTURES.changed.connect(update_input_texture)
-
+	Audio.pause_music()
 	update_input_texture()
 	animate_end()
 
@@ -14,7 +14,6 @@ func animate_end() -> void:
 	%Corner.modulate.a = 0.0
 	%End.visible_ratio = 0.0
 	%Hugo.visible_ratio = 0.0
-	
 	
 	const INITIAL_DELAY_SEC: float = 1.5
 	const SEGMENT_DELAY_SEC: float = 1.0

@@ -19,7 +19,6 @@ func _ready() -> void:
 	request_close.connect(SETTINGS.save_settings)
 	visibility_changed.connect(_on_visibility_changed)
 	get_tree().current_scene.propagate_call(&"set_volume_linear", [SETTINGS.get_sfx_volume()/100.0])
-	#SETTINGS.volume_changed.connect(_on_volume_changed)
 
 func reset_default() -> void:
 	SETTINGS.reset_to_default()

@@ -49,7 +49,6 @@ var skybox_move_speed: float = 20.0:
 		RenderingServer.global_shader_parameter_set(&"speed", val)
 
 @export var camera_shake: bool = true
-@export var is_first_load: bool
 
 var loaded: bool = false
 

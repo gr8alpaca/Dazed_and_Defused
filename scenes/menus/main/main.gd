@@ -7,11 +7,11 @@ func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	Audio.play_music(Audio.MUSIC_LIBRARY.main_theme)
 	create_player()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	var explosion: GPUParticles3D = $Player/Explosion
 	explosion.finished.connect(explosion.set_lifetime.bind(explosion.lifetime), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	explosion.lifetime = 0.02
 	explosion.emitting = true
-	
 
 func _input(event: InputEvent) -> void:
 	if Engine.is_editor_hint(): return
