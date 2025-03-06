@@ -34,6 +34,8 @@ var starting_camera_angle: float = 0.0:
 
 var camera: PlayerCamera
 
+var is_mobile: bool = false
+
 func _init() -> void:
 	add_to_group(GROUP)
 	physics_material_override = PhysicsMaterial.new()
@@ -45,6 +47,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
+	is_mobile = OS.has_feature("web_android") or OS.has_feature("web_ios")
 	$CollisionSensor.unsafe_collision.connect(_on_unsafe_collision)
 
 
@@ -63,6 +66,9 @@ func get_force_vector(delta: float, input: Vector2) -> Vector3:
 func get_input() -> Vector2:
 	if not input_active: 
 		return Vector2.ZERO
+	
+	if is_mobile:
+		return Input.get_meta(&"virtual_joystick", Vector2.ZERO)
 	
 	return Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down", SETTINGS.get_movement_deadzone())
 

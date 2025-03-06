@@ -185,10 +185,6 @@ pause={
 ]
 }
 
-[input_devices]
-
-pointing/android/enable_pan_and_scale_gestures=true
-
 [layer_names]
 
 3d_physics/layer_2="player"
@@ -204,7 +200,6 @@ renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
-environment/defaults/default_environment="uid://bnmt5yys6egho"
 
 [shader_globals]
 

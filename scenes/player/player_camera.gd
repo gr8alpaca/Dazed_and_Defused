@@ -26,6 +26,10 @@ const GAMEPAD_SENSITIVITY_MODIFIER: float = 0.005
 var rotation_pivot: Node3D
 var cam: Camera3D
 
+var drag_index: int = 0
+var last_position: Vector2
+
+
 func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	add_to_group(GROUP)
@@ -47,8 +51,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	position = player.position
-	move_camera(Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", SETTINGS.get_camera_deadzone()) \
-	* SETTINGS.get_camera_sensitivity() * delta  )
+	#move_camera(Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", SETTINGS.get_camera_deadzone()) \
+	#* SETTINGS.get_camera_sensitivity() * delta  )
 
 func move_camera(input: Vector2) -> void:
 	if not player.input_active: return
@@ -58,8 +62,25 @@ func move_camera(input: Vector2) -> void:
 	update_position()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventScreenTouch:
+		drag_index = event.index if event.pressed and not event.canceled else 0
+		last_position = event.position
+		
+	elif event is InputEventScreenDrag and drag_index == event.index:
+		if event.is_canceled():
+			drag_index = 0
+		else:
+			move_camera((event.position - last_position) * SETTINGS.get_camera_sensitivity() * TOUCH_SENSITIVITY_MODIFIER)
+			last_position = event.position
+	
+	elif event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		move_camera(event.relative * SETTINGS.get_camera_sensitivity() * TOUCH_SENSITIVITY_MODIFIER)
+	
+	else:
+		return
+	
+	get_viewport().set_input_as_handled()
+
 
 func update_position() -> void:
 	var pre_offset_position: Vector3 = Vector3.FORWARD.rotated(Vector3.RIGHT, PI + cam.rotation.x) * (DISTANCE_FROM_PIVOT + 0.5)

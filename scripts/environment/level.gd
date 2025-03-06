@@ -40,7 +40,8 @@ func _ready() -> void:
 	pause_menu = PauseMenu.new()
 	add_child(pause_menu)
 	
-	if OS.has_feature("web_android") or OS.has_feature("web_ios"):
+	if true:
+	#if OS.has_feature("web_android") or OS.has_feature("web_ios"):
 		var canvas_layer: CanvasLayer = CanvasLayer.new()
 		canvas_layer.layer = 3
 		
@@ -73,7 +74,16 @@ func _ready() -> void:
 		
 		hbox.add_child(reset_but)
 		hbox.add_child(pause_but)
+		
+		var joy: VirtualJoystick = VirtualJoystick.new()
+		
+		joy.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 32)
+		
+		
+		canvas_layer.add_child(joy)
+		
 		canvas_layer.add_child(hbox)
+		
 		add_child(canvas_layer)
 
 
@@ -89,3 +99,11 @@ func _on_goal_entered(player: Node3D, goal: Goal) -> void:
 	player.defuse()
 	goal_reached.emit()
 	Master.change_level.call_deferred(Master.current_level + 1)
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_WM_MOUSE_EXIT:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		NOTIFICATION_WM_MOUSE_ENTER:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			

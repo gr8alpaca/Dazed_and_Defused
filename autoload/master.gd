@@ -35,6 +35,7 @@ func _ready() -> void:
 	
 	root.add_child.call_deferred(messager)
 	root.add_child.call_deferred(transitioner)
+	#root.add_child.call_deferred(InputDebug.new())
 	
 
 func change_level(level_number: int) -> void:
@@ -70,6 +71,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if not OS.is_debug_build(): return
 	
+	
+	
 	if Input.is_key_pressed(KEY_PERIOD):
 		change_level(wrapi(current_level + 1, 1, LEVEL_PATHS.size() + 1))
 	elif Input.is_key_pressed(KEY_COMMA):
@@ -89,3 +92,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		change_level(6)
 	elif Input.is_key_pressed(KEY_7):
 		change_level(7)
+
+
+
+func _input(event: InputEvent) -> void:
+	if not OS.is_debug_build(): return
+	
+	
+	if not event.is_echo() and event.is_pressed() and Input.is_key_pressed(KEY_MINUS):
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_VISIBLE
