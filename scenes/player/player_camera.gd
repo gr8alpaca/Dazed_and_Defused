@@ -44,15 +44,13 @@ func _init() -> void:
 		cam.owner = self
 		cam.rotation.x = STARTING_PITCH
 
-
 func _ready() -> void:
 	update_position()
 
-
 func _process(delta: float) -> void:
 	position = player.position
-	#move_camera(Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", SETTINGS.get_camera_deadzone()) \
-	#* SETTINGS.get_camera_sensitivity() * delta  )
+	move_camera(Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", SETTINGS.get_camera_deadzone()) \
+	* SETTINGS.get_camera_sensitivity() * delta  )
 
 func move_camera(input: Vector2) -> void:
 	if not player.input_active: return
@@ -79,7 +77,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	else:
 		return
 	
-	get_viewport().set_input_as_handled()
+	#get_viewport().set_input_as_handled()
 
 
 func update_position() -> void:

@@ -13,7 +13,7 @@ var reset_speed_sec: float = 1.0
 var is_running: bool = false
 
 func execute(host_node: Node) -> Tween:
-	print("Calling %s from host node %s" % [path, host_node.name])
+	#print("Calling %s from host node %s" % [path, host_node.name])
 	var callable:= Callable(host_node.get_node(target_node_path), path)
 	assert(callable.is_valid(), "Callable is invalid")
 	is_running = true

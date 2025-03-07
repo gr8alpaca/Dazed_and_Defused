@@ -10,7 +10,18 @@ var tw: Tween
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
-	%Reset.hide()
+	if OS.has_feature("web_ios") or OS.has_feature("web_android"):
+		%CornerLabel.hide()
+		%ButtonTexture.hide()
+		%CornerLabel2.hide()
+		var event: InputEventAction = InputEventAction.new()
+		event.action = &"reset"
+		event.pressed = true
+		%Reset.pressed.connect(Input.parse_input_event.bind(event))
+		%Reset.show()
+	else:
+		%Reset.hide()
+	
 	hide_all.call_deferred()
 	if get_tree().current_scene is Level: 
 		connect_scene(get_tree().current_scene)

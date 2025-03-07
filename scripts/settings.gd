@@ -4,7 +4,7 @@ class_name Settings extends Resource
 
 const PATH: String = "user://settings.tres"
 
-const PROPERTIES: PackedStringArray = ["movement_sensitivity", "movment_deadzone", "camera_sensitivity", "camera_deadzone",  "sfx_volume", "music_volume", "skybox_move_speed",]
+const PROPERTIES: PackedStringArray = ["movement_sensitivity", "movment_deadzone", "joystick_hud_size", "camera_sensitivity", "camera_deadzone",  "sfx_volume", "music_volume", "skybox_move_speed", ]
 
 signal volume_changed(bus: int, value: float)
 
@@ -42,18 +42,26 @@ var music_volume: float = 10.0:
 	set(val):
 		music_volume = val
 		volume_changed.emit(Audio.BUS_MUSIC, get_music_volume())
-@export_range(0.0, 100.0, 5.0, "suffix:%")
+@export_range(0.0, 100.0, 5.0, )
 var skybox_move_speed: float = 20.0:
 	set(val):
 		skybox_move_speed = val
 		RenderingServer.global_shader_parameter_set(&"speed", val)
+
+@export_range(32, 512, 1, "suffix:px")
+var joystick_hud_size: int = 128:
+	set(val):
+		joystick_hud_size = val
+		ThemeDB.get_project_theme().set_constant(&"hud_size", &"VirtualJoystick", joystick_hud_size)
 
 @export var camera_shake: bool = true
 
 var loaded: bool = false
 
 func save_settings() -> void:
-	ResourceSaver.save(duplicate(), PATH, ResourceSaver.FLAG_CHANGE_PATH)
+	var new_settings: Settings = duplicate()
+	new_settings.take_over_path(PATH)
+	ResourceSaver.save(new_settings, PATH, ResourceSaver.FLAG_CHANGE_PATH)
 
 func load_settings() -> void:
 	if Engine.is_editor_hint(): return
@@ -61,7 +69,7 @@ func load_settings() -> void:
 	loaded = true
 	
 	if not ResourceLoader.exists(PATH, "Settings"): 
-		print("Settings resource does not exist...")
+		printerr("Settings resource does not exist...")
 		return
 	
 	var settings: Settings = ResourceLoader.load(PATH, "Settings")
@@ -70,8 +78,8 @@ func load_settings() -> void:
 
 func reset_to_default() -> void:
 	var script: Script = get_script()
-	for dict: Dictionary in script.get_script_property_list():
-		set(dict.name, script.get_property_default_value(dict.name))
+	for prop: StringName in PROPERTIES:
+		set(prop, script.get_property_default_value(prop))
 		#print("resetting %s to value %s" % [prop, script.get_property_default_value(prop)])
 
 func get_sfx_volume() -> float:

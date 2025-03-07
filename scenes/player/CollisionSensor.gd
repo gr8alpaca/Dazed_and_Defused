@@ -59,7 +59,8 @@ func _physics_process(delta: float) -> void:
 	var strength: float = linear_strength * cushion
 	
 	if max_safe_linear_delta_magnitude < strength:
-		print("Velocity: %1.2v | Collision: Force: %1.2f | Delta: %1.2v | Cushion: %1.2f" % [real_velocity, linear_strength, velocity_delta, cushion])
+		if OS.is_debug_build():
+			print("Velocity: %1.2v | Collision: Force: %1.2f | Delta: %1.2v | Cushion: %1.2f" % [real_velocity, linear_strength, velocity_delta, cushion])
 		unsafe_collision.emit(last_collider)
 
 

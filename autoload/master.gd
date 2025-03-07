@@ -35,12 +35,13 @@ func _ready() -> void:
 	
 	root.add_child.call_deferred(messager)
 	root.add_child.call_deferred(transitioner)
-	#root.add_child.call_deferred(InputDebug.new())
+	
 	
 
 func change_level(level_number: int) -> void:
 	var level_path: String = LEVEL_PATHS[clampi(level_number-1, 0, LEVEL_PATHS.size()-1)]
-	print("Transitioning to level #%d" % level_number)
+	if OS.is_debug_build():
+		print("Transitioning to level #%d" % level_number)
 	if ResourceLoader.exists(level_path, "PackedScene"):
 		transitioner.transition(level_path)
 		current_level = level_number

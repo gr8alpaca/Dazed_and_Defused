@@ -31,7 +31,11 @@ func populate_menu() -> void:
 		child.free()
 	
 	for prop: Dictionary in SETTINGS.get_property_list():
-		if prop.name not in SETTINGS.PROPERTIES: continue
+		match [prop.name, OS.has_feature("web_ios") or OS.has_feature("web_android")]:
+			["joystick_hud_size", false]: 					continue
+			["movement_sensitivity", true]: 					continue
+			[var x, _] when x not in SETTINGS.PROPERTIES: 	continue
+			
 		create_setting_slider(prop, grid)
 	
 	var label:= Label.new()
