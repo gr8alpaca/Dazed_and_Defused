@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://dhv3fkt5cbd0f"]
+[gd_scene load_steps=17 format=4 uid="uid://dhv3fkt5cbd0f"]
 
 [ext_resource type="Script" uid="uid://dlwsrcbxd6885" path="res://scripts/environment/level.gd" id="1_r1e5f"]
 [ext_resource type="Material" uid="uid://bduwtottg1auy" path="res://resources/materials/metal_plate.tres" id="2_368nu"]
@@ -24,15 +24,24 @@ reset_speed_sec = 1.0
 arguments = []
 metadata/_custom_type_script = ExtResource("5_ourro")
 
+[sub_resource type="Resource" id="Resource_uabqd"]
+script = ExtResource("4_vlp1d")
+target_node_path = NodePath(".")
+path = "disable"
+additional_delay_sec = 0.0
+reset_speed_sec = 1.0
+arguments = []
+metadata/_custom_type_script = "uid://trmcio4w813p"
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_p5xfs"]
-size = Vector3(2, 1, 1)
+size = Vector3(0.5, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ljm8n"]
 material = ExtResource("2_368nu")
-size = Vector3(20, 0.25, 0.25)
+size = Vector3(20, 0.25, 0.6)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ljm8n"]
-size = Vector3(20, 0.25, 0.25)
+size = Vector3(20, 0.25, 0.6)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ljm8n"]
 data = PackedVector3Array(3.125, 0, -4.5, 3.125, -0.25, -5, 3.125, 0, 4.5, 3.125, 0, 4.5, 3.125, 0.25, 5, 3.125, 0.25, 4.5, 3.125, 0, 4.5, 3.125, -0.25, 5, 3.125, 0.25, 5, -2.625, 0.25, 4.5, 3.125, 0.25, 4.5, 3.125, 0.25, 5, 3.125, 0.25, -5, 3.125, 0, -4.5, 3.125, 0.25, -4.5, 3.125, 0.25, -5, 3.125, -0.25, -5, 3.125, 0, -4.5, -2.625, 0.25, -4.5, 3.125, 0.25, -5, 3.125, 0.25, -4.5, 3.125, -0.25, -5, 3.125, 0.25, -5, -3.125, 0.25, -5, 3.125, -0.25, 5, 3.125, 0, 4.5, 3.125, -0.25, -5, 3.125, 0.25, 5, 3.125, -0.25, 5, -3.125, -0.25, 5, -3.125, -0.25, 5, 3.125, -0.25, 5, 3.125, -0.25, -5, -3.125, -0.25, 5, -3.125, -0.25, -5, -3.125, 0.25, -5, -2.625, 0.25, 4.5, 3.125, 0.25, 5, -3.125, 0.25, 5, -3.125, 0.25, 5, 3.125, 0.25, 5, -3.125, -0.25, 5, -2.625, 0.25, 4.5, -3.125, 0.25, 5, -2.625, 0.25, -4.5, -3.125, 0.25, -5, -3.125, 0.25, 5, -3.125, -0.25, 5, -2.625, 0.25, -4.5, -3.125, 0.25, -5, 3.125, 0.25, -5, -2.625, 0.25, -4.5, -3.125, 0.25, 5, -3.125, 0.25, -5, 3.125, -0.25, -5, -3.125, 0.25, -5, -3.125, -0.25, -5, -3.125, -0.25, 5, 3.125, -0.25, -5, -3.125, -0.25, -5, -2.625, 0.25, 4.5, -2.625, 0, 4.5, 3.125, 0.25, 4.5, -2.625, 0.25, -4.5, -2.625, 0, 4.5, -2.625, 0.25, 4.5, -2.625, 0.25, -4.5, 3.125, 0.25, -4.5, 3.125, 0, -4.5, -2.625, 0, 4.5, -2.625, 0, -4.5, 3.125, 0, -4.5, -2.625, 0, -4.5, -2.625, 0.25, -4.5, 3.125, 0, -4.5, 3.125, 0, -4.5, 3.125, 0, 4.5, -2.625, 0, 4.5, 3.125, 0, 4.5, 3.125, 0.25, 4.5, -2.625, 0, 4.5, -2.625, 0.25, -4.5, -2.625, 0, -4.5, -2.625, 0, 4.5)
@@ -62,15 +71,17 @@ script = ExtResource("1_r1e5f")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 0)
 script = ExtResource("3_368nu")
 area_trigger = NodePath("TrapArea")
-actions = Array[ExtResource("4_vlp1d")]([SubResource("Resource_v24ps")])
-metadata/_custom_type_script = ExtResource("3_368nu")
+actions = Array[ExtResource("4_vlp1d")]([SubResource("Resource_v24ps"), SubResource("Resource_uabqd")])
+metadata/_custom_type_script = "uid://brx8nin43uye7"
 
 [node name="TrapArea" type="Area3D" parent="Environment/Trap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, 0)
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Trap/TrapArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0, 0)
 shape = SubResource("BoxShape3D_p5xfs")
 
 [node name="Rope" type="StaticBody3D" parent="Environment"]
@@ -114,6 +125,7 @@ input_ray_pickable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, 0.5, 2.75)
 physics_material_override = SubResource("PhysicsMaterial_ql3nd")
 starting_camera_angle = -1.0472
+metadata/_custom_type_script = "uid://265ioi7d3q7c"
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866024, -0.433016, 0.25, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 20, 0)
@@ -133,4 +145,4 @@ collision_layer = 0
 collision_mask = 2
 monitorable = false
 script = ExtResource("9_ppnyf")
-metadata/_custom_type_script = ExtResource("9_ppnyf")
+metadata/_custom_type_script = "uid://67y6b3cnojc0"

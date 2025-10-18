@@ -11,7 +11,7 @@ var pause_menu: PauseMenu
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	Audio.play_music(Audio.MUSIC_LIBRARY.main_theme)
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED 
 	for goal: Goal in find_children("*", "Goal"):
 		goal.body_entered.connect(_on_goal_entered.bind(goal), CONNECT_ONE_SHOT)
 	
@@ -98,6 +98,7 @@ func _on_goal_entered(player: Node3D, goal: Goal) -> void:
 	Master.change_level.call_deferred(Master.current_level + 1)
 
 func _notification(what: int) -> void:
+	if Engine.is_editor_hint(): return
 	match what:
 		NOTIFICATION_WM_MOUSE_EXIT:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

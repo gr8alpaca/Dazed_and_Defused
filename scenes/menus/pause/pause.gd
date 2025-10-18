@@ -15,10 +15,16 @@ func open() -> void:
 	get_tree().paused = true
 	tween(true)
 	panel_container.show()
+	get_buttons()[0].grab_focus()
 	show()
 
 func close() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	for but: Control in get_buttons():
+		if not but.has_focus(): continue
+		but.release_focus()
+	
 	if visible and settings_menu.visible:
 		settings_menu.hide()
 		panel_container.show()
@@ -86,6 +92,12 @@ func _init() -> void:
 	settings_menu.hide()
 	
 	hide()
+
+func get_buttons() -> Array[Control]:
+	var buts: Array[Control]
+	for but: Control in panel_container.get_child(0).get_children():
+		buts.push_back(but)
+	return buts
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"pause"):

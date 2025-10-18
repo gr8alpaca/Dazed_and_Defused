@@ -48,6 +48,7 @@ func _ready() -> void:
 	update_position()
 
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint(): return
 	position = player.position
 	move_camera(Input.get_vector(&"camera_left", &"camera_right", &"camera_up", &"camera_down", SETTINGS.get_camera_deadzone()) \
 	* SETTINGS.get_camera_sensitivity() * delta  )

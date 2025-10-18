@@ -97,9 +97,9 @@ func _draw() -> void:
 	draw_circle(stick_center, diameter/4.0, JOY_COLOR, true, -1.0, true)
 	draw_circle(stick_center, diameter/5.0, JOY_RING_COLOR, false, 2.0, true)
 	
-	if OS.is_debug_build():
-		draw_string_outline(get_theme_default_font(), Vector2(0, -96), "%0.02v" % input, 0, -1, 32, 2, Color.BLACK)
-		draw_string(get_theme_default_font(), Vector2(0, -96), "%0.02v" % input, 0, -1, 32)
+	#if OS.is_debug_build():
+		#draw_string_outline(get_theme_default_font(), Vector2(0, -96), "%0.02v" % input, 0, -1, 32, 2, Color.BLACK)
+		#draw_string(get_theme_default_font(), Vector2(0, -96), "%0.02v" % input, 0, -1, 32)
 
 
 func _notification(what: int) -> void:
